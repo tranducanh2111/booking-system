@@ -1,0 +1,48 @@
+ <!-- Page Body -->
+ <main class="page-height overflow-y-auto">
+    <!-- Overlay and Pop-up HTML -->
+    <div id="overlay" class="overlay">
+        <div class="popup rounded-3">
+            <h3 class="text-center text-h3 text-primary mb-10">Wait, seems like we met before! Is that you?</h3>
+            <div class="d-flex flex-wrap flex-column flex-md-row justify-content-between gap-5">
+                <!-- Sign In -->
+                <button type="button" id="confirm" class="w-100 text-body fw-bolder text-white bg-user-primary rounded-3 px-5 py-2 border-1 border-primary">That&apos;s me!</button>
+                <button type="button" id="cancelBtn" class="w-100 text-body fw-bolder text-primary rounded-3 border-primary px-5 py-2">No</button>
+            </div>
+            <!-- Add form or additional content here -->
+        </div>
+    </div>
+    <section class="page-height position-relative d-flex justify-content-center align-items-center px-5">
+        <figure class="h-100 w-100 position-absolute">
+            <img src="../assets/media/image/form-background.jpg" alt="Form Background" class="h-100 w-100 opacity-50 object-fit-cover">
+        </figure>
+        <section class="glassmorphism mx-auto w-100 d-flex flex-column justify-content-start gap-10 py-8 px-5" style="max-width: 420px;">
+            <!-- Form: Retrieve Client Detail -->
+            <form action="/" name="Client Detail Form">
+                <h2 class="client-detail text-h2 mb-10 text-center">Client Detail</h2>
+                <!-- BEGIN: Client Detail -->
+                <div class="client-detail row gap-sm-0 gap-4 mb-6 w-100 mx-auto">
+                    <!-- Last Name -->
+                    <label for="lname" class="text-body">Last Name</label>
+                    <input type="text" id="lname" name="lname" placeholder="Last Name" class="text-body py-2 px-5 rounded-3">
+                </div>
+                <div class="client-detail row gap-sm-0 gap-4 mb-6 w-100 mx-auto">
+                    <!-- Email -->
+                    <label for="email" class="text-body">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Email" class="text-body py-2 px-5 rounded-3">
+                </div>
+                <!-- END: Client Detail -->
+                <!-- Button Container -->
+                <div class="row w-100 mx-auto">
+                    <!-- Submit Form -->
+                    <button type="submit" class="btn bg-primary w-100 rounded-3 p-5 p-md-3 text-white text-body border-0">NEXT</button>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button type="button" id="openPopup" class="btn mt-3 w-100 p-5 p-md-3 bg-white border border-1 border-primary text-body text-primary rounded-3">Open Popup</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </section>
+</main>

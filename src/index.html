@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Advance Notices</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:locale" content="en_US">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Advance Notices">
+    <link rel="shortcut icon" href="assets/media/logos/favicon.ico">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700">
+    <!-- <link href="assets/plugins/custom/fullcalendar/fullcalendar.bundle.css" rel="stylesheet" type="text/css">
+    <link href="assets/plugins/custom/datatables/datatables.bundle.css" rel="stylesheet" type="text/css">
+    <link href="assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css">
+    <link href="assets/css/style.bundle.css" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+	<link rel="stylesheet" href="assets/css/popup.css">
+	<link rel="stylesheet" href="assets/css/user.css"> -->
+    <link rel="stylesheet" href="styles/style.bundle.css">
+    <link rel="stylesheet" href="styles/custom.css">
+    <link rel="stylesheet" href="styles/popup.css">
+    <link rel="stylesheet" href="styles/user.css">
+    <script>
+        if (window.top != window.self) {
+            window.top.location.replace(window.self.location.href);
+        }
+    </script>
+</head>
+<!-- <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled"> -->
+    <body>
+    <!-- <script>
+        var defaultThemeMode = "light";
+        var themeMode;
+        if (document.documentElement) {
+            if (document.documentElement.hasAttribute("data-bs-theme-mode")) {
+                themeMode = document.documentElement.getAttribute("data-bs-theme-mode");
+            } else {
+                if (localStorage.getItem("data-bs-theme") !== null) {
+                    themeMode = localStorage.getItem("data-bs-theme");
+                } else {
+                    themeMode = defaultThemeMode;
+                }
+            }
+            if (themeMode === "system") {
+                themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            }
+            document.documentElement.setAttribute("data-bs-theme", themeMode);
+        }
+    </script> -->
+    <div class="d-flex flex-column flex-root">
+        <!-- Navigation -->
+        <header class="w-100 bg-white sticky-top">
+			<div class="max-w-body w-100 mx-auto d-flex p-4 flex-row justify-content-between align-items-center">
+				<section class="d-flex align-items-center gap-2">
+					<figure class="w-auto h-100 max-w-sm-150 max-w-lg-310 mb-0">
+						<a href="index.html">
+							<img src="images/logo.png" alt="Logo" class="object-cover">
+						</a>
+					</figure>
+					<div class="ms-3 d-none d-md-inline">
+						<h3 class="text-h3 text-primary mb-2">Cider House ICT</h3>
+						<p class="text-body mb-0">9/899 Wellington Road ROWVILLE 3178 VIC</p>
+					</div>
+				</section>
+				<div class="w-auto d-flex flex-row flex-md-column align-items-center align-items-md-start gap-2">
+					<a href="tel:0466223888" class="link-primary">
+						<div class="d-flex align-items-center gap-2">
+							<img src="svg/icons/phone.svg" alt="Clinic Hotline" type="image/svg+xml" width="24" height="24">
+							<p class="d-none d-md-inline w-auto mb-0">0466223888</p>
+						</div>
+					</a>
+					<a href="mailto:at@ciderhouse.com.au" class="link-primary">
+						<div class="d-flex align-items-center gap-2">
+							<img src="svg/icons/email.svg" alt="Clinic Email" type="image/svg+xml" width="24" height="24">
+							<p class="d-none d-md-inline w-auto mb-0">at@ciderhouse.com.au</p>
+						</div>
+					</a>
+				</div>
+			</div>
+        </header>
+        <!-- Page Body -->
+        <main id="content" class="page-height overflow-y-auto">
+            <!-- Dynamic content will be loaded here -->
+            <!-- Overlay for Popups -->
+            <div id="overlay" class="overlay"></div>
+        </main>
+        <footer class="sticky-bottom w-100 bg-white">
+            <section class="max-w-body w-100 mx-auto d-flex flex-column flex-sm-row justify-content-between align-items-center px-4 p-4 gap-3">
+                <div>
+                    <a href="https://ciderhouse.com.au/" target="_blank"><img src="svg/icons/website-url.svg" alt="Clinic Website" type="image/svg+xml" width="32" height="32"></a>
+                    <a href="https://ciderhouse.com.au/" target="_blank"><img src="svg/icons/facebook.svg" alt="Facebook" type="image/svg+xml" width="32" height="32"></a>
+                    <a href="https://ciderhouse.com.au/" target="_blank"><img src="svg/icons/twitter.svg" alt="Twitter" type="image/svg+xml" width="32" height="32"></a>
+                    <a href="https://ciderhouse.com.au/" target="_blank"><img src="svg/icons/instagram.svg" alt="Instagram" type="image/svg+xml" width="32" height="32"></a>
+                </div>
+                <div>
+                    <ul class="list-unstyled list-inline mb-0">
+                        <li class="list-inline-item"><a href="" class="text-primary fw-bolder link-primary">Advanced Notice</a></li>
+                        <li class="list-inline-item"><a href="" class="fw-bolder link-primary">Privacy Policy</a></li>
+                        <li class="list-inline-item"><a href="" class="fw-bolder link-primary">Terms &amp; Conditions</a></li>
+                    </ul>
+                </div>
+            </section>
+        </footer>
+    </div>
+    <!-- JavaScript -->
+    <script src="js/page_loader.js"></script>
+    <script src="js/popup_loader.js"></script>
+</body>
+</html>
