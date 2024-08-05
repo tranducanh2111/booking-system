@@ -1,18 +1,16 @@
+// popup_loader.js
 async function setupPopup() {
     try {
-        // Assume this function fetches or loads something asynchronously
-        await loadPopupContent(); // Replace with your actual async operation
+        // Wait for the popup window content loaded completely
+        await loadPopupContent();
 
         const clientFormButton = document.getElementById('open_client_type_popup');
         const overlay = document.getElementById('overlay');
         const popup = document.getElementById('popup_choose_client_type');
         const cancelBtn = document.getElementById('cancelBtn');
+        const existingClientBtn = document.getElementById('existingClientBtn');
 
-        console.log("Client Form Button:", clientFormButton);
-        console.log("Overlay:", overlay);
-        console.log("Popup:", popup);
-        console.log("Cancel Button:", cancelBtn);
-
+        // Open the popup for the index.html page
         if (clientFormButton) {
             clientFormButton.addEventListener('click', () => {
                 overlay.style.display = 'block';
@@ -20,10 +18,18 @@ async function setupPopup() {
             });
         }
 
+        // Close the Popup Layout
         if (cancelBtn) {
             cancelBtn.addEventListener('click', () => {
                 overlay.style.display = 'none';
                 popup.style.display = 'none';
+            });
+        }
+
+        // Redirect users to the search_client.html page for old clients
+        if (existingClientBtn) {
+            existingClientBtn.addEventListener('click', () => {
+                loadContent('search_client');
             });
         }
     } catch (error) {
