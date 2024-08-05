@@ -1,0 +1,50 @@
+<section class="mx-auto w-100 d-flex flex-column justify-content-start align-items-center gap-20 px-4 py-10">
+    <form action="/cancel_appointment" method="POST" name="Cancel Appointment" onsubmit="proceedCancellation(); return false;">
+        <div class="row mb-10">
+            <h2 class="text-h2">Cancel an Appointment</h2>
+        </div>
+        <!-- Appointment Code, FName, LName, Cancel Reason -->
+        <div class="row mb-6 gap-sm-0 gap-4">
+            <!-- First Name -->
+            <div class="col-sm-6 col-md-3 d-flex flex-column gap-2">
+                <label for="fname" class="text-body">First Name</label>
+                <input type="text" id="fname" name="fname" placeholder="First Name" class="text-body py-2 px-5 rounded-3">
+            </div>
+            <!-- Last Name -->
+            <div class="col-sm-6 col-md-3 d-flex flex-column gap-2">
+                <label for="lname" class="text-body">Last Name</label>
+                <input type="text" id="lname" name="lname" placeholder="Last Name" class="text-body py-2 px-5 rounded-3">
+            </div>
+            <!-- Appointment Code -->
+            <div class="col-sm-6 col-md-3 d-flex flex-column gap-2">
+                <label for="apptcode" class="text-body">Appointment Code</label>
+                <input type="text" id="apptcode" name="apptcode" placeholder="Appointment Code" class="text-body py-2 px-5 rounded-3">
+            </div>
+            <!-- Reason -->
+            <div class="col-sm-6 col-md-3 d-flex flex-column gap-2">
+                <label for="reason" class="text-body">Reason</label>
+                <input type="text" id="reason" name="reason" placeholder="Reason" class="text-body py-2 px-5 rounded-3">
+            </div>
+        </div>
+        <!-- Reason Description -->
+        <div class="row mb-10">
+            <div class="col d-flex flex-column gap-2">
+                <label for="description" class="text-body">We are so sorry about this, however, would you mind giving us a more detailed reason?</label>
+                <textarea type="text" name="description" id="description" placeholder="Reason" class="text-body py-2 px-5 rounded-3" rows="5" style="min-height: 39px;"></textarea>
+            </div>
+        </div>
+        <!-- Button Container -->
+        <div class="row">
+            <!-- Submit Form -->
+            <div class="col">
+                <button type="submit" class="bg-primary w-100 rounded-3 p-5 p-md-3 text-white text-body border-0">PROCEED</button>
+            </div>
+            <!-- Redirect to Homepage -->
+            <div class="col">
+                <a href="/" class="col p-0">
+                    <button type="button" class="bg-red w-100 rounded-3 p-5 p-md-3 text-white text-body border-0">CANCEL</button>
+                </a>
+            </div>
+        </div>
+    </form>
+</section>
