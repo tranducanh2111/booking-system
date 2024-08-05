@@ -42,6 +42,10 @@ app.post('/cancel_appointment', (req, res) => {
   res.json({ success: true });
 })
 
+app.get('/api/clinic-notes', (req, res) => {
+  res.sendFile(path.join(__dirname, 'data/clinic-notes.json'));
+});
+
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
 });
