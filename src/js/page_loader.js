@@ -1,5 +1,5 @@
-// contentLoader.js
-function loadContent(page) {
+// page_loader.js
+export function loadContent(page) {
     const contentDiv = document.getElementById('content');
     fetch(`/components/${page}.html`)
         .then(response => response.text())
@@ -15,3 +15,6 @@ function loadContent(page) {
 document.addEventListener('DOMContentLoaded', () => {
     loadContent('homepage');
 });
+
+// Expose loadContent function to global scope
+window.loadContent = loadContent;

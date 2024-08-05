@@ -1,9 +1,14 @@
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
+const bodyParser = require('body-parser');
 
 const app = express();
 const port = 3000;
+
+// Middleware to parse form data
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
@@ -30,6 +35,12 @@ app.get('/components/:component', (req, res) => {
     }
   });
 });
+
+app.post('/cancel_appointment', (req, res) => {
+  // Here you would typically process the cancellation
+  // For now, we'll just send a success response
+  res.json({ success: true });
+})
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);
