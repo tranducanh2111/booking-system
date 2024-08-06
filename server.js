@@ -37,10 +37,20 @@ app.get('/components/:component', (req, res) => {
   });
 });
 
+// Handle cancel appointment request
 app.post('/cancel_appointment', (req, res) => {
-  // Here you would typically process the cancellation
-  // For now, we'll just send a success response
-  res.json();
+  const appointmentCancellationData = req.body;
+
+  res.json({ success: true });
+})
+
+// Handle booking appointment request
+app.post('/proceed-appointment-request', (req, res) => {
+  const appointmentBookingData = req.body;
+  // Process the appointment data here
+
+
+  res.json({ success: true });
 })
 
 // Handle request for loading the clinic notes)

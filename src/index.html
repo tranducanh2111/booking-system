@@ -105,6 +105,21 @@
     <script src="js/popup_loader.js" type="module"></script>
     <script src="/js/cancel_appointment.js" type="module"></script>
     <script src="/js/load_clinic_note.js" type="module"></script>
-    <script src="js/booking_confirmation.js"></script>
+    <script type="module">
+        import { initializeCheckoutPage, moveToNext } from './booking_confirmation.js';
+    
+        document.addEventListener('DOMContentLoaded', () => {
+            initializeCheckoutPage();
+            document.getElementById('card-number').addEventListener('input', () => {
+                moveToNext(document.getElementById('card-number'), 'card-holder');
+            });
+            document.getElementById('card-expiry-month').addEventListener('input', () => {
+                moveToNext(document.getElementById('card-expiry-month'), 'card-expiry-year');
+            });
+            document.getElementById('card-expiry-year').addEventListener('input', () => {
+                moveToNext(document.getElementById('card-expiry-year'), 'card-cvv');
+            });
+        });
+    </script>
 </body>
 </html>

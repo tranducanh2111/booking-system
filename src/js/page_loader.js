@@ -16,6 +16,16 @@ export function loadContent(page) {
                     })
                     .catch(error => console.error('Error loading select_service.js:', error));
             }
+
+            // Load and initialize the booking_confirmation script if needed
+            if (page === 'checkout') {
+                // Load and initialize the select_service script
+                import('./booking_confirmation.js')
+                    .then(module => {
+                        module.initializeCheckoutPage();
+                    })
+                    .catch(error => console.error('Error loading booking_confirmation.js:', error));
+            }
         })
         .catch(() => {
             contentDiv.innerHTML = '<h2>404</h2><p>Page not found.</p>';

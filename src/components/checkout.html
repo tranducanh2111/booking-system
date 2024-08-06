@@ -1,0 +1,172 @@
+<!-- checkout.html -->
+<section class="max-w-body w-100 px-4 mx-auto">
+    <h2 class="text-h2 text-center mt-5">Check Out</h2>
+    <section class="d-lg-grid d-flex flex-column gap-10" style="grid-template-columns: auto 395px;">
+        <!-- Confirm Infomation -->
+        <section class="d-flex flex-column justify-content-start gap-5 py-10">
+            <!-- Client Detail -->
+            <article class="w-100 p-8 bg-white shadow-sm rounded-3">
+                <p class="text-body fw-bold text-primary mb-2">Client Detail</p>
+                <div class="d-flex justify-content-between align-items-center mb-8">
+                    <h3 class="text-h3 line-clamp-1">Mr. Aaron Tran</h3>
+                    <span class="d-inline-flex align-items-center" style="width: max-content;">
+                        <img src="svg/icons/birthday.svg" alt="Birthday">
+                        <p class="text-body mb-0 ms-2">21/11/2003</p>
+                    </span>
+                </div>
+                <div class="d-block">
+                    <span class="w-100 d-inline-flex align-items-center" style="width: max-content;">
+                        <img src="svg/icons/phone.svg" alt="Client Hotline" type="image/svg+xml" width="20" height="20">
+                        <p class="text-body mb-0 ms-2" id="client-mobile">0466223845</p>
+                    </span>
+                    <span class="w-100 d-inline-flex align-items-center" style="width: max-content;">
+                        <img src="svg/icons/email.svg" alt="Client Email" type="image/svg+xml" width="20" height="20">
+                        <p class="text-body mb-0 ms-2 line-clamp-1" id="client-email">tranducanh@sace.edu.au</p>
+                    </span>
+                </div>
+            </article>
+            <!-- Patient Detail -->
+            <article class="p-8 bg-white shadow-sm rounded-3">
+                <p class="text-body fw-bold text-primary mb-2">Patient Detail</p>
+                <div class="d-flex justify-content-between align-items-center mb-8">
+                    <h3 class="text-h3 line-clamp-1">Abby</h3>
+                    <span class="d-inline-flex align-items-center" style="width: max-content;">
+                        <img src="svg/icons/birthday.svg" alt="Birthday">
+                        <p class="text-body mb-0 ms-2">21/10/2021</p>
+                    </span>
+                </div>
+                <div class="d-block">
+                    <span class="w-100 d-inline-flex align-items-center" style="width: max-content;">
+                        <img src="svg/icons/species.svg" alt="Birthday">
+                        <p class="text-body mb-0 ms-2">Canine</p>
+                    </span>
+                    <span class="w-100 d-inline-flex align-items-center" style="width: max-content;">
+                        <img src="svg/icons/breed.svg" alt="Birthday">
+                        <p class="text-body mb-0 ms-2 line-clamp-1">Basset - Fauve de Bretagne (Basset - Fawn Brittany)</p>
+                    </span>
+                </div>
+            </article>
+            <!-- Appointment Detail -->
+            <article class="w-100 p-8 bg-white shadow-sm rounded-3">
+                <p class="text-body fw-bold text-primary mb-2">Appointment Detail</p>
+                <div class="d-flex justify-content-between align-items-center mb-8">
+                    <h3 class="text-h3 line-clamp-1">Grooming</h3>
+                </div>
+                <div class="d-block">
+                    <!-- Appointment Date -->
+                    <span class="w-100 d-inline-flex align-items-start" style="width: max-content;">
+                        <img src="svg/icons/calendar.svg" alt="Note" width="24" height="24">
+                        <p class="text-body mb-0 ms-2">21/08/2024</p>
+                    </span>
+                    <!-- Appointment Time -->
+                    <span class="w-100 d-inline-flex align-items-center" style="width: max-content;">
+                        <img src="svg/icons/clock.svg" alt="Appointment Time" width="24" height="20">
+                        <p class="text-body mb-0 ms-2">9:00 AM - 9:15 PM</p>
+                    </span>
+                </div>
+            </article>
+        </section>
+        <!-- Sticky Sidebar -->
+        <aside class="sticky-top d-flex d-md-grid d-lg-flex flex-column gap-5 py-10" style="grid-template-columns: auto 395px; height: fit-content;">
+            <!-- Payment Method -->
+            <article class="p-8 bg-white shadow-sm rounded-3" style="height: fit-content;">
+                <p class="text-body fw-bold text-primary mb-2">Payment Detail</p>
+                <span class="d-flex justify-content-between align-items-center mb-2">
+                    <p class="text-body line-clamp-1">Grooming</p>
+                    <p class="text-body mb-0 ms-2">$210.00</p>
+                </span>
+                <span class="d-flex justify-content-between align-items-center mb-2">
+                    <p class="text-body line-clamp-1">GST</p>
+                    <p class="text-body mb-0 ms-2">$21.00</p>
+                </span>
+                <hr>
+                <span class="d-flex justify-content-between align-items-center mb-2 fw-bold">
+                    <p class="text-body line-clamp-1">Total</p>
+                    <p class="text-body mb-0 ms-2">$231.00</p>
+                </span>
+            </article>
+            <!-- Credit Card -->
+            <form action="">
+                <section class="d-flex flex-column justify-content-center align-items-center text-break bg-primary rounded-3 border border-1 border-primary mx-auto mx-md-0 px-10 py-5 mb-5" style="aspect-ratio: 395/214.5; max-width: 450px; width: 100%">
+                    <div class="w-100 d-flex justify-content-between align-items-center" style="height: fit-content !important;">
+                        <figure id="bank-identifier">
+                            <!-- <img src="svg/icons/anz.svg" height="32" alt="ANZ Bank Logo"> -->
+                        </figure>
+                        <figure id="industry-identfier">
+                            <!-- <img src="svg/icons/visa.svg" height="24" alt="Card Network Icon"> -->
+                        </figure>
+                    </div>
+                    <div class="w-100 mt-10 text-body">
+                        <span class="text-body text-white fw-bold">Card Number</span>
+                        <div>
+                            <input
+                                type="text"
+                                oninput="moveToNext(this, 'card-holder')"
+                                id="card-number"
+                                class="p-0 border-0 bg-transparent me-1 outline-none text-body"
+                                maxlength="19"
+                                placeholder="0000 0000 0000 0000"
+                            >
+                        </div>
+                    </div>
+                    <div class="w-100 d-flex justify-content-between card-details mt-3 mb-3">
+                        <div class="d-flex flex-column">
+                            <span class=" text-body text-white fw-bold">Card Holder</span>
+                            <input
+                                type="text"
+                                id="card-holder"
+                                class="p-0 border-0 bg-transparent me-2 outline-none text-body"
+                                title="Client Name"
+                                placeholder="John Doe"
+                                style="width: 160px;"
+                            >
+                        </div>
+                        <div class="d-flex flex-row">
+                            <div class="d-flex flex-column me-3">
+                                <span class=" text-white text-body fw-bold">Expired</span>
+                                <div class="d-inline-flex justify-content-between text-body">
+                                    <input
+                                        type="text"
+                                        id="card-expiry-month"
+                                        class="p-0 border-0 bg-transparent outline-none text-body"
+                                        maxlength="2"
+                                        pattern="\d{2}"
+                                        title="2 digits number"
+                                        oninput="moveToNext(this, 'card-expiry-year')"
+                                        placeholder="00"
+                                        style="width: 18px;"
+                                    >
+                                    /
+                                    <input
+                                        type="text"
+                                        id="card-expiry-year"
+                                        class="p-0 border-0 bg-transparent me-2 outline-none text-body"
+                                        maxlength="2"
+                                        pattern="\d{2}"
+                                        oninput="moveToNext(this, 'card-cvv')"
+                                        placeholder="00"
+                                        style="width: 18px;"
+                                    >
+                                </div>
+                            </div>
+                            <div class="d-flex flex-column">
+                                <span class=" text-white text-body fw-bold">CVV</span>
+                                <input
+                                    type="text"
+                                    id="card-cvv"
+                                    class="p-0 border-0 bg-transparent me-2 outline-none text-body"
+                                    maxlength="3"
+                                    pattern="\d{3}"
+                                    title="3 digits number"
+                                    placeholder="000"
+                                    style="width: 36px;"
+                                >
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <button class="w-100 px-3 py-2 rounded-3 text-body text-primary border-primary bg-white">CHECK OUT</button>
+            </form>
+        </aside>
+    </section>
+</section>
