@@ -11,15 +11,15 @@ document.addEventListener("DOMContentLoaded", () => {
     const bankIdentifier = document.getElementById("bank-identifier");
 
     const cardNetworkImages = {
-        "3": "../assets/media/svg/personal/amex.svg",
-        "4": "../assets/media/svg/personal/visa.svg",
-        "5": "../assets/media/svg/personal/mastercard.svg",
-        "2": "../assets/media/svg/personal/mastercard.svg"
+        "3": "svg/icons/amex.svg",
+        "4": "svg/icons/visa.svg",
+        "5": "svg/icons/mastercard.svg",
+        "2": "svg/icons/mastercard.svg"
     };
 
     // Load BINs from JSON file
     let bankIINs = {};
-    fetch('../assets/bank-bin.json')
+    fetch('/api/bank-bin')
         .then(response => response.json())
         .then(data => {
             bankIINs = data;
@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const updateCardNetworkImage = (value) => {
         const firstDigit = value.charAt(0);
-        const imagePath = cardNetworkImages[firstDigit] || "../assets/media/svg/personal/visa.svg";
+        const imagePath = cardNetworkImages[firstDigit] || "svg/icons/visa.svg";
         industryIdentifier.innerHTML = `<img src="${imagePath}" height="24" alt="Card Network Icon">`;
     };
 
@@ -51,12 +51,12 @@ document.addEventListener("DOMContentLoaded", () => {
         for (const [bank, iins] of Object.entries(bankIINs)) {
             if (iins.includes(firstSixDigits)) {
                 const bankName = bank.split(' ')[0].toLowerCase();
-                bankIdentifier.innerHTML = `<img src="../assets/media/svg/bank-logos/${bankName}.svg" height="32" alt="${bank} Logo">`;
+                bankIdentifier.innerHTML = `<img src="svg/bank-logos/${bankName}.svg" height="32" alt="${bank} Logo">`;
                 return;
             }
         }
         // Default image if no match found
-        // bankIdentifier.innerHTML = `<img src="/assets/media/svg/personal/anz.svg" height="32" alt="Default Bank Logo">`;
+        // bankIdentifier.innerHTML = `<img src="svg/bank-logos/anz.svg" height="32" alt="Default Bank Logo">`;
     };
 
     input.addEventListener("input", () => {

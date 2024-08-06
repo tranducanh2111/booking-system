@@ -1,4 +1,6 @@
 // popup_loader.js
+import { loadContent } from './page_loader.js';
+
 async function setupPopup() {
     try {
         // Wait for the popup window content loaded completely
@@ -9,6 +11,7 @@ async function setupPopup() {
         const popup = document.getElementById('popup_choose_client_type');
         const cancelBtn = document.getElementById('cancelBtn');
         const existingClientBtn = document.getElementById('existingClientBtn');
+        const GuestBtn = document.getElementById('GuestBtn');
 
         // Open the popup for the index.html page
         if (clientFormButton) {
@@ -30,6 +33,13 @@ async function setupPopup() {
         if (existingClientBtn) {
             existingClientBtn.addEventListener('click', () => {
                 loadContent('search_client');
+            });
+        }
+
+        // Redirect users to the search_service.html page for old clients
+        if (GuestBtn) {
+            GuestBtn.addEventListener('click', () => {
+                loadContent('select_service');
             });
         }
     } catch (error) {
