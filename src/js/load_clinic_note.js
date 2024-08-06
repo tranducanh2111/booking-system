@@ -1,4 +1,5 @@
 function loadClinicNotes() {
+  console.log("Clinic Note Loaded")
     fetch('/api/clinic-notes')
       .then(response => response.json())
       .then(data => {
@@ -22,5 +23,5 @@ function loadClinicNotes() {
       .catch(error => console.error('Error loading clinic notes:', error));
   }
   
-  // Call this function when the page loads
-  document.addEventListener('DOMContentLoaded', loadClinicNotes);
+// Call this function when the page loads
+document.addEventListener('DOMContentLoaded', loadClinicNotes);

@@ -5,6 +5,17 @@ export function loadContent(page) {
         .then(response => response.text())
         .then(html => {
             contentDiv.innerHTML = html;
+
+            // After loading the HTML, check if it's the select_service page
+            if (page === 'select_service') {
+                // Load and initialize the select_service script
+                import('./select_service.js')
+                    .then(module => {
+                        module.initSelectService();
+                        module.initializeServiceSelection();
+                    })
+                    .catch(error => console.error('Error loading select_service.js:', error));
+            }
         })
         .catch(() => {
             contentDiv.innerHTML = '<h2>404</h2><p>Page not found.</p>';

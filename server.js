@@ -1,3 +1,4 @@
+// server.js
 const express = require('express');
 const path = require('path');
 const fs = require('fs');
@@ -39,11 +40,22 @@ app.get('/components/:component', (req, res) => {
 app.post('/cancel_appointment', (req, res) => {
   // Here you would typically process the cancellation
   // For now, we'll just send a success response
-  res.json({ success: true });
+  res.json();
 })
 
+// Handle request for loading the clinic notes)
 app.get('/api/clinic-notes', (req, res) => {
   res.sendFile(path.join(__dirname, 'data/clinic-notes.json'));
+});
+
+// Handle request for loading the service data (services, available date and time)
+app.get('/api/service-list', (req, res) => {
+  res.sendFile(path.join(__dirname, 'data/service-list.json'));
+});
+
+// Handle request for loading the bank BIN
+app.get('/api/bank-bin', (req, res) => {
+  res.sendFile(path.join(__dirname, 'data/bank-bin.json'));
 });
 
 app.listen(port, () => {

@@ -1,8 +1,53 @@
+<!-- select_service.html -->
+
 <!-- Page Body -->
 <div class="max-w-body w-100 mx-auto d-flex flex-column justify-content-start gap-10 px-4 py-10">
     <h3 class="text-h3 text-gray-400">Welcome, we hope you are doing well!</h3>
     <!-- Form: Retrieve Client Detail -->
     <form action="/" name="Client Detail Form">
+        <!-- Choose Service -->
+        <section class="service-option d-flex flex-column flex-md-row gap-10 mb-10">
+            <h2 class="text-h2" style="width: fit-content;">Select a service</h2>
+            <select name="service" id="service" class="flex-grow-1 text-body py-3 px-3 rounded-3 border-2" style="height: 41px;">
+                <option value="" class="text-body" disabled selected hidden>Select a service</option>
+                <!-- Clinic Service will be append in here -->
+            </select>
+        </section>
+        <!-- Book Service Day -->
+        <section class="service-time mt-10 mb-20">
+            <div class="d-grid gap-3 mb-10" style="grid-template-columns: 84px auto 84px;">
+                <!-- Previous Day Button -->
+                <button id="previous-day" type="button" class="btn d-flex align-items-center justify-content-center text-primary border border-primary px-3 py-2" style="width: 84px;">
+                    <img src="svg/icons/left-arrow.svg" alt="Left Arrow" class="me-1">
+                    Before
+                </button>
+                <!-- Day Selection Container -->
+                <div id="day-selection" class="hide-scrollbar d-inline-flex overflow-x-auto gap-3"></div>
+                <!-- Next Day Button -->
+                <button id="next-day" type="button" class="btn d-flex align-items-center justify-content-center text-primary border border-primary px-3 py-2" style="width: 84px;">
+                    After
+                    <img src="svg/icons/right-arrow.svg" alt="Left Arrow" class="ms-1">
+                </button>
+            </div>
+            <!-- Book Service Time -->
+            <section class="rounded-3 bg-primary shadow-md p-5 d-flex flex-column flex-md-row justify-content-between gap-5">
+                <!-- Choosen Date -->
+                <span class="text-h3 fw-bold d-flex align-items-center justify-content-md-center gap-2">
+                    <img src="svg/icons/calendar.svg" alt="Calendar Icon">
+                    <span id="selected-day" class="text-white"></span>
+                </span>
+                <!-- Time Selection -->
+                <div class="appointment-time-container d-inline-flex flex-column flex-md-row align-items-md-center gap-6">
+                    <div class="d-inline-flex flex-column flex-md-row align-items-md-center gap-3">
+                        <p class="fw-bold text-body text-white">Session Time</p>
+                        <select name="appointment-time" id="appointment-time" class="flex-grow-1 text-body py-3 px-3 rounded-3 border-2" style="height: 41px;">
+                            <option value="" class="text-body" disabled selected hidden>Appointment Time</option>
+                            <!-- Available Time will be append in here -->
+                        </select>
+                    </div>
+                </div>
+            </section>
+        </section>
         <div class="row">
             <!-- BEGIN: Client Detail -->
             <div class="client-detail col-lg col-12">
@@ -42,8 +87,14 @@
             <div class="patient-detail col-lg col-12">
                 <div class="d-flex justify-content-between align-items-center mb-10">
                     <h2 class="text-h2">Patient Detail</h2>
-                    <select name="current-patient" id="current-patient" class="text-body py-2 px-3 rounded-3 border-2" style="height: 38px; width: 160px">
-                        <option value="" class="text-body" disabled></option>
+                    <select
+                        name="current-patient"
+                        id="current-patient"
+                        class="text-body py-2 px-3 rounded-3 border-2"
+                        style="height: 38px; width: 160px"
+                        aria-placeholder=""
+                    >
+                        <option value="" class="text-body" disabled selected hidden>Existed Patients</option>
                         <option value="Male" class="text-body">Abby</option>
                         <option value="Female" class="text-body">Chow Chow</option>
                     </select>
@@ -62,8 +113,8 @@
                     <!-- Patient Gender -->
                     <div class="col-4 d-flex flex-column gap-2">
                         <label for="gender" class="text-body">Gender</label>
-                        <select name="gender" id="gender" class="text-body py-3 px-3 rounded-3 border-2" style="height: 41px;">
-                            <option value="" class="text-body" disabled></option>
+                        <select name="gender" id="patient-gender" class="text-body py-3 px-3 rounded-3 border-2" style="height: 41px;">
+                            <option value="" class="text-body" disabled selected hidden>Patient Gender</option>
                             <option value="Male" class="text-body">Male</option>
                             <option value="Female" class="text-body">Female</option>
                             <option value="Unknown" class="text-body">Unknown</option>
@@ -74,84 +125,26 @@
                     <!-- Breed -->
                     <div class="col-sm-6 d-flex flex-column gap-2">
                         <label for="breed" class="text-body">Breed</label>
-                        <select name="breed" id="breed" class="text-body py-3 px-3 rounded-3 border-2" style="height: 41px;">
-                            <option value="" class="text-body" disabled></option>
+                        <select name="breed" id="patient-breed" class="text-body py-3 px-3 rounded-3 border-2" style="height: 41px;">
+                            <option value="" class="text-body" disabled selected hidden>Patient Breed</option>
+                            <option value="Test Breed" class="text-body">Test Breed</option>
                         </select>
                     </div>
                     <!-- Species -->
                     <div class="col-sm-6 d-flex flex-column gap-2">
                         <label for="species" class="text-body">Species</label>
-                        <select name="species" id="species" class="text-body py-3 px-3 rounded-3 border-2" style="height: 41px;">
-                            <option value="" class="text-body" disabled></option>
+                        <select name="species" id="patient-species" class="text-body py-3 px-3 rounded-3 border-2" style="height: 41px;">
+                            <option value="" class="text-body" disabled selected hidden>Patient Species</option>
+                            <option value="Test Species" class="text-body">Test Species</option>
                         </select>
                     </div>
                 </div>
             </div>
             <!-- END: Patient Detail -->
         </div>
-        <!-- Choose Service -->
-        <section class="service-option d-flex flex-column flex-md-row gap-10 mt-10">
-            <h2 class="text-h2" style="width: fit-content;">Select a service</h2>
-            <select name="service" id="service" class="flex-grow-1 text-body py-3 px-3 rounded-3 border-2" style="height: 41px;">
-                <option value=""></option>
-                <option value="Consult" class="text-body">Consult</option>
-                <option value="Surgery" class="text-body">Surgery</option>
-                <option value="Grooming" class="text-body">Grooming</option>
-                <option value="Vaccination" class="text-body">Vaccination</option>
-            </select>
-        </section>
-        <!-- Book Service Day -->
-        <section class="service-time mt-10">
-            <div class="d-grid gap-3 mb-10" style="grid-template-columns: 84px auto 84px;">
-                <!-- Previous Day Button -->
-                <button class="btn d-flex align-items-center justify-content-center text-primary border border-primary px-3 py-2" style="width: 84px;">
-                    <img src="../assets/media/svg/personal/left-arrow.svg" alt="Left Arrow" class="me-1">
-                    Before
-                </button>
-                <!-- Day Selection Container -->
-                <div class="hide-scrollbar d-inline-flex overflow-x-auto gap-3">
-                    <button class="btn d-flex align-items-center justify-content-center bg-primary text-white border border-primary px-10 py-0">Today</button>
-                    <button class="btn d-flex align-items-center justify-content-center border border-black px-10 py-2 opacity-50">18/07/2024</button>
-                    <button class="btn d-flex align-items-center justify-content-center border border-black px-10 py-2 opacity-50">19/07/2024</button>
-                    <button class="btn d-flex align-items-center justify-content-center border border-black px-10 py-2 opacity-50">20/07/2024</button>
-                    <button class="btn d-flex align-items-center justify-content-center border border-black px-10 py-2 opacity-50">21/07/2024</button>
-                    <button class="btn d-flex align-items-center justify-content-center border border-black px-10 py-2 opacity-50">22/07/2024</button>
-                    <button class="btn d-flex align-items-center justify-content-center border border-black px-10 py-2 opacity-50">23/07/2024</button>
-                </div>
-                <!-- Next Day Button -->
-                <button class="btn d-flex align-items-center justify-content-center text-primary border border-primary px-3 py-2" style="width: 84px;">
-                    After
-                    <img src="../assets/media/svg/personal/right-arrow.svg" alt="Left Arrow" class="ms-1">
-                </button>
-            </div>
-            <!-- Book Service Time -->
-            <section class="rounded-3 bg-white shadow-md p-5 d-flex flex-column flex-md-row justify-content-between gap-5">
-                <!-- Choosen Date -->
-                <span class="text-h3 fw-bold d-flex align-items-center justify-content-md-center gap-2">
-                    <img src="assets/media/svg/personal/calendar.svg" alt="Calendar Icon">
-                    17/07/2024
-                </span>
-                <!-- Time Selection -->
-                <div class="appointment-time-container d-inline-flex flex-column flex-md-row align-items-md-center gap-6">
-                    <div class="d-inline-flex flex-column flex-md-row align-items-md-center gap-3">
-                        <p class="fw-bold text-body">Session Time</p>
-                        <select name="appointment-time" id="appointment-time" class="flex-grow-1 text-body py-3 px-3 rounded-3 border-2" style="height: 41px;">
-                            <option value="9:15 AM - 9:30 AM" class="text-body">9:15 AM - 9:30 AM</option>
-                            <option value="9:15 AM - 9:30 AM" class="text-body">9:15 AM - 9:30 AM</option>
-                            <option value="9:15 AM - 9:30 AM" class="text-body">9:15 AM - 9:30 AM</option>
-                            <option value="9:15 AM - 9:30 AM" class="text-body">9:15 AM - 9:30 AM</option>
-                            <option value="9:15 AM - 9:30 AM" class="text-body">9:15 AM - 9:30 AM</option>
-                            <option value="9:15 AM - 9:30 AM" class="text-body">9:15 AM - 9:30 AM</option>
-                            <option value="9:15 AM - 9:30 AM" class="text-body">9:15 AM - 9:30 AM</option>
-                        </select>
-                    </div>
-                    <!-- Check Out Button -->
-                    <button type="button" class="btn d-flex align-items-center justify-content-center text-white bg-primary border border-primary px-3 py-2">
-                        <img src="../assets/media/svg/personal/checkout.svg" alt="Check Out Icon" class="me-1" width="24" height="24">
-                        Check Out
-                    </button>
-                </div>
-            </section>
-        </section>
+        <button id="request-appointment-booking" type="submit" class="w-100 btn align-items-center justify-content-center text-h3 text-white bg-primary border border-primary px-3 py-2">
+            <img src="svg/icons/checkout.svg" alt="Check Out Icon" class="me-3" width="32" height="32">
+            Check Out
+        </button>
     </form>
 </div>
