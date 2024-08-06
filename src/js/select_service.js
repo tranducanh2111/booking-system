@@ -1,4 +1,6 @@
 // select_service.js
+import { loadContent } from "./page_loader.js";
+
 const clientDetailSection = document.querySelector('.client-detail');
 const patientDetailSection = document.querySelector('.patient-detail');
 
@@ -202,3 +204,32 @@ export function initializeServiceSelection() {
         afterButton.addEventListener('click', goToNextDay);
     }
 }
+
+// Handle form submission for an appointment booking
+export function proceedAppointmentRequest() {
+    const form = document.forms['Proceed Appointment Request'];
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+
+    fetch('/proceed-appointment-request', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                loadContent('checkout');
+            } else {
+                alert('Error booking an appointment. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('An error occurred. Please try again.');
+        });
+}
+
+window.proceedAppointmentRequest = proceedAppointmentRequest;
