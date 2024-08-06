@@ -1,6 +1,4 @@
 // select_service.js
-console.log("select_service.js loaded");
-
 const clientDetailSection = document.querySelector('.client-detail');
 const patientDetailSection = document.querySelector('.patient-detail');
 
@@ -42,10 +40,6 @@ export function initSelectService() {
         });
     }
 
-    // Add event listeners to all input fields
-    const clientInputs = clientDetailSection.querySelectorAll('input, select');
-    const patientInputs = patientDetailSection.querySelectorAll('input, select');
-
     // Add event listeners to specific input fields
     requiredFields.forEach(id => {
         const input = document.getElementById(id);
@@ -56,7 +50,6 @@ export function initSelectService() {
 }
 
 function checkAllFieldsFilled() {
-    
     return requiredFields.every(id => {
         const input = document.getElementById(id);
         return input && input.value.trim() !== '';
@@ -72,7 +65,6 @@ function toggleBookingButton() {
 
 // Load service options, available date and time from json file
 export function initializeServiceSelection() {
-    console.log("select service function event loaded");
     const serviceSelect = document.getElementById('service');
     const daySelectionContainer = document.getElementById('day-selection');
     const appointmentTimeSelect = document.getElementById('appointment-time');
@@ -89,7 +81,6 @@ export function initializeServiceSelection() {
     fetch('/api/service-list')
         .then(response => response.json())
         .then(data => {
-            console.log('Data:', data);
             servicesData = data.services;
             populateServiceOptions();
         })
@@ -97,7 +88,6 @@ export function initializeServiceSelection() {
 
     // Populate service options
     function populateServiceOptions() {
-        console.log('Populating service options with:', servicesData);
         servicesData.forEach(service => {
             const option = document.createElement('option');
             option.value = service.name;
@@ -106,6 +96,7 @@ export function initializeServiceSelection() {
         });
     }
 
+    // Populate available days
     function populateDayOptions(serviceName) {
         const service = servicesData.find(s => s.name === serviceName);
         if (!service) return;
@@ -133,6 +124,7 @@ export function initializeServiceSelection() {
         }
     }
 
+    // Select day
     function selectDay(day) {
         selectedDay = day;
         selectedDayElement.textContent = day;
