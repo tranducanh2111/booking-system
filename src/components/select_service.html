@@ -30,16 +30,16 @@
                 </button>
             </div>
             <!-- Book Service Time -->
-            <section class="rounded-3 bg-primary shadow-md p-5 d-flex flex-column flex-md-row justify-content-between gap-5">
+            <section class="rounded-3 bg-white shadow p-5 d-flex flex-column flex-md-row justify-content-between gap-5">
                 <!-- Choosen Date -->
                 <span class="text-h3 fw-bold d-flex align-items-center justify-content-md-center gap-2">
                     <img src="svg/icons/calendar.svg" alt="Calendar Icon">
-                    <span id="selected-day" class="text-white"></span>
+                    <span id="selected-day"></span>
                 </span>
                 <!-- Time Selection -->
                 <div class="appointment-time-container d-inline-flex flex-column flex-md-row align-items-md-center gap-6">
                     <div class="d-inline-flex flex-column flex-md-row align-items-md-center gap-3">
-                        <p class="fw-bold text-body text-white">Session Time</p>
+                        <p class="fw-bold text-body">Session Time</p>
                         <select name="appointment-time" id="appointment-time" class="flex-grow-1 text-body py-3 px-3 rounded-3 border-2" style="height: 41px; width: 210px">
                             <option value="" class="text-body" disabled selected hidden>Appointment Time</option>
                             <!-- Available Time will be append in here -->
@@ -107,8 +107,8 @@
                     </div>
                     <!-- Patient Date of Birth -->
                     <div class="col-4 d-flex flex-column gap-2">
-                        <label for="dob" class="text-body">Date of Birth</label>
-                        <input type="date" id="dob" name="dob" class="text-body py-2 px-3 rounded-3">
+                        <label for="patient-dob" class="text-body">Date of Birth</label>
+                        <input type="date" id="patient-dob" name="patient-dob" class="text-body py-2 px-3 rounded-3">
                     </div>
                     <!-- Patient Gender -->
                     <div class="col-4 d-flex flex-column gap-2">

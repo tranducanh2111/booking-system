@@ -8,20 +8,20 @@
             <article class="w-100 p-8 bg-white shadow-sm rounded-3">
                 <p class="text-body fw-bold text-primary mb-2">Client Detail</p>
                 <div class="d-flex justify-content-between align-items-center mb-8">
-                    <h3 class="text-h3 line-clamp-1">Mr. Aaron Tran</h3>
+                    <h3 id="client-title-name" class="text-h3 line-clamp-1"></h3>
                     <span class="d-inline-flex align-items-center" style="width: max-content;">
                         <img src="svg/icons/birthday.svg" alt="Birthday">
-                        <p class="text-body mb-0 ms-2">21/11/2003</p>
+                        <p id="client-dob" class="text-body mb-0 ms-2"></p>
                     </span>
                 </div>
                 <div class="d-block">
                     <span class="w-100 d-inline-flex align-items-center" style="width: max-content;">
                         <img src="svg/icons/phone.svg" alt="Client Hotline" type="image/svg+xml" width="20" height="20">
-                        <p class="text-body mb-0 ms-2" id="client-mobile">0466223845</p>
+                        <p class="text-body mb-0 ms-2" id="client-mobile"></p>
                     </span>
                     <span class="w-100 d-inline-flex align-items-center" style="width: max-content;">
                         <img src="svg/icons/email.svg" alt="Client Email" type="image/svg+xml" width="20" height="20">
-                        <p class="text-body mb-0 ms-2 line-clamp-1" id="client-email">tranducanh@sace.edu.au</p>
+                        <p class="text-body mb-0 ms-2 line-clamp-1" id="client-email"></p>
                     </span>
                 </div>
             </article>
@@ -29,20 +29,20 @@
             <article class="p-8 bg-white shadow-sm rounded-3">
                 <p class="text-body fw-bold text-primary mb-2">Patient Detail</p>
                 <div class="d-flex justify-content-between align-items-center mb-8">
-                    <h3 class="text-h3 line-clamp-1">Abby</h3>
+                    <h3 id="confirm-patient-name" class="text-h3 line-clamp-1"></h3>
                     <span class="d-inline-flex align-items-center" style="width: max-content;">
                         <img src="svg/icons/birthday.svg" alt="Birthday">
-                        <p class="text-body mb-0 ms-2">21/10/2021</p>
+                        <p id="confirm-patient-dob" class="text-body mb-0 ms-2"></p>
                     </span>
                 </div>
                 <div class="d-block">
                     <span class="w-100 d-inline-flex align-items-center" style="width: max-content;">
-                        <img src="svg/icons/species.svg" alt="Birthday">
-                        <p class="text-body mb-0 ms-2">Canine</p>
+                        <img src="svg/icons/species.svg" alt="Species Icons">
+                        <p id="confirm-patient-species" class="text-body mb-0 ms-2"></p>
                     </span>
                     <span class="w-100 d-inline-flex align-items-center" style="width: max-content;">
-                        <img src="svg/icons/breed.svg" alt="Birthday">
-                        <p class="text-body mb-0 ms-2 line-clamp-1">Basset - Fauve de Bretagne (Basset - Fawn Brittany)</p>
+                        <img src="svg/icons/breed.svg" alt="Breed Icons">
+                        <p id="confirm-patient-breed" class="text-body mb-0 ms-2 line-clamp-1"></p>
                     </span>
                 </div>
             </article>
@@ -50,18 +50,18 @@
             <article class="w-100 p-8 bg-white shadow-sm rounded-3">
                 <p class="text-body fw-bold text-primary mb-2">Appointment Detail</p>
                 <div class="d-flex justify-content-between align-items-center mb-8">
-                    <h3 class="text-h3 line-clamp-1">Grooming</h3>
+                    <h3 id="confirm-service" class="text-h3 line-clamp-1"></h3>
                 </div>
                 <div class="d-block">
                     <!-- Appointment Date -->
                     <span class="w-100 d-inline-flex align-items-start" style="width: max-content;">
                         <img src="svg/icons/calendar.svg" alt="Note" width="24" height="24">
-                        <p class="text-body mb-0 ms-2">21/08/2024</p>
+                        <p id="confirm-service-date" class="text-body mb-0 ms-2"></p>
                     </span>
                     <!-- Appointment Time -->
                     <span class="w-100 d-inline-flex align-items-center" style="width: max-content;">
                         <img src="svg/icons/clock.svg" alt="Appointment Time" width="24" height="20">
-                        <p class="text-body mb-0 ms-2">9:00 AM - 9:15 PM</p>
+                        <p id="confirm-service-time" class="text-body mb-0 ms-2"></p>
                     </span>
                 </div>
             </article>
@@ -72,17 +72,13 @@
             <article class="p-8 bg-white shadow-sm rounded-3" style="height: fit-content;">
                 <p class="text-body fw-bold text-primary mb-2">Payment Detail</p>
                 <span class="d-flex justify-content-between align-items-center mb-2">
-                    <p class="text-body line-clamp-1">Grooming</p>
-                    <p class="text-body mb-0 ms-2">$210.00</p>
-                </span>
-                <span class="d-flex justify-content-between align-items-center mb-2">
-                    <p class="text-body line-clamp-1">GST</p>
-                    <p class="text-body mb-0 ms-2">$21.00</p>
+                    <p id="service-item-1" class="text-body line-clamp-1"></p>
+                    <p id="service-fee" class="text-body mb-0 ms-2">$210.00</p>
                 </span>
                 <hr>
                 <span class="d-flex justify-content-between align-items-center mb-2 fw-bold">
                     <p class="text-body line-clamp-1">Total</p>
-                    <p class="text-body mb-0 ms-2">$231.00</p>
+                    <p id="total-fee" class="text-body mb-0 ms-2">$231.00</p>
                 </span>
             </article>
             <!-- Credit Card -->

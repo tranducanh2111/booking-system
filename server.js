@@ -53,6 +53,10 @@ app.post('/proceed-appointment-request', (req, res) => {
   res.json({ success: true });
 })
 
+app.get('/checkout', (req, res) => {
+  res.sendFile(path.join(__dirname, 'src', 'components', 'checkout.html'));
+});
+
 // Handle request for loading the clinic notes)
 app.get('/api/clinic-notes', (req, res) => {
   res.sendFile(path.join(__dirname, 'data/clinic-notes.json'));
