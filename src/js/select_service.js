@@ -211,6 +211,16 @@ export function proceedAppointmentRequest() {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
 
+    data['patient-breed'] = document.getElementById('patient-breed').value;
+    data['patient-species'] = document.getElementById('patient-species').value;
+    data['patient-dob'] = document.getElementById('patient-dob').value;
+    data['service'] = document.getElementById('service').value;
+    data['appointment-day'] = document.getElementById('selected-day').textContent;
+    data['appointment-time'] = document.getElementById('appointment-time').value;
+
+    // Store form data in sessionStorage
+    sessionStorage.setItem('appointmentBookingData', JSON.stringify(data));
+
     fetch('/proceed-appointment-request', {
             method: 'POST',
             headers: {

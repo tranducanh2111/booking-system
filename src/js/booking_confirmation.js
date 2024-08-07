@@ -45,7 +45,7 @@ export function initializeCheckoutPage() {
     function updateCardNetworkImage(value) {
         const firstDigit = value.charAt(0);
         const imagePath = cardNetworkImages[firstDigit] || "svg/icons/visa.svg";
-        industryIdentifier.innerHTML = `<img src="${imagePath}" alt="Card Network">`;
+        industryIdentifier.innerHTML = `<img src="${imagePath}" alt="Card Network" height="32">`;
     }
 
     function updateBankImage(value) {
@@ -60,11 +60,34 @@ export function initializeCheckoutPage() {
         // Default image if no match found
         bankIdentifier.innerHTML = `<img src="svg/bank-logos/commonwealth-bank.svg" alt="commonwealth-bank">`;
     }
+
+    populateAppointmentData();
 }
 
 // Define moveToNext function if it's required
 export function moveToNext(currentInput, nextInputId) {
     if (currentInput.value.length === currentInput.maxLength) {
         document.getElementById(nextInputId).focus();
+    }
+}
+
+function populateAppointmentData() {
+    const appointmentBookingData = JSON.parse(sessionStorage.getItem('appointmentBookingData'));
+    if (appointmentBookingData) {
+        document.getElementById('client-title-name').textContent = `${appointmentBookingData.title} ${appointmentBookingData.fname} ${appointmentBookingData.lname}`;
+        document.getElementById('client-email').textContent = appointmentBookingData.email;
+        document.getElementById('client-mobile').textContent = appointmentBookingData.mobile;
+        document.getElementById('confirm-patient-name').textContent = appointmentBookingData['patient-name'];
+        document.getElementById('confirm-patient-species').textContent = appointmentBookingData['patient-species'];
+        document.getElementById('confirm-patient-breed').textContent = appointmentBookingData['patient-breed'];
+        document.getElementById('confirm-patient-dob').textContent = appointmentBookingData['patient-dob'];
+        document.getElementById('confirm-service').textContent = appointmentBookingData['service'];
+        document.getElementById('confirm-service-date').textContent = appointmentBookingData['appointment-day'];
+        document.getElementById('confirm-service-time').textContent = appointmentBookingData['appointment-time'];
+
+        document.getElementById('service-item-1').textContent = appointmentBookingData['service'];
+        
+        // You may need to adjust these IDs based on your actual HTML structure
+        sessionStorage.removeItem('appointmentBookingData');
     }
 }
