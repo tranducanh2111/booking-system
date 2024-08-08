@@ -62,6 +62,16 @@ export function initializeCheckoutPage() {
     }
 
     populateAppointmentData();
+
+    document.getElementById("card-number").addEventListener("input", function() {
+        moveToNext(this, 'card-holder');
+    });
+    document.getElementById("card-expiry-month").addEventListener("input", function() {
+        moveToNext(this, 'card-expiry-year');
+    });
+    document.getElementById("card-expiry-year").addEventListener("input", function() {
+        moveToNext(this, 'card-cvv');
+    });
 }
 
 // Define moveToNext function if it's required
@@ -91,3 +101,5 @@ function populateAppointmentData() {
         sessionStorage.removeItem('appointmentBookingData');
     }
 }
+
+window.moveToNext = moveToNext;
