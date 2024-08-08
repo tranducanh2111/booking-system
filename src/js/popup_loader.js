@@ -1,11 +1,7 @@
 // popup_loader.js
 import { loadContent } from './page_loader.js';
 
-async function setupPopup() {
-    try {
-        // Wait for the popup window content loaded completely
-        await loadPopupContent();
-
+export function setupPopup() {
         const clientFormButton = document.getElementById('open_client_type_popup');
         const overlay = document.getElementById('overlay');
         const popup = document.getElementById('popup_choose_client_type');
@@ -42,19 +38,6 @@ async function setupPopup() {
                 loadContent('select_service');
             });
         }
-    } catch (error) {
-        console.error('Error setting up popup:', error);
-    }
-}
-
-// Function that simulates an async operation, e.g., fetching data or loading content
-async function loadPopupContent() {
-    // Simulate async operation
-    return new Promise((resolve) => {
-        setTimeout(() => {
-            resolve();
-        }, 1000); // 1-second delay
-    });
 }
 
 // Call the async function when the DOM content is loaded

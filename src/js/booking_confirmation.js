@@ -1,5 +1,3 @@
-console.log("loaded booking_confirmation.js");
-
 export function initializeCheckoutPage() {
     const input = document.getElementById("card-number");
     const industryIdentifier = document.getElementById("industry-identfier");
@@ -90,7 +88,7 @@ function populateAppointmentData() {
         document.getElementById('confirm-patient-name').textContent = appointmentBookingData['patient-name'];
         document.getElementById('confirm-patient-species').textContent = appointmentBookingData['patient-species'];
         document.getElementById('confirm-patient-breed').textContent = appointmentBookingData['patient-breed'];
-        document.getElementById('confirm-patient-dob').textContent = appointmentBookingData['patient-dob'];
+        document.getElementById('confirm-patient-dob').textContent = formatDate(appointmentBookingData['patient-dob']);
         document.getElementById('confirm-service').textContent = appointmentBookingData['service'];
         document.getElementById('confirm-service-date').textContent = appointmentBookingData['appointment-day'];
         document.getElementById('confirm-service-time').textContent = appointmentBookingData['appointment-time'];
@@ -100,6 +98,14 @@ function populateAppointmentData() {
         // You may need to adjust these IDs based on your actual HTML structure
         sessionStorage.removeItem('appointmentBookingData');
     }
+}
+
+function formatDate(dateString) {
+    const date = new Date(dateString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
 }
 
 window.moveToNext = moveToNext;

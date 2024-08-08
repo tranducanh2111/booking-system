@@ -1,4 +1,4 @@
-function loadClinicNotes() {
+export function loadClinicNotes() {
   console.log("Clinic Note Loaded")
     fetch('/api/clinic-notes')
       .then(response => response.json())

@@ -6,7 +6,33 @@ export function loadContent(page) {
         .then(html => {
             contentDiv.innerHTML = html;
 
-            // After loading the HTML, check if it's the select_service page
+            // Load required script for the homepage page
+            if (page === 'homepage') {
+                // Load and initialize the popup_loader script
+                import('./popup_loader.js')
+                    .then(module => {
+                        module.setupPopup();
+                    })
+                    .catch(error => console.error('Error loading popup_loader.js:', error));
+                // Load and initialize the clinic_note script
+                import('./load_clinic_note.js')
+                    .then(module => {
+                        module.loadClinicNotes();
+                    })
+                    .catch(error => console.error('Error loading load_clinic_note.js:', error));
+            }
+
+            // Load required script for the cancel page
+            if (page === 'cancel') {
+                // Load and initialize the cancel_appointment script
+                import('./cancel_appointment.js')
+                    .then(module => {
+                        module.proceedCancellation();
+                    })
+                    .catch(error => console.error('Error loading cancel_appointment.js:', error));
+            }
+
+            // After loading the HTML, check if it's the select_service page to load the required js file
             if (page === 'select_service') {
                 // Load and initialize the select_service script
                 import('./select_service.js')
@@ -19,7 +45,7 @@ export function loadContent(page) {
 
             // Load and initialize the booking_confirmation script if needed
             if (page === 'checkout') {
-                // Load and initialize the select_service script
+                // Load and initialize the booking_confirmation script
                 import('./booking_confirmation.js')
                     .then(module => {
                         module.initializeCheckoutPage();
