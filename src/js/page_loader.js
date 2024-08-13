@@ -1,6 +1,10 @@
 // page_loader.js
 export function loadContent(page) {
     const contentDiv = document.getElementById('content');
+
+    // Store the current page in sessionStorage
+    sessionStorage.setItem('currentPage', page);
+
     fetch(`/components/${page}.html`)
         .then(response => response.text())
         .then(html => {
@@ -60,7 +64,15 @@ export function loadContent(page) {
 
 // Load the default content
 document.addEventListener('DOMContentLoaded', () => {
-    loadContent('homepage');
+    // Check if there is a saved page in sessionStorage
+    const savedPage = sessionStorage.getItem('currentPage');
+
+    if (savedPage) {
+        loadContent(savedPage);
+    } else {
+        // Load the default homepage if no page is saved
+        loadContent('homepage');
+    }
 });
 
 // Expose loadContent function to global scope
