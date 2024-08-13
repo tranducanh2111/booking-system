@@ -82,34 +82,12 @@ export function moveToNext(currentInput, nextInputId) {
 function populateAppointmentData() {
     const appointmentBookingData = JSON.parse(sessionStorage.getItem('appointmentBookingData'));
     if (appointmentBookingData) {
-        document.getElementById('client-title-name').textContent = `${appointmentBookingData.title} ${appointmentBookingData.fname} ${appointmentBookingData.lname}`;
-        document.getElementById('client-email').textContent = appointmentBookingData.email;
-        document.getElementById('client-mobile').textContent = appointmentBookingData.mobile;
-        document.getElementById('confirm-patient-name').textContent = appointmentBookingData['patient-name'];
-        document.getElementById('confirm-patient-species').textContent = appointmentBookingData['patient-species'];
-        document.getElementById('confirm-patient-breed').textContent = appointmentBookingData['patient-breed'];
-        document.getElementById('confirm-patient-dob').textContent = formatDate(appointmentBookingData['patient-dob']);
         document.getElementById('confirm-service').textContent = appointmentBookingData['service'];
         document.getElementById('confirm-service-date').textContent = appointmentBookingData['appointment-day'];
         document.getElementById('confirm-service-time').textContent = appointmentBookingData['appointment-time'];
-
-        document.getElementById('service-item-1').textContent = appointmentBookingData['service'];
         
-        // You may need to adjust these IDs based on your actual HTML structure
+        // Remove session storage for temporary booking data
         sessionStorage.removeItem('appointmentBookingData');
-    }
-}
-
-function formatDate(dateString) {
-    const date = new Date(dateString);
-    if (isNaN(date)) {
-        return "No Birthday";
-    }
-    else {
-        const day = date.getDate().toString().padStart(2, '0');
-        const month = (date.getMonth() + 1).toString().padStart(2, '0');
-        const year = date.getFullYear();
-        return `${day}/${month}/${year}`;
     }
 }
 

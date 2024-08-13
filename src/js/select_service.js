@@ -1,20 +1,12 @@
-// select_service.js
 import { loadContent } from "./page_loader.js";
-
-const clientDetailSection = document.querySelector('.client-detail');
-const patientDetailSection = document.querySelector('.patient-detail');
-
-const requiredFields = ['fname', 'lname', 'email', 'mobile', 'patient-name', 'patient-gender', 'patient-breed', 'patient-species'];
+import { formatDate } from "./common_function.js";
 
 export function initSelectService() {
     const serviceSelect = document.getElementById('service');
     const serviceDay = document.querySelector('.service-time');
-    const serviceTime = document.querySelector('#appointment-time');
 
     // Initially hide service option and service time
     if (serviceDay) serviceDay.style.display = 'none';
-    if (clientDetailSection) clientDetailSection.style.display = 'none';
-    if (patientDetailSection) patientDetailSection.style.display = 'none';
 
     // Initially hide the booking button
     const bookingButton = document.getElementById('request-appointment-booking');
@@ -24,66 +16,39 @@ export function initSelectService() {
 
     // Add event listener to service select
     if (serviceSelect) {
-        serviceSelect.addEventListener('change', function() {
+        serviceSelect.addEventListener('change', function () {
             if (serviceDay) {
                 serviceDay.style.display = this.value ? 'block' : 'none';
             }
         });
     }
-
-    // Add event listener to service time
-    if (serviceTime) {
-        serviceTime.addEventListener('change', function() {
-            if (clientDetailSection && patientDetailSection && serviceTime.value != "") {
-                clientDetailSection.style.display = 'block';
-                patientDetailSection.style.display = 'block';
-                toggleBookingButton();
-            }
-        });
-    }
-
-    // Add event listeners to specific input fields
-    requiredFields.forEach(id => {
-        const input = document.getElementById(id);
-        if (input) {
-            input.addEventListener('input', toggleBookingButton);
-        }
-    });
 }
 
-function checkAllFieldsFilled() {
-    return requiredFields.every(id => {
-        const input = document.getElementById(id);
-        return input && input.value.trim() !== '';
-    });
-}
-
-function toggleBookingButton() {
-    const bookingButton = document.getElementById('request-appointment-booking');
-    if (bookingButton) {
-        bookingButton.style.display = checkAllFieldsFilled() ? 'block' : 'none';
-    }
-}
-
-// Load service options, available date and time from json file
+// Load service options, available date, and time from json file
 export function initializeServiceSelection() {
     const serviceSelect = document.getElementById('service');
     const daySelectionContainer = document.getElementById('day-selection');
-    const appointmentTimeSelect = document.getElementById('appointment-time');
     const selectedDayElement = document.getElementById('selected-day');
     const beforeButton = document.getElementById('previous-day');
     const afterButton = document.getElementById('next-day');
+    const morningSessionContainer = document.getElementById('morning-session');
+    const afternoonSessionContainer = document.getElementById('afternoon-session');
+    const appointmentStaffSelect = document.getElementById('appointment-staff');
+    const appointmentRoomSelect = document.getElementById('appointment-room');
+    const bookingButton = document.getElementById('request-appointment-booking');
 
     let servicesData = [];
     let selectedService = '';
     let selectedDay = '';
     let availableDays = [];
+    let selectedSession = null;
 
     // Fetch data from JSON file
     fetch('/api/service-list')
         .then(response => response.json())
         .then(data => {
             servicesData = data.services;
+            console.log("Services Data:", servicesData); // Debugging line
             populateServiceOptions();
         })
         .catch(error => console.error('Error fetching data:', error));
@@ -101,25 +66,29 @@ export function initializeServiceSelection() {
     // Populate available days
     function populateDayOptions(serviceName) {
         const service = servicesData.find(s => s.name === serviceName);
-        if (!service) return;
-    
-        // Limit to the first 7 days
-        availableDays = Object.keys(service.availableDays).slice(0, 7);
-    
+        if (!service) {
+            console.log(`Service not found: ${serviceName}`); // Debugging line
+            return;
+        }
+
+        availableDays = service.days.map(dayObj => dayObj.date).slice(0, 10); // Extract days
+
+        console.log("Available Days:", availableDays); // Debugging line
+
         daySelectionContainer.innerHTML = '';
         availableDays.forEach(day => {
             const button = document.createElement('button');
             button.type = 'button';
             button.className = 'btn d-flex align-items-center justify-content-center border border-black px-10 py-2 opacity-50';
-            button.textContent = day;
-    
+            button.textContent = formatDate(day);
+
             button.addEventListener('click', () => {
                 selectDay(day);
             });
-    
+
             daySelectionContainer.appendChild(button);
         });
-    
+
         // Auto-select the first day if available
         if (availableDays.length > 0) {
             selectDay(availableDays[0]);
@@ -129,26 +98,18 @@ export function initializeServiceSelection() {
     // Select day
     function selectDay(day) {
         selectedDay = day;
-        selectedDayElement.textContent = day;
-    
-        clientDetailSection.style.display = 'none';
-        patientDetailSection.style.display = 'none';
-        
+        selectedDayElement.textContent = formatDate(day);
+
         // Update button styles
-        const buttons = daySelectionContainer.querySelectorAll('button');
-        buttons.forEach(button => {
-            if (button.textContent === day) {
-                button.classList.remove('border-black', 'opacity-50');
-                button.classList.add('bg-primary', 'text-white', 'border-primary');
-            } else {
-                button.classList.remove('bg-primary', 'text-white', 'border-primary');
-                button.classList.add('border-black', 'opacity-50');
-            }
-        });
-    
+        updateButtonStyles(daySelectionContainer, formatDate(day));
+
         // Only populate time options if we have a selected service
         if (selectedService) {
             populateTimeOptions(selectedService, day);
+        }
+
+        if (bookingButton) {
+            bookingButton.style.display = 'none';
         }
     }
 
@@ -157,13 +118,78 @@ export function initializeServiceSelection() {
         const service = servicesData.find(s => s.name === serviceName);
         if (!service) return;
 
-        const times = service.availableDays[day] || [];
-        appointmentTimeSelect.innerHTML = '<option value="" class="text-body" disabled selected hidden>Appointment Time</option>';
-        times.forEach(time => {
-            const option = document.createElement('option');
-            option.value = time;
-            option.textContent = time;
-            appointmentTimeSelect.appendChild(option);
+        const dayObject = service.days.find(d => d.date === day);
+        if (!dayObject) return;
+
+        const sessions = dayObject.sessions || [];
+
+        // Clear previous sessions
+        morningSessionContainer.innerHTML = '';
+        afternoonSessionContainer.innerHTML = '';
+        appointmentStaffSelect.innerHTML = '<option value="" class="text-body" disabled selected hidden>Appointment Staff</option>';
+        appointmentRoomSelect.innerHTML = '<option value="" class="text-body" disabled selected hidden>Appointment Room</option>';
+
+        sessions.forEach(session => {
+            if (session.available) {
+                const button = document.createElement('button');
+                button.type = 'button';
+                button.className = 'btn session-btn d-flex align-items-center justify-content-center border border-black px-10 py-2 opacity-50';
+                button.textContent = session.time;
+
+                button.addEventListener('click', () => {
+                    selectSession(session, button);
+                });
+
+                const startTime = new Date(`1970-01-01T${session.time.split(' - ')[0]}`);
+
+                if (startTime.getHours() < 12) {
+                    morningSessionContainer.appendChild(button);
+                } else {
+                    afternoonSessionContainer.appendChild(button);
+                }
+            }
+        });
+    }
+
+    // Select session
+    function selectSession(session, button) {
+        selectedSession = session;
+
+        // Clear previous selections and populate staff and room options
+        appointmentStaffSelect.innerHTML = '';
+        appointmentRoomSelect.innerHTML = '';
+
+        const staffOption = document.createElement('option');
+        staffOption.value = session.staff;
+        staffOption.textContent = session.staff;
+        staffOption.selected = true;
+        appointmentStaffSelect.appendChild(staffOption);
+
+        const roomOption = document.createElement('option');
+        roomOption.value = session.location;
+        roomOption.textContent = session.location;
+        roomOption.selected = true;
+        appointmentRoomSelect.appendChild(roomOption);
+
+        updateButtonStyles(morningSessionContainer, session.time);
+        updateButtonStyles(afternoonSessionContainer, session.time);
+        toggleBookingButton();
+    }
+
+    function toggleBookingButton() {
+        bookingButton.style.display = 'block';
+    }
+
+    function updateButtonStyles(container, activeText) {
+        const buttons = container.querySelectorAll('button');
+        buttons.forEach(button => {
+            if (button.textContent === activeText) {
+                button.classList.remove('border-black', 'opacity-50');
+                button.classList.add('bg-primary', 'text-white', 'border-primary');
+            } else {
+                button.classList.remove('bg-primary', 'text-white', 'border-primary');
+                button.classList.add('border-black', 'opacity-50');
+            }
         });
     }
 
@@ -189,11 +215,6 @@ export function initializeServiceSelection() {
         selectedDay = '';
         selectedDayElement.textContent = '';
         populateDayOptions(selectedService);
-        appointmentTimeSelect.innerHTML = '<option value="" class="text-body" disabled selected hidden>Appointment Time</option>';
-    
-        if (selectedService) {
-            populateDayOptions(selectedService);
-        }
     });
 
     // Event listeners for before and after buttons
@@ -211,23 +232,23 @@ export function proceedAppointmentRequest() {
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
 
-    data['patient-breed'] = document.getElementById('patient-breed').value;
-    data['patient-species'] = document.getElementById('patient-species').value;
-    data['patient-dob'] = document.getElementById('patient-dob').value;
     data['service'] = document.getElementById('service').value;
     data['appointment-day'] = document.getElementById('selected-day').textContent;
-    data['appointment-time'] = document.getElementById('appointment-time').value;
+    const selectedSession = document.querySelector('.session-btn.bg-primary');
+    if (selectedSession) {
+        data['appointment-time'] = selectedSession.textContent;
+    }
 
     // Store form data in sessionStorage
     sessionStorage.setItem('appointmentBookingData', JSON.stringify(data));
 
     fetch('/proceed-appointment-request', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(data)
-        })
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+    })
         .then(response => response.json())
         .then(data => {
             if (data.success) {

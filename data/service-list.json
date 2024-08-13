@@ -1,64 +1,2209 @@
 {
   "services": [
     {
-      "name": "Consult",
-      "availableDays": {
-        "18/07/2024": ["9:15 AM - 9:30 AM", "10:00 AM - 10:15 AM"],
-        "19/07/2024": ["11:00 AM - 11:15 AM", "1:00 PM - 1:15 PM"],
-        "20/07/2024": ["9:00 AM - 9:30 AM", "10:00 AM - 10:30 AM"],
-        "21/07/2024": ["11:00 AM - 11:30 AM", "1:00 PM - 1:30 PM"],
-        "22/07/2024": ["2:00 PM - 2:30 PM", "3:00 PM - 3:30 PM"],
-        "23/07/2024": ["9:00 AM - 9:30 AM", "10:00 AM - 10:30 AM"],
-        "24/07/2024": ["11:00 AM - 11:30 AM", "1:00 PM - 1:30 PM"],
-        "25/07/2024": ["2:00 PM - 2:30 PM", "3:00 PM - 3:30 PM"],
-        "26/07/2024": ["9:00 AM - 9:30 AM", "10:00 AM - 10:30 AM"],
-        "27/07/2024": ["11:00 AM - 11:30 AM", "1:00 PM - 1:30 PM"]
-      }
-    },
-    {
-      "name": "Surgery",
-      "availableDays": {
-        "20/07/2024": ["2:00 PM - 2:30 PM", "3:00 PM - 3:30 PM"],
-        "21/07/2024": ["4:00 PM - 4:30 PM", "5:00 PM - 5:30 PM"],
-        "22/07/2024": ["2:00 PM - 2:30 PM", "3:00 PM - 3:30 PM"],
-        "23/07/2024": ["4:00 PM - 4:30 PM", "5:00 PM - 5:30 PM"],
-        "24/07/2024": ["2:00 PM - 2:30 PM", "3:00 PM - 3:30 PM"],
-        "25/07/2024": ["4:00 PM - 4:30 PM", "5:00 PM - 5:30 PM"],
-        "26/07/2024": ["2:00 PM - 2:30 PM", "3:00 PM - 3:30 PM"],
-        "27/07/2024": ["4:00 PM - 4:30 PM", "5:00 PM - 5:30 PM"],
-        "28/07/2024": ["2:00 PM - 2:30 PM", "3:00 PM - 3:30 PM"],
-        "29/07/2024": ["4:00 PM - 4:30 PM", "5:00 PM - 5:30 PM"]
-      }
-    },
-    {
       "name": "Grooming",
-      "availableDays": {
-        "22/07/2024": ["9:00 AM - 9:30 AM", "10:00 AM - 10:30 AM"],
-        "23/07/2024": ["11:00 AM - 11:30 AM", "12:00 PM - 12:30 PM"],
-        "24/07/2024": ["9:00 AM - 9:30 AM", "10:00 AM - 10:30 AM"],
-        "25/07/2024": ["11:00 AM - 11:30 AM", "12:00 PM - 12:30 PM"],
-        "26/07/2024": ["9:00 AM - 9:30 AM", "10:00 AM - 10:30 AM"],
-        "27/07/2024": ["11:00 AM - 11:30 AM", "12:00 PM - 12:30 PM"],
-        "28/07/2024": ["9:00 AM - 9:30 AM", "10:00 AM - 10:30 AM"],
-        "29/07/2024": ["11:00 AM - 11:30 AM", "12:00 PM - 12:30 PM"],
-        "30/07/2024": ["9:00 AM - 9:30 AM", "10:00 AM - 10:30 AM"],
-        "31/07/2024": ["11:00 AM - 11:30 AM", "12:00 PM - 12:30 PM"]
-      }
+      "days": [
+        {
+          "date": "2024-08-01",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": true
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-02",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-03",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-04",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-05",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-06",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-07",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-08",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-09",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-10",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 1",
+              "staff": "Bob",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 1",
+              "staff": "Alice",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 1",
+              "staff": "Charlie",
+              "available": false
+            }
+          ]
+        }
+      ]
     },
     {
       "name": "Vaccination",
-      "availableDays": {
-        "24/07/2024": ["1:00 PM - 1:30 PM", "2:00 PM - 2:30 PM"],
-        "25/07/2024": ["3:00 PM - 3:30 PM", "4:00 PM - 4:30 PM"],
-        "26/07/2024": ["1:00 PM - 1:30 PM", "2:00 PM - 2:30 PM"],
-        "27/07/2024": ["3:00 PM - 3:30 PM", "4:00 PM - 4:30 PM"],
-        "28/07/2024": ["1:00 PM - 1:30 PM", "2:00 PM - 2:30 PM"],
-        "29/07/2024": ["3:00 PM - 3:30 PM", "4:00 PM - 4:30 PM"],
-        "30/07/2024": ["1:00 PM - 1:30 PM", "2:00 PM - 2:30 PM"],
-        "31/07/2024": ["3:00 PM - 3:30 PM", "4:00 PM - 4:30 PM"],
-        "01/08/2024": ["1:00 PM - 1:30 PM", "2:00 PM - 2:30 PM"],
-        "02/08/2024": ["3:00 PM - 3:30 PM", "4:00 PM - 4:30 PM"]
-      }
+      "days": [
+        {
+          "date": "2024-08-01",
+          "sessions": [
+            {
+              "time": "8:30 AM - 8:45 AM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-02",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-03",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-04",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-05",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-06",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-07",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-08",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-09",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            }
+          ]
+        },
+        {
+          "date": "2024-08-10",
+          "sessions": [
+            {
+              "time": "1:30 PM - 1:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "1:45 PM - 2:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 2",
+              "staff": "Eva",
+              "available": false
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 2",
+              "staff": "David",
+              "available": true
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 2",
+              "staff": "Frank",
+              "available": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "room": "Room 3",
+      "details": [
+        {
+          "date": "2024-08-01",
+          "sessions": [
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            }
+          ]
+        },
+        {
+          "date": "2024-08-02",
+          "sessions": [
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            }
+          ]
+        },
+        {
+          "date": "2024-08-03",
+          "sessions": [
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            }
+          ]
+        },
+        {
+          "date": "2024-08-04",
+          "sessions": [
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            }
+          ]
+        },
+        {
+          "date": "2024-08-05",
+          "sessions": [
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            }
+          ]
+        },
+        {
+          "date": "2024-08-06",
+          "sessions": [
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            }
+          ]
+        },
+        {
+          "date": "2024-08-07",
+          "sessions": [
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            }
+          ]
+        },
+        {
+          "date": "2024-08-08",
+          "sessions": [
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            }
+          ]
+        },
+        {
+          "date": "2024-08-09",
+          "sessions": [
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            }
+          ]
+        },
+        {
+          "date": "2024-08-10",
+          "sessions": [
+            {
+              "time": "2:00 PM - 2:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:15 PM - 2:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "2:30 PM - 2:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "2:45 PM - 3:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:00 PM - 3:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:15 PM - 3:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "3:30 PM - 3:45 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "3:45 PM - 4:00 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            },
+            {
+              "time": "4:00 PM - 4:15 PM",
+              "location": "Room 3",
+              "staff": "Grace",
+              "available": false
+            },
+            {
+              "time": "4:15 PM - 4:30 PM",
+              "location": "Room 3",
+              "staff": "Helen",
+              "available": true
+            }
+          ]
+        }
+      ]
     }
   ]
 }
