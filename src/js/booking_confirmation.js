@@ -3,6 +3,10 @@ export function initializeCheckoutPage() {
     const industryIdentifier = document.getElementById("industry-identfier");
     const bankIdentifier = document.getElementById("bank-identifier");
 
+    // Default Payment
+    bankIdentifier.innerHTML = `<img src="svg/bank-logos/stripe.svg" alt="Stripe" height="32">`;
+    industryIdentifier.innerHTML = `<img src="svg/icons/visa.svg" alt="Visa Icon" height="32">`;
+
     const cardNetworkImages = {
         "3": "svg/icons/amex.svg",
         "4": "svg/icons/visa.svg",
@@ -56,7 +60,7 @@ export function initializeCheckoutPage() {
             }
         }
         // Default image if no match found
-        bankIdentifier.innerHTML = `<img src="svg/bank-logos/commonwealth-bank.svg" alt="commonwealth-bank">`;
+        bankIdentifier.innerHTML = `<img src="svg/bank-logos/stripe.svg" alt="Stripe" height="32">`;
     }
 
     populateAppointmentData();
