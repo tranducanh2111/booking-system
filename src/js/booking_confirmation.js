@@ -1,3 +1,5 @@
+import { loadContent } from "./page_loader.js";
+
 export function initializeCheckoutPage() {
     const input = document.getElementById("card-number");
     const industryIdentifier = document.getElementById("industry-identfier");
@@ -76,11 +78,24 @@ export function initializeCheckoutPage() {
     });
 }
 
-// Define moveToNext function if it's required
+// In credit card, user can auto switch to the next input once the length of current input is reached
 export function moveToNext(currentInput, nextInputId) {
     if (currentInput.value.length === currentInput.maxLength) {
         document.getElementById(nextInputId).focus();
     }
+}
+
+// Redirect user to the select_service if the user wants to change the service
+export function chooseOtherService() {
+    loadContent('select_service');
+}
+
+// Redirect user to the homepage if the user wants to cancel the booking reservation
+export function cancelAppointmentReservation() {
+    loadContent('homepage');
+
+    // Remove session storage for temporary booking data
+    populateAppointmentData();
 }
 
 function populateAppointmentData() {
@@ -96,3 +111,5 @@ function populateAppointmentData() {
 }
 
 window.moveToNext = moveToNext;
+window.chooseOtherService = chooseOtherService;
+window.cancelAppointmentReservation = cancelAppointmentReservation;

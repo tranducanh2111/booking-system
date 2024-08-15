@@ -48,7 +48,6 @@ export function initializeServiceSelection() {
         .then(response => response.json())
         .then(data => {
             servicesData = data.services;
-            console.log("Services Data:", servicesData); // Debugging line
             populateServiceOptions();
         })
         .catch(error => console.error('Error fetching data:', error));
@@ -72,8 +71,6 @@ export function initializeServiceSelection() {
         }
 
         availableDays = service.days.map(dayObj => dayObj.date).slice(0, 10); // Extract days
-
-        console.log("Available Days:", availableDays); // Debugging line
 
         daySelectionContainer.innerHTML = '';
         availableDays.forEach(day => {
