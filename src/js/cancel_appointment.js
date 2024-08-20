@@ -8,7 +8,7 @@ export function proceedCancellation() {
     const cancelAppointmentRequestData = Object.fromEntries(formData);
 
     // Retrieve form data
-    cancelAppointmentRequestData['apptcode'] = document.getElementById('apptcode').textContent;
+    cancelAppointmentRequestData['bookingCode'] = document.getElementById('bookingCode').textContent;
     cancelAppointmentRequestData['mobile'] = document.getElementById('mobile').textContent;
 
     fetch('/cancel_appointment', {
