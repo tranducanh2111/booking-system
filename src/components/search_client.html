@@ -1,4 +1,9 @@
- <!-- Page Body -->
+ <!DOCTYPE html>
+ <body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qs/dist/qs.js"></script>
+
+<!-- Page Body -->
  <main class="page-height overflow-y-auto">
     <!-- Overlay and Pop-up HTML -->
     <div id="overlay" class="overlay">
@@ -18,7 +23,7 @@
         </figure>
         <section class="glassmorphism mx-auto w-100 d-flex flex-column justify-content-start gap-10 py-8 px-5" style="max-width: 420px;">
             <!-- Form: Retrieve Client Detail -->
-            <form action="/" name="Client Detail Form">
+            <form id="clientDetailForm" name="Client Detail Form">
                 <h2 class="client-detail text-h2 mb-10 text-center">Client Detail</h2>
                 <!-- BEGIN: Client Detail -->
                 <div class="client-detail row gap-sm-0 gap-4 mb-6 w-100 mx-auto">
@@ -30,14 +35,18 @@
                     <!-- Email -->
                     <label for="mobile" class="text-body">Mobile</label>
                     <input type="text" id="mobile" name="mobile" placeholder="Mobile" class="text-body py-2 px-5 rounded-3">
+                    <!-- Error Message -->
+                    <div id="errorMessage" class="text-danger mt-2" style="display:none;"></div>
                 </div>
                 <!-- END: Client Detail -->
                 <!-- Button Container -->
                 <div class="row w-100 mx-auto">
                     <!-- Submit Form -->
-                    <button type="submit" class="btn bg-primary w-100 rounded-3 p-5 p-md-3 text-white text-body border-0 fw-bold">Next</button>
+                    <button id="se_client" type="submit" class="btn bg-primary w-100 rounded-3 p-5 p-md-3 text-white text-body border-0 fw-bold">Next</button>
                 </div>
             </form>
         </section>
     </section>
 </main>
+</body>
+</html>

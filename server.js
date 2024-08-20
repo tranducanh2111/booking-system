@@ -3,9 +3,13 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const bodyParser = require('body-parser');
+const cors = require('cors'); 
 
 const app = express();
 const port = 3000;
+
+// Use CORS middleware to allow cross-origin requests
+app.use(cors());
 
 // Middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -42,22 +46,21 @@ app.post('/cancel_appointment', (req, res) => {
   const appointmentCancellationData = req.body;
 
   res.json({ success: true });
-})
+});
 
 // Handle booking appointment request
 app.post('/proceed-appointment-request', (req, res) => {
   const appointmentBookingData = req.body;
   // Process the appointment data here
 
-
   res.json({ success: true });
-})
+});
 
 app.get('/checkout', (req, res) => {
   res.sendFile(path.join(__dirname, 'src', 'components', 'checkout.html'));
 });
 
-// Handle request for loading the clinic notes)
+// Handle request for loading the clinic notes
 app.get('/api/clinic-notes', (req, res) => {
   res.sendFile(path.join(__dirname, 'data/clinic-notes.json'));
 });
