@@ -70,11 +70,16 @@ export function initializeCheckoutPage() {
     document.getElementById("card-number").addEventListener("input", function() {
         moveToNext(this, 'card-holder');
     });
-    document.getElementById("card-expiry-month").addEventListener("input", function() {
+    document.getElementById("card-expiry-month").addEventListener("input", function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
         moveToNext(this, 'card-expiry-year');
     });
-    document.getElementById("card-expiry-year").addEventListener("input", function() {
+    document.getElementById("card-expiry-year").addEventListener("input", function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
         moveToNext(this, 'card-cvv');
+    });
+    document.getElementById("card-cvv").addEventListener("input", function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
     });
 }
 

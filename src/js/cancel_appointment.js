@@ -8,11 +8,8 @@ export function proceedCancellation() {
     const cancelAppointmentRequestData = Object.fromEntries(formData);
 
     // Retrieve form data
-    cancelAppointmentRequestData['fname'] = document.getElementById('fname').textContent;
-    cancelAppointmentRequestData['lname'] = document.getElementById('lname').textContent;
     cancelAppointmentRequestData['apptcode'] = document.getElementById('apptcode').textContent;
-    cancelAppointmentRequestData['reason'] = document.getElementById('reason').textContent;
-    cancelAppointmentRequestData['description'] = document.getElementById('description').textContent;
+    cancelAppointmentRequestData['mobile'] = document.getElementById('mobile').textContent;
 
     fetch('/cancel_appointment', {
         method: 'POST',
@@ -28,7 +25,7 @@ export function proceedCancellation() {
             sessionStorage.removeItem('cancelAppointmentRequestData');
             // Redirect to the cancel_confirmation page
             loadContent('cancel_confirmation');
-            // Avoid the user can access the current page
+            // Avoid the user can access the cancel_confirmation page
             sessionStorage.removeItem('currentPage');
         } else {
             alert('Error cancelling appointment. Please try again.');
