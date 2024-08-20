@@ -31,7 +31,7 @@ export function loadContent(page) {
                 // Load and initialize the cancel_appointment script
                 import('./cancel_appointment.js')
                     .then(module => {
-                        module.proceedCancellation();
+
                     })
                     .catch(error => console.error('Error loading cancel_appointment.js:', error));
             }
