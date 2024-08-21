@@ -129,6 +129,12 @@ export function searchServiceAvailableTime(event) {
                 return;
             }
 
+            if (preferDate == "")
+            {
+                alert('Please select your preferred date.');
+                return;
+            }
+
             // Filter available days based on the preferred date (inclusive)
             const availableDays = serviceData.days.filter(dayObj => new Date(dayObj.date) >= new Date(preferDate));
 
