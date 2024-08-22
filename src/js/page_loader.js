@@ -1,45 +1,18 @@
-// page_loader.js
 export function loadContent(page) {
     const contentDiv = document.getElementById('content');
 
     // Store the current page in sessionStorage
     sessionStorage.setItem('currentPage', page);
 
-    fetch(`/components/${page}.html`)
+    const cacheBuster = new Date().getTime(); // Generate a unique timestamp to bust the cache
+
+    fetch(`/components/${page}.html?ts=${cacheBuster}`)
         .then(response => response.text())
         .then(html => {
             contentDiv.innerHTML = html;
 
-            // Load required script for the homepage page
-            if (page === 'homepage') {
-                // Load and initialize the popup_loader script
-                import('./popup_loader.js')
-                    .then(module => {
-                        module.setupPopup();
-                    })
-                    .catch(error => console.error('Error loading popup_loader.js:', error));
-                // Load and initialize the clinic_note script
-                import('./load_clinic_note.js')
-                    .then(module => {
-                        module.loadClinicNotes();
-                    })
-                    .catch(error => console.error('Error loading load_clinic_note.js:', error));
-            }
-
-            // Load required script for the cancel page
-            if (page === 'cancel') {
-                // Load and initialize the cancel_appointment script
-                import('./cancel_appointment.js')
-                    .then(module => {
-
-                    })
-                    .catch(error => console.error('Error loading cancel_appointment.js:', error));
-            }
-
-            // After loading the HTML, check if it's the select_service page to load the required js file
             if (page === 'select_service') {
-                // Load and initialize the select_service script
-                import('./select_service.js')
+                import(`./select_service.js?ts=${cacheBuster}`)
                     .then(module => {
                         module.initSelectService();
                         module.initializeServiceSelection();
@@ -47,10 +20,28 @@ export function loadContent(page) {
                     .catch(error => console.error('Error loading select_service.js:', error));
             }
 
-            // Load and initialize the booking_confirmation script if needed
+            // Load scripts for other pages as necessary
+            if (page === 'homepage') {
+                import(`./popup_loader.js?ts=${cacheBuster}`)
+                    .then(module => {
+                        module.setupPopup();
+                    })
+                    .catch(error => console.error('Error loading popup_loader.js:', error));
+
+                import(`./load_clinic_note.js?ts=${cacheBuster}`)
+                    .then(module => {
+                        module.loadClinicNotes();
+                    })
+                    .catch(error => console.error('Error loading load_clinic_note.js:', error));
+            }
+
+            if (page === 'cancel') {
+                import(`./cancel_appointment.js?ts=${cacheBuster}`)
+                    .catch(error => console.error('Error loading cancel_appointment.js:', error));
+            }
+
             if (page === 'checkout') {
-                // Load and initialize the booking_confirmation script
-                import('./booking_confirmation.js')
+                import(`./booking_confirmation.js?ts=${cacheBuster}`)
                     .then(module => {
                         module.initializeCheckoutPage();
                     })
@@ -64,15 +55,8 @@ export function loadContent(page) {
 
 // Load the default content
 document.addEventListener('DOMContentLoaded', () => {
-    // Check if there is a saved page in sessionStorage
-    const savedPage = sessionStorage.getItem('currentPage');
-
-    if (savedPage) {
-        loadContent(savedPage);
-    } else {
-        // Load the default homepage if no page is saved
-        loadContent('homepage');
-    }
+    const savedPage = sessionStorage.getItem('currentPage') || 'homepage';
+    loadContent(savedPage);
 });
 
 // Expose loadContent function to global scope

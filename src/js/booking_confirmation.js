@@ -111,7 +111,7 @@ function populateAppointmentData() {
         document.getElementById('confirm-service-time').textContent = appointmentBookingData['appointment-time'];
         
         // Remove session storage for temporary booking data
-        sessionStorage.removeItem('appointmentBookingData');
+        // sessionStorage.removeItem('appointmentBookingData');
     }
 }
 
