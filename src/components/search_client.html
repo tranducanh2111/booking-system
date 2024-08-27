@@ -33,9 +33,17 @@
                 </div>
                 <!-- END: Client Detail -->
                 <!-- Button Container -->
-                <div class="row w-100 mx-auto">
+                <div class="row w-100 mx-auto mb-3">
                     <!-- Submit Form -->
-                    <button type="submit" class="btn bg-primary w-100 rounded-3 p-5 p-md-3 text-white text-body border-0 fw-bold">Next</button>
+                    <button type="submit" class="w-100 text-body fw-bolder text-white bg-primary border-primary rounded-3 p-5 p-md-3">Next</button>
+                </div>
+                <div class="row w-100 mx-auto mb-3">
+                    <!-- Continue As Guest -->
+                    <button type="button" onclick="loadContent('select_service')" class="w-100 text-body fw-bolder text-primary bg-white border-primary rounded-3 p-5 p-md-3">Continue as Guest</button>
+                </div>
+                <div class="row w-100 mx-auto">
+                    <!-- Cancel -->
+                    <button type="button" onclick="loadContent('homepage')" class="w-100 text-body fw-bolder text-white bg-red border-red rounded-3 p-5 p-md-3">Cancel</button>
                 </div>
             </form>
         </section>
