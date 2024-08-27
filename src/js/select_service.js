@@ -327,14 +327,6 @@ export function initializePreferredDate() {
   
         preferDateInput.min = minDate.toISOString().split('T')[0];
         preferDateInput.value = minDate.toISOString().split('T')[0];
-  
-        // Disable selecting previous dates
-        preferDateInput.addEventListener('input', function() {
-          const selectedDate = new Date(this.value);
-          if (selectedDate < minDate) {
-            this.value = minDate.toISOString().split('T')[0];
-          }
-        });
       })
       .catch(error => console.error('Error fetching earliest booking:', error));
 }
