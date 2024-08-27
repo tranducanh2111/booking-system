@@ -28,11 +28,11 @@ export function loadContent(page) {
                     })
                     .catch(error => console.error('Error loading popup_loader.js:', error));
 
-                import(`./load_clinic_note.js?ts=${cacheBuster}`)
+                import(`./load_practice_info.js?ts=${cacheBuster}`)
                     .then(module => {
-                        module.loadClinicNotes();
+                        module.loadPracticeInfo();
                     })
-                    .catch(error => console.error('Error loading load_clinic_note.js:', error));
+                    .catch(error => console.error('Error loading load_practice_info.js:', error));
             }
 
             if (page === 'cancel') {

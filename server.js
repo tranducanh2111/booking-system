@@ -3,10 +3,12 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const bodyParser = require('body-parser');
-const db = require('./src/config/db');
+// Database Connection Handle
+const { connectAdvanceNoticeDatabase, closeAdvanceNoticeDatabaseConnection } = require('./src/config/db_advance_notice');
+const { connectConnectDatabase, closeConnectDatabaseConnection } = require('./src/config/db_connect');
 
 const app = express();
-const port = 3000;
+const port = 3500;
 
 // Middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -58,9 +60,36 @@ app.get('/checkout', (req, res) => {
   res.sendFile(path.join(__dirname, 'src', 'components', 'checkout.html'));
 });
 
-// Handle request for loading the clinic notes)
-app.get('/api/clinic-notes', (req, res) => {
-  res.sendFile(path.join(__dirname, 'data/clinic-notes.json'));
+// Handle request for loading the clinic notes
+app.get('/api/practice_info', (req, res) => {
+  // Require connection to the database
+  const db_advance_notice = connectAdvanceNoticeDatabase();
+
+  const practiceInfoQuery = `
+    SELECT Notes, PracticeName, Phone, Email, Website, Logo, Address, Suburb, Postcode, State, Country
+    FROM practice
+    WHERE PracticeCode = '9999' AND isActive = 'Yes'`
+
+  db_advance_notice.query(practiceInfoQuery, (err, results) => {
+    if (err) {
+      console.error('Error fetching practice information:', err);
+      res.status(500).json({ error: 'Error fetching practice information' });
+      return;
+    }
+
+    // Store data retrieved from the database about the clinic
+    // Check if results are available
+    if (results.length > 0) {
+      // Send the entire practice information as JSON
+      res.json(results[0]);
+    } else {
+      // Handle case where no data is found
+      res.status(404).json({ error: 'Practice information not found' });
+    }
+  });
+
+  // Close the database connection
+  closeAdvanceNoticeDatabaseConnection();
 });
 
 // Handle request for loading the service data (services, available date and time)
