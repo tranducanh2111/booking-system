@@ -297,6 +297,49 @@ function goToNextDay() {
     }
 }
 
+export function initializePreferredDate() {
+    const preferDateInput = document.getElementById('prefer-date');
+  
+    fetch('/api/earliest-booking')
+      .then(response => response.json())
+      .then(data => {
+        const earliestBooking = data.earliestBooking;
+        const today = new Date();
+        let minDate;
+  
+        switch (earliestBooking) {
+          case '0':
+            minDate = today;
+            console.log(0);
+            break;
+          case '1':
+            minDate = new Date(today.setDate(today.getDate() + 1));
+            console.log(1);
+            break;
+          case '2':
+            minDate = new Date(today.setDate(today.getDate() + 7));
+            console.log(2);
+            break;
+          default:
+            minDate = today;
+            console.log('default');
+        }
+  
+        preferDateInput.min = minDate.toISOString().split('T')[0];
+        preferDateInput.value = minDate.toISOString().split('T')[0];
+  
+        // Disable selecting previous dates
+        preferDateInput.addEventListener('input', function() {
+          const selectedDate = new Date(this.value);
+          if (selectedDate < minDate) {
+            this.value = minDate.toISOString().split('T')[0];
+          }
+        });
+      })
+      .catch(error => console.error('Error fetching earliest booking:', error));
+}
+  
+
 // Example usage in your script
 window.searchServiceAvailableTime = searchServiceAvailableTime;
 window.proceedAppointmentRequest = proceedAppointmentRequest;

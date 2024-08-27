@@ -52,7 +52,6 @@ app.post('/proceed-appointment-request', (req, res) => {
   const appointmentBookingData = req.body;
   // Process the appointment data here
 
-
   res.json({ success: true });
 })
 
@@ -90,6 +89,29 @@ app.get('/api/practice_info', (req, res) => {
 
   // Close the database connection
   closeAdvanceNoticeDatabaseConnection();
+});
+
+// Handle the practice booking day preference
+app.get('/api/earliest-booking', (req, res) => {
+  const db_advance_notice = connectAdvanceNoticeDatabase();
+
+  const query = 'SELECT EarliestBooking FROM practice WHERE PracticeCode = "9999" AND isActive = "Yes"';
+
+  db_advance_notice.query(query, (err, results) => {
+    if (err) {
+      console.error('Error fetching earliest booking:', err);
+      res.status(500).json({ error: 'Error fetching earliest booking' });
+      return;
+    }
+
+    if (results.length > 0) {
+      res.json({ earliestBooking: results[0].EarliestBooking });
+    } else {
+      res.status(404).json({ error: 'Earliest booking information not found' });
+    }
+
+    closeAdvanceNoticeDatabaseConnection();
+  });
 });
 
 // Handle request for loading the service data (services, available date and time)
