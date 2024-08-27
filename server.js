@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const fs = require('fs');
 const bodyParser = require('body-parser');
+const db = require('./src/config/db');
 
 const app = express();
 const port = 3000;
