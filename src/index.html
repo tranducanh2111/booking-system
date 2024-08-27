@@ -48,29 +48,29 @@
     <div class="d-flex flex-column flex-root">
         <!-- Navigation -->
         <header class="w-100 bg-white sticky-top">
-			<div class="max-w-body w-100 mx-auto d-flex p-4 flex-row justify-content-between align-items-center">
+			<div class="max-w-body w-100 mx-auto d-flex p-4 flex-row justify-content-between align-items-center gap-3">
 				<section class="d-flex align-items-center gap-2">
 					<figure class="w-auto h-100 max-w-sm-150 max-w-lg-310 mb-0">
 						<a onclick="loadContent('homepage')">
-                            <img src="images/logo.png" alt="Logo" class="object-cover">
+                            <img id="practice-logo" src="/" alt="Logo" class="object-cover">
                         </a>
 					</figure>
 					<div class="ms-3 d-none d-md-inline">
-						<h3 class="text-h3 text-primary mb-2">Cider House ICT</h3>
-						<p class="text-body mb-0">9/899 Wellington Road ROWVILLE 3178 VIC</p>
+						<h3 id="practice-name" class="text-h3 text-primary mb-2 text-truncate"></h3>
+						<p id="practice-address" class="text-body mb-0 text-truncate"></p>
 					</div>
 				</section>
 				<div class="w-auto d-flex flex-row flex-md-column align-items-center align-items-md-start gap-2">
-					<a href="tel:0466223888" class="link-primary">
+					<a id="practice-phone-url" href="" class="link-primary">
 						<div class="d-flex align-items-center gap-2">
 							<img src="svg/icons/phone.svg" alt="Clinic Hotline" type="image/svg+xml" width="24" height="24">
-							<p class="d-none d-md-inline w-auto mb-0">0466223888</p>
+							<p id="practice-phone" class="d-none d-md-inline w-auto mb-0"></p>
 						</div>
 					</a>
-					<a href="mailto:at@ciderhouse.com.au" class="link-primary">
+					<a id="practice-email-url" href="" class="link-primary">
 						<div class="d-flex align-items-center gap-2">
 							<img src="svg/icons/email.svg" alt="Clinic Email" type="image/svg+xml" width="24" height="24">
-							<p class="d-none d-md-inline w-auto mb-0">at@ciderhouse.com.au</p>
+							<p id="practice-email" class="d-none d-md-inline w-auto mb-0"></p>
 						</div>
 					</a>
 				</div>
@@ -85,10 +85,10 @@
         <footer class="sticky-bottom w-100 bg-white">
             <section class="max-w-body w-100 mx-auto d-flex flex-column flex-sm-row justify-content-between align-items-center px-4 p-4 gap-3">
                 <div>
-                    <a href="https://ciderhouse.com.au/" target="_blank"><img src="svg/icons/website-url.svg" alt="Clinic Website" type="image/svg+xml" width="32" height="32"></a>
-                    <a href="https://ciderhouse.com.au/" target="_blank"><img src="svg/icons/facebook.svg" alt="Facebook" type="image/svg+xml" width="32" height="32"></a>
-                    <a href="https://ciderhouse.com.au/" target="_blank"><img src="svg/icons/twitter.svg" alt="Twitter" type="image/svg+xml" width="32" height="32"></a>
-                    <a href="https://ciderhouse.com.au/" target="_blank"><img src="svg/icons/instagram.svg" alt="Instagram" type="image/svg+xml" width="32" height="32"></a>
+                    <a id="practice-website" href="" target="_blank"><img src="svg/icons/website-url.svg" alt="Clinic Website" type="image/svg+xml" width="32" height="32"></a>
+                    <a href="" target="_blank"><img src="svg/icons/facebook.svg" alt="Facebook" type="image/svg+xml" width="32" height="32"></a>
+                    <a href="" target="_blank"><img src="svg/icons/twitter.svg" alt="Twitter" type="image/svg+xml" width="32" height="32"></a>
+                    <a href="" target="_blank"><img src="svg/icons/instagram.svg" alt="Instagram" type="image/svg+xml" width="32" height="32"></a>
                 </div>
                 <div>
                     <ul class="list-unstyled list-inline mb-0">
