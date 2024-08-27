@@ -4,6 +4,12 @@ export function loadContent(page) {
     // Store the current page in sessionStorage
     sessionStorage.setItem('currentPage', page);
 
+    import(`./load_practice_info.js`)
+        .then(module => {
+            module.loadPracticeInfo();
+        })
+        .catch(error => console.error('Error loading load_practice_info.js:', error));
+
     const cacheBuster = new Date().getTime(); // Generate a unique timestamp to bust the cache
 
     fetch(`/components/${page}.html?ts=${cacheBuster}`)
@@ -14,6 +20,7 @@ export function loadContent(page) {
             if (page === 'select_service') {
                 import(`./select_service.js?ts=${cacheBuster}`)
                     .then(module => {
+                        module.initializePreferredDate();
                         module.initSelectService();
                         module.initializeServiceSelection();
                     })
