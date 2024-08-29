@@ -51,11 +51,20 @@
     max-width: 1241px;
 }
 
-@media (max-width: 768px)
+@media (max-width: 576px)
 {
     .page-height.page-height
     {
-        min-height: calc(100vh - 80px - 63px);
+        min-height: calc(100vh - 55px - 83px);
+        height: fit-content !important;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 768px) 
+{
+    .page-height.page-height
+    {
+        min-height: calc(100vh - 55px - 56px);
         height: fit-content !important;
     }
 }

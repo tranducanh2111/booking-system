@@ -1,14 +1,30 @@
+// load_practice_info.js
 export async function loadPracticeInfo() {
+  const practiceCode = getPracticeCodeFromURL(); // Get practiceCode from the URL
+
   try {
-    const response = await fetch('/api/practice_info');
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
+    if (practiceCode != "") {
+      const response = await fetch(`/api/practice_info/${practiceCode}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+        
+      }
+      const practiceInfo = await response.json();
+      displayPracticeInfo(practiceInfo);
+    } else {
+      console.error('No practiceCode found in the URL');
     }
-    const practiceInfo = await response.json();
-    displayPracticeInfo(practiceInfo);
   } catch (error) {
     console.error('Error fetching practice information:', error);
   }
+}
+
+// Function to get the practiceCode from the URL
+function getPracticeCodeFromURL() {
+  const params = new URLSearchParams(window.location.search)
+  const reqCode = decodeURI(params.toString()).replace("=", "");
+  console.log(reqCode);
+  return reqCode;
 }
 
 // Append clinic informations to the UI
