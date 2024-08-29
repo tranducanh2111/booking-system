@@ -7,8 +7,8 @@ body, html {
 
 :root,[data-bs-theme=light]{
 	--bs-primary: #A3D063;
-    --bs-btn-hover-color: #D1E7B1;
-    --bs-btn-hover-bg: #D1E7B1;
+    --bs-btn-hover-color: #A0FC8E;
+    --bs-btn-hover-bg: #A0FC8E;
     --bs-secondary: #A0FC8E;
 	--bs-header-primary-link-color: #191919;
 	--bs-font-sans-serif:Montserrat,Helvetica,"sans-serif";

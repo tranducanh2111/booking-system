@@ -1,20 +1,20 @@
 <!-- select_service.html -->
 
 <!-- Page Body -->
-<section class="max-w-body w-100 mx-auto d-flex flex-column justify-content-start gap-10 px-4 py-10">
+<section class="max-w-body w-100 mx-auto d-flex flex-column justify-content-start gap-5 px-4 py-7">
     <h3 class="text-h3 text-gray-400 opacity-25">Welcome, we hope you are doing well!</h3>
     <div>
         <!-- Choose Service & Prefer Date -->
         <form method="GET" action="/search_service_available_time" onsubmit="searchServiceAvailableTime(event);">
             <div class="row align-items-end px-0">
-                <div class="col-12 col-md-5 service-option d-flex flex-column gap-10 mb-10 mb-md-0">
+                <div class="col-12 col-md-5 service-option d-flex flex-column gap-3 mb-10 mb-md-0">
                     <h2 class="text-h2" style="width: fit-content;">Service</h2>
                     <select name="service" id="service" class="flex-grow-1 text-body py-3 px-3 rounded-3 border-2" style="height: 41px;">
                         <option value="" class="text-body" disabled selected hidden>Select a service</option>
                         <!-- Clinic Service will be append in here -->
                     </select>
                 </div>
-                <div class="col-12 col-md-5 d-flex flex-column gap-10 mb-10 mb-md-0">
+                <div class="col-12 col-md-5 d-flex flex-column gap-3 mb-10 mb-md-0">
                     <h2 class="text-h2" style="width: fit-content;">Prefer Date</h2>
                     <input type="date" id="prefer-date" name="prefer-date" class="text-body py-2 px-3 rounded-3">
                 </div>
@@ -28,17 +28,17 @@
         </form>
         <form action="/proceed-appointment-request" name="Proceed Appointment Request" method="POST" onsubmit="proceedAppointmentRequest(); return false;">
             <!-- Book Service Day -->
-            <section class="service-time mt-10 mb-20">
-                <div class="d-grid gap-3 mb-10" style="grid-template-columns: 84px auto 84px;">
+            <section class="service-time mt-10 mb-10">
+                <div class="d-grid gap-3 mb-5" style="grid-template-columns: 84px auto 84px;">
                     <!-- Previous Day Button -->
-                    <button id="previous-day" type="button" class="d-flex align-items-center justify-content-center text-primary border-primary px-3 py-2 rounded-3" style="width: 84px;">
+                    <button id="previous-day" type="button" class="d-flex align-items-center justify-content-center text-primary bg-white border-primary px-3 py-2 rounded-3" style="width: 84px;">
                         <img src="svg/icons/left-arrow.svg" alt="Left Arrow" class="me-1">
                         Before
                     </button>
                     <!-- Day Selection Container -->
                     <div id="day-selection" class="hide-scrollbar d-inline-flex overflow-x-auto gap-3"></div>
                     <!-- Next Day Button -->
-                    <button id="next-day" type="button" class="d-flex align-items-center justify-content-center text-primary border-primary px-3 py-2 rounded-3" style="width: 84px;">
+                    <button id="next-day" type="button" class="d-flex align-items-center justify-content-center text-primary bg-white border-primary px-3 py-2 rounded-3" style="width: 84px;">
                         After
                         <img src="svg/icons/right-arrow.svg" alt="Left Arrow" class="ms-1">
                     </button>
