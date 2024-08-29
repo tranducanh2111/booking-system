@@ -167,7 +167,7 @@ function populateDayOptions(serviceName) {
     availableDays.forEach(day => {
         const button = document.createElement('button');
         button.type = 'button';
-        button.className = 'btn d-flex align-items-center justify-content-center border border-black px-10 py-2 opacity-50';
+        button.className = 'btn d-flex align-items-center justify-content-center bg-white border-black px-12 py-2 opacity-50 rounded-3';
         button.textContent = formatDate(day);
 
         button.addEventListener('click', () => {
