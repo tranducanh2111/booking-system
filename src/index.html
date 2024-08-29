@@ -18,6 +18,7 @@
     <link rel="stylesheet" href="styles/custom.css">
     <link rel="stylesheet" href="styles/popup.css">
     <link rel="stylesheet" href="styles/user.css">
+    <link rel="stylesheet" href="styles/scrollToTopBtn.css">
     <script>
         if (window.top != window.self) {
             window.top.location.replace(window.self.location.href);
@@ -25,7 +26,7 @@
     </script>
 </head>
 <!-- <body id="kt_body" class="header-fixed header-tablet-and-mobile-fixed toolbar-enabled"> -->
-    <body>
+<body>
     <!-- <script>
         var defaultThemeMode = "light";
         var themeMode;
@@ -82,6 +83,10 @@
             <!-- Overlay for Popups -->
             <div id="overlay" class="overlay"></div>
         </main>
+        <!-- Scroll to Top Button -->
+        <button type="button" id="scrollToTopBtn">
+            <img src="svg/icons/arrow-head.svg" alt="Arrow Head" width="32" height="32">
+        </button>
         <footer class="sticky-bottom w-100 bg-white">
             <section class="max-w-body w-100 mx-auto d-flex flex-column flex-sm-row justify-content-between align-items-center px-4 p-4 gap-3">
                 <div>
@@ -102,5 +107,6 @@
     </div>
     <!-- JavaScript -->
     <script src="js/page_loader.js" type="module"></script>
+    <script src="js/scrollToTopButton.js"></script>
 </body>
 </html>

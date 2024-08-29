@@ -157,11 +157,11 @@ export function searchServiceAvailableTime(event) {
 function populateDayOptions(serviceName) {
     const service = servicesData.find(s => s.name === serviceName);
     if (!service) {
-        console.log(`Service not found: ${serviceName}`); // Debugging line
+        console.log(`Service not found: ${serviceName}`);
         return;
     }
 
-    availableDays = service.days.map(dayObj => dayObj.date).slice(0, 10); // Extract days
+    availableDays = service.days.map(dayObj => dayObj.date).slice(0, 10);
 
     daySelectionContainer.innerHTML = '';
     availableDays.forEach(day => {
@@ -310,19 +310,15 @@ export function initializePreferredDate() {
         switch (earliestBooking) {
           case '0':
             minDate = today;
-            console.log(0);
             break;
           case '1':
             minDate = new Date(today.setDate(today.getDate() + 1));
-            console.log(1);
             break;
           case '2':
             minDate = new Date(today.setDate(today.getDate() + 7));
-            console.log(2);
             break;
           default:
             minDate = today;
-            console.log('default');
         }
   
         preferDateInput.min = minDate.toISOString().split('T')[0];
