@@ -14,5 +14,5 @@
 }
   
 #scrollToTopBtn:hover {
-    background-color: var(--bs-secondary); /* A slightly darker shade for hover effect */
+    background-color: var(--bs-secondary);
 }
