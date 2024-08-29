@@ -60,16 +60,18 @@ app.get('/checkout', (req, res) => {
 });
 
 // Handle request for loading the clinic notes
-app.get('/api/practice_info', (req, res) => {
+app.get('/api/practice_info/:id?', (req, res) => {
   // Require connection to the database
   const db_advance_notice = connectAdvanceNoticeDatabase();
+
+  let practiceCode = req.params.id;
 
   const practiceInfoQuery = `
     SELECT Notes, PracticeName, Phone, Email, Website, Logo, Address, Suburb, Postcode, State, Country
     FROM practice
-    WHERE PracticeCode = '9999' AND isActive = 'Yes'`
+    WHERE PracticeCode = ? AND isActive = 'Yes'`
 
-  db_advance_notice.query(practiceInfoQuery, (err, results) => {
+  db_advance_notice.query(practiceInfoQuery, [practiceCode], (err, results) => {
     if (err) {
       console.error('Error fetching practice information:', err);
       res.status(500).json({ error: 'Error fetching practice information' });
@@ -92,12 +94,14 @@ app.get('/api/practice_info', (req, res) => {
 });
 
 // Handle the practice booking day preference
-app.get('/api/earliest-booking', (req, res) => {
+app.get('/api/earliest-booking/:id?', (req, res) => {
   const db_advance_notice = connectAdvanceNoticeDatabase();
 
-  const query = 'SELECT EarliestBooking FROM practice WHERE PracticeCode = "9999" AND isActive = "Yes"';
+  let practiceCode = req.params.id;
 
-  db_advance_notice.query(query, (err, results) => {
+  const query = 'SELECT EarliestBooking FROM practice WHERE PracticeCode = ? AND isActive = "Yes"';
+
+  db_advance_notice.query(query, [practiceCode], (err, results) => {
     if (err) {
       console.error('Error fetching earliest booking:', err);
       res.status(500).json({ error: 'Error fetching earliest booking' });

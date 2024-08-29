@@ -167,7 +167,7 @@ function populateDayOptions(serviceName) {
     availableDays.forEach(day => {
         const button = document.createElement('button');
         button.type = 'button';
-        button.className = 'd-flex align-items-center justify-content-center bg-white border border-1 border-black px-11 py-2 opacity-50 rounded-3';
+        button.className = 'text-body d-flex align-items-center justify-content-center bg-white border border-1 border-black px-11 py-2 opacity-50 rounded-3';
         button.textContent = formatDate(day);
 
         button.addEventListener('click', () => {
@@ -229,7 +229,7 @@ function populateTimeOptions(serviceName, day) {
         if (session.available) {
             const button = document.createElement('button');
             button.type = 'button';
-            button.className = 'btn session-btn d-flex align-items-center justify-content-center border border-black px-10 py-2 opacity-50';
+            button.className = 'text-body session-btn d-flex align-items-center justify-content-center border-black px-10 py-2 opacity-50 rounded-3';
             button.textContent = session.time;
 
             button.addEventListener('click', () => {
@@ -307,34 +307,30 @@ function goToNextDay() {
 
 export function initializePreferredDate() {
     const preferDateInput = document.getElementById('prefer-date');
+
+    const practiceCode = getPracticeCodeFromURL();
   
-    fetch('/api/earliest-booking')
+    fetch(`/api/earliest-booking/${practiceCode}`)
       .then(response => response.json())
       .then(data => {
         const earliestBooking = data.earliestBooking;
         const today = new Date();
         let minDate;
-  
-        switch (earliestBooking) {
-          case '0':
-            minDate = today;
-            break;
-          case '1':
-            minDate = new Date(today.setDate(today.getDate() + 1));
-            break;
-          case '2':
-            minDate = new Date(today.setDate(today.getDate() + 7));
-            break;
-          default:
-            minDate = today;
-        }
+
+        minDate = new Date(today.setDate(today.getDate() + parseInt(earliestBooking)));
   
         preferDateInput.min = minDate.toISOString().split('T')[0];
         preferDateInput.value = minDate.toISOString().split('T')[0];
       })
       .catch(error => console.error('Error fetching earliest booking:', error));
 }
-  
+
+function getPracticeCodeFromURL() {
+    const params = new URLSearchParams(window.location.search)
+    const reqCode = decodeURI(params.toString()).replace("=", "");
+    console.log(reqCode);
+    return reqCode;
+}  
 
 // Example usage in your script
 window.searchServiceAvailableTime = searchServiceAvailableTime;
