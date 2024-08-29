@@ -191,6 +191,14 @@ function selectDay(day) {
     // Update button styles
     updateButtonStyles(daySelectionContainer, formatDate(day));
 
+    // Scroll the selected day into view
+    const buttons = daySelectionContainer.querySelectorAll('button');
+    buttons.forEach(button => {
+        if (button.textContent === formatDate(day)) {
+            button.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'start' });
+        }
+    });
+    
     // Only populate time options if we have a selected service
     if (selectedService) {
         populateTimeOptions(selectedService, day);
