@@ -6,8 +6,9 @@ export async function loadPracticeInfo() {
     if (practiceCode != "") {
       const response = await fetch(`/api/practice_info/${practiceCode}`);
       if (!response.ok) {
-        throw new Error('Network response was not ok');
-        
+        window.location.href = '/404';
+        console.log('Network response was not ok');
+        // throw new Error('Network response was not ok');
       }
       const practiceInfo = await response.json();
       displayPracticeInfo(practiceInfo);
