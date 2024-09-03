@@ -85,7 +85,7 @@ export function proceedAppointmentRequest() {
     // Store form data in sessionStorage
     sessionStorage.setItem('appointmentBookingData', JSON.stringify(data));
 
-    fetch('/proceed-appointment-request', {
+    fetch('/api/proceed-appointment-request', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -229,7 +229,7 @@ function populateTimeOptions(serviceName, day) {
         if (session.available) {
             const button = document.createElement('button');
             button.type = 'button';
-            button.className = 'text-body session-btn d-flex align-items-center justify-content-center border-black px-10 py-2 opacity-50 rounded-3';
+            button.className = 'text-body bg-white session-btn d-flex align-items-center justify-content-center border-black px-10 py-2 opacity-50 rounded-3';
             button.textContent = session.time;
 
             button.addEventListener('click', () => {

@@ -49,6 +49,17 @@ router.get('/earliest-booking/:id?', (req, res) => {
   });
 });
 
+router.post('/proceed-appointment-request', (req, res) => {
+  const appointmentBookingData = req.body;
+  // Process the appointment data here
+
+  res.json({ success: true });
+})
+
+router.get('/checkout', (req, res) => {
+  res.sendFile(path.join(__dirname, 'src', 'components', 'checkout.html'));
+});
+
 // Handle request for loading the service data (services, available date and time)
 router.get('/service-list', (req, res) => {
   res.sendFile(path.join(__dirname, '../../data/service-list.json'));
