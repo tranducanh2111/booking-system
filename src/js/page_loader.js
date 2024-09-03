@@ -12,7 +12,7 @@ export function loadContent(page) {
 
     const cacheBuster = new Date().getTime(); // Generate a unique timestamp to bust the cache
 
-    fetch(`/components/${page}.html?ts=${cacheBuster}`)
+    fetch(`/pages/${page}.html?ts=${cacheBuster}`)
         .then(response => response.text())
         .then(html => {
             contentDiv.innerHTML = html;

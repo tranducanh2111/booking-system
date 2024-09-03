@@ -1,7 +1,10 @@
-// src/routes/apiRoutes.js
+// src/routes/routes.js
 const express = require('express');
+const path = require('path');
 const router = express.Router();
+// Database Connection
 const { connectAdvanceNoticeDatabase, closeAdvanceNoticeDatabaseConnection } = require('../config/db_advance_notice');
+const { connectConnectDatabase, closeConnectDatabaseConnection } = require('../config/db_connect');
 
 // Handle request for loading the clinic notes
 router.get('/practice_info/:id?', (req, res) => {
