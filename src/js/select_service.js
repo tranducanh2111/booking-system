@@ -1,6 +1,7 @@
 // select_service.js
 import { loadContent } from "./page_loader.js";
 import { formatDate } from "./common_function.js";
+import { decryptPracticeCode } from "./crypto.js";
 
 const serviceDay = document.querySelector('.service-time');
 const serviceSelect = document.getElementById('service');
@@ -306,23 +307,21 @@ function goToNextDay() {
 }
 
 export function initializePreferredDate() {
-    const preferDateInput = document.getElementById('prefer-date');
+  const preferDateInput = document.getElementById('prefer-date');
+  const practiceCode = getPracticeCodeFromURL();
 
-    const practiceCode = getPracticeCodeFromURL();
-  
-    fetch(`/api/earliest-booking/${practiceCode}`)
-      .then(response => response.json())
-      .then(data => {
-        const earliestBooking = data.earliestBooking;
-        const today = new Date();
-        let minDate;
+  fetch(`/api/earliest-booking/${practiceCode}`)
+    .then(response => response.json())
+    .then(async encryptedData => {
+      const decryptedData = JSON.parse(await decryptPracticeCode(encryptedData));
+      const earliestBooking = decryptedData.earliestBooking;
+      const today = new Date();
+      let minDate = new Date(today.setDate(today.getDate() + parseInt(earliestBooking)));
 
-        minDate = new Date(today.setDate(today.getDate() + parseInt(earliestBooking)));
-  
-        preferDateInput.min = minDate.toISOString().split('T')[0];
-        preferDateInput.value = minDate.toISOString().split('T')[0];
-      })
-      .catch(error => console.error('Error fetching earliest booking:', error));
+      preferDateInput.min = minDate.toISOString().split('T')[0];
+      preferDateInput.value = minDate.toISOString().split('T')[0];
+    })
+    .catch(error => console.error('Error fetching earliest booking:', error));
 }
 
 function getPracticeCodeFromURL() {

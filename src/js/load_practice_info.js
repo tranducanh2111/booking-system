@@ -1,22 +1,28 @@
 // load_practice_info.js
 export async function loadPracticeInfo() {
-  const practiceCode = getPracticeCodeFromURL(); // Get practiceCode from the URL
+  const practiceCode = getPracticeCodeFromURL();
 
   try {
-    if (practiceCode != "") {
-      const response = await fetch(`/api/practice_info/${practiceCode}`);
+    if (practiceCode !== "") {
+      const response = await fetch(`/api/encrypt_practice_code/${practiceCode}`);
       if (!response.ok) {
         window.location.href = '/404';
         console.log('Network response was not ok');
-        // throw new Error('Network response was not ok');
       }
-      const practiceInfo = await response.json();
-      displayPracticeInfo(practiceInfo);
+      const encryptedData = await response.json();
+      const decryptedPracticeCode = await decryptPracticeCode(encryptedData);
+      const practiceInfoResponse = await fetch(`/api/practice_info/${decryptedPracticeCode}`);
+      if (!practiceInfoResponse.ok) {
+        throw new Error('Error fetching practice information');
+      }
+      const encryptedPracticeInfo = await practiceInfoResponse.json();
+      const decryptedPracticeInfo = JSON.parse(await decryptPracticeCode(encryptedPracticeInfo));
+      displayPracticeInfo(decryptedPracticeInfo);
     } else {
       console.error('No practiceCode found in the URL');
     }
   } catch (error) {
-    console.error('Error fetching practice information:', error);
+    console.error('Error:', error);
   }
 }
 
@@ -26,6 +32,20 @@ function getPracticeCodeFromURL() {
   const reqCode = decodeURI(params.toString()).replace("=", "");
   console.log(reqCode);
   return reqCode;
+}
+
+async function decryptPracticeCode(encryptedData) {
+  const response = await fetch('/api/decrypt_practice_code', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(encryptedData),
+  });
+  if (!response.ok) {
+    throw new Error('Error decrypting practice code');
+  }
+  return await response.text();
 }
 
 // Append clinic informations to the UI
