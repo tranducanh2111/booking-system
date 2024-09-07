@@ -7,30 +7,34 @@ const { connectAdvanceNoticeDatabase, closeAdvanceNoticeDatabaseConnection } = r
 const { connectConnectDatabase, closeConnectDatabaseConnection } = require('../config/db_connect');
 
 // Handle request for loading the clinic notes
-router.get('/practice_info/:id?', (req, res) => {
-  const db_advance_notice = connectAdvanceNoticeDatabase();
-  let practiceCode = req.params.id;
-  const practiceInfoQuery = `
-    SELECT Notes, PracticeName, Phone, Email, Website, Logo, Address, Suburb, Postcode, State, Country
-    FROM practice
-    WHERE PracticeCode = ? AND isActive = 'Yes'`;
-  
-  const encryptedQuery = encrypt(practiceInfoQuery);
-  
-  db_advance_notice.query(decrypt(encryptedQuery), [practiceCode], (err, results) => {
-    if (err) {
-      console.error('Error fetching practice information:', err);
-      res.status(500).json({ error: 'Error fetching practice information' });
-      return;
-    }
+router.get('/practice_info/:id?', async (req, res) => {
+  try {
+    const db_advance_notice = connectAdvanceNoticeDatabase();
+    let practiceCode = req.params.id;
+    const practiceInfoQuery = `
+      SELECT Notes, PracticeName, Phone, Email, Website, Logo, Address, Suburb, Postcode, State, Country
+      FROM practice
+      WHERE PracticeCode = ? AND isActive = 'Yes'`;
+    
+    const results = await new Promise((resolve, reject) => {
+      db_advance_notice.query(practiceInfoQuery, [practiceCode], (err, results) => {
+        if (err) reject(err);
+        else resolve(results);
+      });
+    });
+
     if (results.length > 0) {
-      const encryptedResults = encrypt(JSON.stringify(results[0]));
+      const encryptedResults = await encrypt(results[0]);
       res.json(encryptedResults);
     } else {
       res.status(404).json({ error: 'Practice information not found', redirect: '/404' });
     }
-  });
-  closeAdvanceNoticeDatabaseConnection();
+  } catch (error) {
+    console.error('Error fetching practice information:', error);
+    res.status(500).json({ error: 'Error fetching practice information' });
+  } finally {
+    closeAdvanceNoticeDatabaseConnection();
+  }
 });
 
 // Handle the practice booking day preference
@@ -81,12 +85,10 @@ router.get('/bank-bin', (req, res) => {
 const { encrypt, decrypt } = require('../utils/crypto');
 
 // New route for encrypting practice code
-router.get('/encrypt_practice_code/:id', (req, res) => {
-  const practiceCode = req.params.id;
-  console.log('Received practice code for encryption:', practiceCode);
+router.get('/encrypt_practice_code/:id', async (req, res) => {
   try {
-    const encryptedData = encrypt(practiceCode);
-    console.log('Encrypted data:', encryptedData);
+    const practiceCode = req.params.id;
+    const encryptedData = await encrypt(practiceCode);
     res.json(encryptedData);
   } catch (error) {
     console.error('Encryption error:', error);
@@ -95,12 +97,10 @@ router.get('/encrypt_practice_code/:id', (req, res) => {
 });
 
 // New route for decrypting practice code
-router.post('/decrypt_practice_code', (req, res) => {
-  const encryptedData = req.body;
-  console.log('Received encrypted data for decryption:', encryptedData);
+router.post('/decrypt_practice_code', async (req, res) => {
   try {
-    const decryptedPracticeCode = decrypt(encryptedData);
-    console.log('Decrypted practice code:', decryptedPracticeCode);
+    const encryptedData = req.body;
+    const decryptedPracticeCode = await decrypt(encryptedData);
     res.send(decryptedPracticeCode);
   } catch (error) {
     console.error('Decryption error:', error);
