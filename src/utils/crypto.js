@@ -1,31 +1,30 @@
 const crypto = require('crypto');
 
-const algorithm = 'aes-256-ctr';
-const secretKey = 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3'; // This should be stored securely, not in the code
+const algorithm = process.env.ENCRYPTION_ALGORITHM || 'aes-256-ctr';
+const secretKey = process.env.ENCRYPTION_SECRET_KEY || 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3';
 
-function encrypt(text) {
-  console.log('Encrypting text:', text);
-  const iv = crypto.randomBytes(16);
-  const cipher = crypto.createCipheriv(algorithm, secretKey, iv);
-  const encrypted = Buffer.concat([cipher.update(text), cipher.final()]);
-  const result = {
-    iv: iv.toString('hex'),
-    content: encrypted.toString('hex')
-  };
-  console.log('Encrypted result:', result);
-  return result;
-}
+const cryptoOperation = async (data, operation) => {
+  try {
+    const iv = operation === 'encrypt' ? crypto.randomBytes(16) : Buffer.from(data.iv, 'hex');
+    const key = crypto.scryptSync(secretKey, 'salt', 32);
 
-function decrypt(hash) {
-  console.log('Decrypting hash:', hash);
-  const decipher = crypto.createDecipheriv(algorithm, secretKey, Buffer.from(hash.iv, 'hex'));
-  const decrypted = Buffer.concat([decipher.update(Buffer.from(hash.content, 'hex')), decipher.final()]);
-  const result = decrypted.toString();
-  console.log('Decrypted result:', result);
-  return result;
-}
+    const cipher = operation === 'encrypt'
+      ? crypto.createCipheriv(algorithm, key, iv)
+      : crypto.createDecipheriv(algorithm, key, iv);
 
-module.exports = {
-  encrypt,
-  decrypt
+    const input = operation === 'encrypt' ? JSON.stringify(data) : Buffer.from(data.content, 'hex');
+    const output = Buffer.concat([cipher.update(input), cipher.final()]);
+
+    return operation === 'encrypt'
+      ? { iv: iv.toString('hex'), content: output.toString('hex') }
+      : JSON.parse(output.toString());
+  } catch (error) {
+    console.error(`Crypto operation failed: ${error.message}`);
+    throw new Error(`Crypto operation failed: ${error.message}`);
+  }
 };
+
+const encrypt = (data) => cryptoOperation(data, 'encrypt');
+const decrypt = (data) => cryptoOperation(data, 'decrypt');
+
+module.exports = { encrypt, decrypt };
