@@ -5,3 +5,4 @@ Cider House Booking System
 npm install express
 npm install mysql2
 npm install dotenv
+npm install crypto
