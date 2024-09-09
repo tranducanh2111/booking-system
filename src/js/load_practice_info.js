@@ -15,8 +15,9 @@ export async function loadPracticeInfo() {
       if (!practiceInfoResponse.ok) {
         throw new Error('Error fetching practice information');
       }
-      const practiceInfo = await practiceInfoResponse.json();
-      displayPracticeInfo(practiceInfo);
+      const encryptedPracticeInfo = await practiceInfoResponse.json();
+      const decryptedPracticeInfo = JSON.parse(await decryptPracticeCode(encryptedPracticeInfo));
+      displayPracticeInfo(decryptedPracticeInfo);
     } else {
       console.error('No practiceCode found in the URL');
     }

@@ -14,22 +14,25 @@ router.get('/practice_info/:id?', (req, res) => {
   const practiceInfoQuery = `
     SELECT Notes, PracticeName, Phone, Email, Website, Logo, Address, Suburb, Postcode, State, Country
     FROM practice
-    WHERE PracticeCode = ? AND isActive = 'Yes'`
-  db_advance_notice.query(practiceInfoQuery, [practiceCode], (err, results) => {
+    WHERE PracticeCode = ? AND isActive = 'Yes'`;
+  
+  const encryptedQuery = encrypt(practiceInfoQuery);
+  
+  db_advance_notice.query(decrypt(encryptedQuery), [practiceCode], (err, results) => {
     if (err) {
       console.error('Error fetching practice information:', err);
       res.status(500).json({ error: 'Error fetching practice information' });
       return;
     }
     if (results.length > 0) {
-      res.json(results[0]);
+      const encryptedResults = encrypt(JSON.stringify(results[0]));
+      res.json(encryptedResults);
     } else {
       res.status(404).json({ error: 'Practice information not found', redirect: '/404' });
     }
   });
   closeAdvanceNoticeDatabaseConnection();
 });
-
 // Handle the practice booking day preference
 router.get('/earliest-booking/:id?', (req, res) => {
   const db_advance_notice = connectAdvanceNoticeDatabase();
