@@ -7,34 +7,26 @@ const { connectAdvanceNoticeDatabase, closeAdvanceNoticeDatabaseConnection } = r
 const { connectConnectDatabase, closeConnectDatabaseConnection } = require('../config/db_connect');
 
 // Handle request for loading the clinic notes
-router.get('/practice_info/:id?', async (req, res) => {
-  try {
-    const db_advance_notice = connectAdvanceNoticeDatabase();
-    let practiceCode = req.params.id;
-    const practiceInfoQuery = `
-      SELECT Notes, PracticeName, Phone, Email, Website, Logo, Address, Suburb, Postcode, State, Country
-      FROM practice
-      WHERE PracticeCode = ? AND isActive = 'Yes'`;
-    
-    const results = await new Promise((resolve, reject) => {
-      db_advance_notice.query(practiceInfoQuery, [practiceCode], (err, results) => {
-        if (err) reject(err);
-        else resolve(results);
-      });
-    });
-
+router.get('/practice_info/:id?', (req, res) => {
+  const db_advance_notice = connectAdvanceNoticeDatabase();
+  let practiceCode = req.params.id;
+  const practiceInfoQuery = `
+    SELECT Notes, PracticeName, Phone, Email, Website, Logo, Address, Suburb, Postcode, State, Country
+    FROM practice
+    WHERE PracticeCode = ? AND isActive = 'Yes'`
+  db_advance_notice.query(practiceInfoQuery, [practiceCode], (err, results) => {
+    if (err) {
+      console.error('Error fetching practice information:', err);
+      res.status(500).json({ error: 'Error fetching practice information' });
+      return;
+    }
     if (results.length > 0) {
-      const encryptedResults = await encrypt(results[0]);
-      res.json(encryptedResults);
+      res.json(results[0]);
     } else {
       res.status(404).json({ error: 'Practice information not found', redirect: '/404' });
     }
-  } catch (error) {
-    console.error('Error fetching practice information:', error);
-    res.status(500).json({ error: 'Error fetching practice information' });
-  } finally {
-    closeAdvanceNoticeDatabaseConnection();
-  }
+  });
+  closeAdvanceNoticeDatabaseConnection();
 });
 
 // Handle the practice booking day preference
@@ -42,18 +34,14 @@ router.get('/earliest-booking/:id?', (req, res) => {
   const db_advance_notice = connectAdvanceNoticeDatabase();
   let practiceCode = req.params.id;
   const query = 'SELECT EarliestBooking FROM practice WHERE PracticeCode = ? AND isActive = "Yes"';
-  
-  const encryptedQuery = encrypt(query);
-  
-  db_advance_notice.query(decrypt(encryptedQuery), [practiceCode], (err, results) => {
+  db_advance_notice.query(query, [practiceCode], (err, results) => {
     if (err) {
       console.error('Error fetching earliest booking:', err);
       res.status(500).json({ error: 'Error fetching earliest booking' });
       return;
     }
     if (results.length > 0) {
-      const encryptedResults = encrypt(JSON.stringify({ earliestBooking: results[0].EarliestBooking }));
-      res.json(encryptedResults);
+      res.json({ earliestBooking: results[0].EarliestBooking });
     } else {
       res.status(404).json({ error: 'Earliest booking information not found' });
     }
@@ -80,32 +68,6 @@ router.get('/service-list', (req, res) => {
 // Handle request for loading the bank BIN
 router.get('/bank-bin', (req, res) => {
   res.sendFile(path.join(__dirname, '../../data/bank-bin.json'));
-});
-
-const { encrypt, decrypt } = require('../utils/crypto');
-
-// New route for encrypting practice code
-router.get('/encrypt_practice_code/:id', async (req, res) => {
-  try {
-    const practiceCode = req.params.id;
-    const encryptedData = await encrypt(practiceCode);
-    res.json(encryptedData);
-  } catch (error) {
-    console.error('Encryption error:', error);
-    res.status(500).json({ error: 'Encryption failed' });
-  }
-});
-
-// New route for decrypting practice code
-router.post('/decrypt_practice_code', async (req, res) => {
-  try {
-    const encryptedData = req.body;
-    const decryptedPracticeCode = await decrypt(encryptedData);
-    res.send(decryptedPracticeCode);
-  } catch (error) {
-    console.error('Decryption error:', error);
-    res.status(500).json({ error: 'Decryption failed' });
-  }
 });
 
 module.exports = router;
