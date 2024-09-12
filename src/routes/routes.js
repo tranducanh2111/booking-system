@@ -5,12 +5,13 @@ const router = express.Router();
 // Database Connection
 const { connectAdvanceNoticeDatabase, closeAdvanceNoticeDatabaseConnection } = require('../config/db_advance_notice');
 const { connectConnectDatabase, closeConnectDatabaseConnection } = require('../config/db_connect');
+const { encrypt, decrypt } = require('../utils/crypto');
 
 // Handle request for loading the clinic notes
 router.get('/practice_info/:id?', async (req, res) => {
   try {
     const db_advance_notice = connectAdvanceNoticeDatabase();
-    let practiceCode = req.params.id;
+    const practiceCode = req.params.id;
     const practiceInfoQuery = `
       SELECT Notes, PracticeName, Phone, Email, Website, Logo, Address, Suburb, Postcode, State, Country
       FROM practice
@@ -24,7 +25,7 @@ router.get('/practice_info/:id?', async (req, res) => {
     });
 
     if (results.length > 0) {
-      const encryptedResults = await encrypt(JSON.stringify(results[0])); // Convert to string
+      const encryptedResults = await encrypt(JSON.stringify(results[0]));
       res.json(encryptedResults);
     } else {
       res.status(404).json({ error: 'Practice information not found', redirect: '/404' });
@@ -79,8 +80,6 @@ router.get('/service-list', (req, res) => {
 router.get('/bank-bin', (req, res) => {
   res.sendFile(path.join(__dirname, '../../data/bank-bin.json'));
 });
-
-const { encrypt, decrypt } = require('../utils/crypto');
 
 // New route for encrypting practice code
 router.get('/encrypt_practice_code/:id', async (req, res) => {
