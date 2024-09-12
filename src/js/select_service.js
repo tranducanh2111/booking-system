@@ -311,18 +311,31 @@ export function initializePreferredDate() {
     const practiceCode = getPracticeCodeFromURL();
   
     fetch(`/api/earliest-booking/${practiceCode}`)
-      .then(response => response.json())
+      .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+      })
       .then(data => {
         const earliestBooking = data.earliestBooking;
-        const today = new Date();
-        let minDate;
 
-        minDate = new Date(today.setDate(today.getDate() + parseInt(earliestBooking)));
-  
-        preferDateInput.min = minDate.toISOString().split('T')[0];
-        preferDateInput.value = minDate.toISOString().split('T')[0];
+        // Check if earliestBooking is defined and valid
+        if (earliestBooking !== undefined && !isNaN(Date.parse(earliestBooking))) {
+            const today = new Date();
+            let minDate = new Date(today.setDate(today.getDate() + parseInt(earliestBooking)));
+
+            preferDateInput.min = minDate.toISOString().split('T')[0];
+            preferDateInput.value = minDate.toISOString().split('T')[0];
+        } else {
+            console.error('Invalid earliest booking date:', earliestBooking);
+            alert('Invalid earliest booking date received. Please check the server response.');
+        }
       })
-      .catch(error => console.error('Error fetching earliest booking:', error));
+      .catch(error => {
+        console.error('Error fetching earliest booking:', error);
+        alert('An error occurred while fetching the earliest booking date.');
+      });
 }
 
 function getPracticeCodeFromURL() {

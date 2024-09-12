@@ -5,6 +5,10 @@ const algorithm = 'aes-256-ctr';
 const secretKey = 'vOVH6sdmpNWjRRIqCc7rdxs01lwHzfr3'; // This should be stored securely, not in the code
 
 function encrypt(text) {
+  // Ensure the input is a string
+  if (typeof text !== 'string') {
+    throw new TypeError('The "text" argument must be of type string.');
+  }
   console.log('Encrypting text:', text);
   const iv = crypto.randomBytes(16);
   const cipher = crypto.createCipheriv(algorithm, secretKey, iv);

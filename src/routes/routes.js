@@ -24,7 +24,7 @@ router.get('/practice_info/:id?', async (req, res) => {
     });
 
     if (results.length > 0) {
-      const encryptedResults = await encrypt(results[0]);
+      const encryptedResults = await encrypt(JSON.stringify(results[0])); // Convert to string
       res.json(encryptedResults);
     } else {
       res.status(404).json({ error: 'Practice information not found', redirect: '/404' });
@@ -43,17 +43,15 @@ router.get('/earliest-booking/:id?', (req, res) => {
   let practiceCode = req.params.id;
   const query = 'SELECT EarliestBooking FROM practice WHERE PracticeCode = ? AND isActive = "Yes"';
   
-  const encryptedQuery = encrypt(query);
-  
-  db_advance_notice.query(decrypt(encryptedQuery), [practiceCode], (err, results) => {
+  db_advance_notice.query(query, [practiceCode], (err, results) => {
     if (err) {
       console.error('Error fetching earliest booking:', err);
       res.status(500).json({ error: 'Error fetching earliest booking' });
       return;
     }
     if (results.length > 0) {
-      const encryptedResults = encrypt(JSON.stringify({ earliestBooking: results[0].EarliestBooking }));
-      res.json(encryptedResults);
+      // Return the earliest booking directly without encryption
+      res.json({ earliestBooking: results[0].EarliestBooking });
     } else {
       res.status(404).json({ error: 'Earliest booking information not found' });
     }
