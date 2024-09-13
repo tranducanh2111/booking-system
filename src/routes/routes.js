@@ -3,6 +3,8 @@ const express = require('express');
 const path = require('path');
 const router = express.Router();
 const { decrypt } = require('../utils/crypto'); // Import the decrypt function
+const { fetchDataFromPracticeInfo } = require('../js/api_requests'); // Adjust the path as necessary
+
 // Database Connection
 const { connectAdvanceNoticeDatabase, closeAdvanceNoticeDatabaseConnection } = require('../config/db_advance_notice');
 const { connectConnectDatabase, closeConnectDatabaseConnection } = require('../config/db_connect');
@@ -88,6 +90,36 @@ router.get('/service-list', (req, res) => {
 // Handle request for loading the bank BIN
 router.get('/bank-bin', (req, res) => {
   res.sendFile(path.join(__dirname, '../../data/bank-bin.json'));
+});
+
+// New API endpoint to fetch services
+router.get('/fetch-services/:encryptedCode?', async (req, res) => {
+    const { encryptedCode } = req.params; // Extract the encryptedCode from the request parameters
+
+    if (!encryptedCode) {
+        return res.status(400).json({ error: 'No encrypted code provided' });
+    }
+
+    try {
+        // Decrypt the practice code
+        const decryptedCode = await decrypt({ iv: process.env.IV, content: encryptedCode });
+
+        const practiceInfo = {
+            IPAddressZT: 'petbooqz.yourlocalvet.com.au',
+            APIEP: 'advancenotice/api/v1',
+            APIUser: 'abcdef',
+            APIPassword: '1234'
+        };
+
+        const method = 'GET';
+        const request = 'services';
+
+        const data = await fetchDataFromPracticeInfo(practiceInfo, method, request, decryptedCode);
+        res.json(data); // Send the fetched data as a response
+    } catch (error) {
+        console.error('Error fetching services:', error);
+        res.status(500).json({ error: 'Failed to fetch services' });
+    }
 });
 
 module.exports = router;
