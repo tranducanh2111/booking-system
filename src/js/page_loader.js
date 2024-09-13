@@ -53,6 +53,13 @@ export function loadContent(page) {
                         module.initializeCheckoutPage();
                     })
                     .catch(error => console.error('Error loading booking_confirmation.js:', error));
+
+                // Import the checkout timer only for the checkout page
+                import(`./checkout_timer.js?ts=${cacheBuster}`)
+                    .then(module => {
+                        module.startCheckoutTimer();
+                    })
+                    .catch(error => console.error('Error loading checkout_timer.js:', error));
             }
         })
         .catch(() => {

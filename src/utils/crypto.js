@@ -4,6 +4,7 @@ const crypto = require('crypto');
 
 const algorithm = 'aes-256-ctr';
 const secretKey = process.env.APIAUTH;
+const iv = Buffer.from(process.env.IV, 'utf-8');
 
 /**
  * Encrypts a given text using AES-256-CTR algorithm.
@@ -16,7 +17,6 @@ async function encrypt(text) {
       return reject(new TypeError('The "text" argument must be of type string.'));
     }
     
-    const iv = crypto.randomBytes(16);
     const keyBuffer = Buffer.from(secretKey, 'hex');
     
     if (keyBuffer.length !== 32) {
@@ -45,11 +45,24 @@ async function decrypt(hash) {
     }
 
     const keyBuffer = Buffer.from(secretKey, 'hex');
-    const decipher = crypto.createDecipheriv(algorithm, keyBuffer, Buffer.from(hash.iv, 'hex'));
+    const decipher = crypto.createDecipheriv(algorithm, keyBuffer, iv);
     const decrypted = Buffer.concat([decipher.update(Buffer.from(hash.content, 'hex')), decipher.final()]);
     
     resolve(decrypted.toString());
   });
 }
+
+// async function encryptPracticeCode() {
+//   const practiceCode = '9999';
+  
+//   try {
+//       const encrypted = await encrypt(practiceCode);
+//       console.log('Encrypted Code:', encrypted.content); // This will log the encrypted content
+//   } catch (error) {
+//       console.error('Error encrypting practice code:', error);
+//   }
+// }
+
+// encryptPracticeCode();
 
 module.exports = { encrypt, decrypt };
