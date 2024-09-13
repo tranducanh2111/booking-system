@@ -29,37 +29,24 @@ export function loadContent(page) {
 
             // Load scripts for other pages as necessary
             if (page === 'homepage') {
-                import(`./popup_loader.js?ts=${cacheBuster}`)
+                import(`./popup_loader.js`)
                     .then(module => {
                         module.setupPopup();
                     })
                     .catch(error => console.error('Error loading popup_loader.js:', error));
-
-                import(`./load_practice_info.js?ts=${cacheBuster}`)
-                    .then(module => {
-                        module.loadPracticeInfo();
-                    })
-                    .catch(error => console.error('Error loading load_practice_info.js:', error));
             }
 
             if (page === 'cancel') {
-                import(`./cancel_appointment.js?ts=${cacheBuster}`)
+                import(`./cancel_appointment.js`)
                     .catch(error => console.error('Error loading cancel_appointment.js:', error));
             }
 
             if (page === 'checkout') {
-                import(`./booking_confirmation.js?ts=${cacheBuster}`)
+                import(`./booking_confirmation.js`)
                     .then(module => {
                         module.initializeCheckoutPage();
                     })
                     .catch(error => console.error('Error loading booking_confirmation.js:', error));
-
-                // Import the checkout timer only for the checkout page
-                import(`./checkout_timer.js?ts=${cacheBuster}`)
-                    .then(module => {
-                        module.startCheckoutTimer();
-                    })
-                    .catch(error => console.error('Error loading checkout_timer.js:', error));
             }
         })
         .catch(() => {

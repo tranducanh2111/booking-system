@@ -1,3 +1,4 @@
+// src/js/api_requests.js
 const axios = require('axios');
 
 async function fetchDataFromPracticeInfo(practiceInfo, method, request, practiceCode) {
@@ -18,7 +19,7 @@ async function fetchDataFromPracticeInfo(practiceInfo, method, request, practice
             url: url,
             auth: auth,
             headers: {
-                'client_practice': practiceCode // Add the practice code here
+                'client_practice': practiceCode
             }
         });
         return response.data; // Return the data from the response

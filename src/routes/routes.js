@@ -105,7 +105,7 @@ router.get('/bank-bin', (req, res) => {
   res.sendFile(path.join(__dirname, '../../data/bank-bin.json'));
 });
 
-// New API endpoint to fetch services
+// API endpoint to fetch services from PB
 router.get('/fetch-services/:encryptedCode?', async (req, res) => {
     const { encryptedCode } = req.params; // Extract the encryptedCode from the request parameters
 
