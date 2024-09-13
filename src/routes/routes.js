@@ -51,24 +51,37 @@ router.get('/practice_info/:encryptedCode?', async (req, res) => {
 });
 
 // Handle the practice booking day preference
-router.get('/earliest-booking/:id?', (req, res) => {
-  const db_advance_notice = connectAdvanceNoticeDatabase();
-  let practiceCode = req.params.id;
-  const query = 'SELECT EarliestBooking FROM practice WHERE PracticeCode = ? AND isActive = "Yes"';
-  
-  db_advance_notice.query(query, [practiceCode], (err, results) => {
-    if (err) {
-      console.error('Error fetching earliest booking:', err);
-      res.status(500).json({ error: 'Error fetching earliest booking' });
-      return;
-    }
-    if (results.length > 0) {
-      res.json({ earliestBooking: results[0].EarliestBooking });
-    } else {
-      res.status(404).json({ error: 'Earliest booking information not found' });
-    }
-    closeAdvanceNoticeDatabaseConnection();
-  });
+router.get('/earliest-booking/:encryptedCode?', async (req, res) => {
+  const { encryptedCode } = req.params; // Extract the encryptedCode from the request parameters
+
+  if (!encryptedCode) {
+    return res.status(400).json({ error: 'No encrypted code provided' });
+  }
+
+  try {
+    // Decrypt the practice code
+    const decryptedCode = await decrypt({ iv: process.env.IV, content: encryptedCode });
+
+    const db_advance_notice = connectAdvanceNoticeDatabase();
+    const query = 'SELECT EarliestBooking FROM practice WHERE PracticeCode = ? AND isActive = "Yes"';
+    
+    db_advance_notice.query(query, [decryptedCode], (err, results) => {
+      if (err) {
+        console.error('Error fetching earliest booking:', err);
+        res.status(500).json({ error: 'Error fetching earliest booking' });
+        return;
+      }
+      if (results.length > 0) {
+        res.json({ earliestBooking: results[0].EarliestBooking });
+      } else {
+        res.status(404).json({ error: 'Earliest booking information not found' });
+      }
+      closeAdvanceNoticeDatabaseConnection();
+    });
+  } catch (error) {
+    console.error('Error decrypting practice code:', error);
+    res.status(500).json({ error: 'Failed to decrypt practice code' });
+  }
 });
 
 router.post('/proceed-appointment-request', (req, res) => {
