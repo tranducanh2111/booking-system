@@ -2,36 +2,33 @@
 const express = require('express');
 const path = require('path');
 const router = express.Router();
-const { decrypt } = require('../utils/crypto'); // Import the decrypt function
-const { fetchDataFromPracticeInfo } = require('../js/api_requests'); // Adjust the path as necessary
+// Remove the decrypt function import
+// const { decrypt } = require('../utils/crypto'); 
+const { fetchDataFromPracticeInfo } = require('../js/api_requests');
 
 // Database Connection
 const { connectAdvanceNoticeDatabase, closeAdvanceNoticeDatabaseConnection } = require('../config/db_advance_notice');
 const { connectConnectDatabase, closeConnectDatabaseConnection } = require('../config/db_connect');
 
 // Handle request for loading the clinic notes
-router.get('/practice_info/:encryptedCode?', async (req, res) => {
+router.get('/practice_info/:practiceCode?', async (req, res) => {
   try {
-    const encryptedCode = req.params.encryptedCode;
-    if (!encryptedCode) {
-      return res.status(400).json({ error: 'No encrypted code provided' });
+    const practiceCode = req.params.practiceCode; // Use practiceCode directly
+    if (!practiceCode) {
+      return res.status(400).json({ error: 'No practice code provided' });
     }
-
-    // Decrypt the practice code
-    const decryptedCode = await decrypt({ iv: process.env.IV, content: encryptedCode });
-    // console.log('Decrypted Code:', decryptedCode);
 
     // Connect to the database
     const db_advance_notice = connectAdvanceNoticeDatabase();
 
-    // Fetch practice info using the decrypted practice code
+    // Fetch practice info using the practice code
     const practiceInfoQuery = `
       SELECT Notes, PracticeName, Phone, Email, Website, Logo, Address, Suburb, Postcode, State, Country, IPAddressZT, ListeningPort, APIEP, APIUser, APIPassword
       FROM practice
       WHERE PracticeCode = ? AND isActive = 'Yes'`;
     
     const results = await new Promise((resolve, reject) => {
-      db_advance_notice.query(practiceInfoQuery, [decryptedCode], (err, results) => {
+      db_advance_notice.query(practiceInfoQuery, [practiceCode], (err, results) => {
         if (err) reject(err);
         else resolve(results);
       });
@@ -51,21 +48,18 @@ router.get('/practice_info/:encryptedCode?', async (req, res) => {
 });
 
 // Handle the practice booking day preference
-router.get('/earliest-booking/:encryptedCode?', async (req, res) => {
-  const { encryptedCode } = req.params; // Extract the encryptedCode from the request parameters
+router.get('/earliest-booking/:practiceCode?', async (req, res) => {
+  const { practiceCode } = req.params; // Use practiceCode directly
 
-  if (!encryptedCode) {
-    return res.status(400).json({ error: 'No encrypted code provided' });
+  if (!practiceCode) {
+    return res.status(400).json({ error: 'No practice code provided' });
   }
 
   try {
-    // Decrypt the practice code
-    const decryptedCode = await decrypt({ iv: process.env.IV, content: encryptedCode });
-
     const db_advance_notice = connectAdvanceNoticeDatabase();
     const query = 'SELECT EarliestBooking FROM practice WHERE PracticeCode = ? AND isActive = "Yes"';
     
-    db_advance_notice.query(query, [decryptedCode], (err, results) => {
+    db_advance_notice.query(query, [practiceCode], (err, results) => {
       if (err) {
         console.error('Error fetching earliest booking:', err);
         res.status(500).json({ error: 'Error fetching earliest booking' });
@@ -79,8 +73,8 @@ router.get('/earliest-booking/:encryptedCode?', async (req, res) => {
       closeAdvanceNoticeDatabaseConnection();
     });
   } catch (error) {
-    console.error('Error decrypting practice code:', error);
-    res.status(500).json({ error: 'Failed to decrypt practice code' });
+    console.error('Error fetching earliest booking:', error);
+    res.status(500).json({ error: 'Error fetching earliest booking' });
   }
 });
 
@@ -106,33 +100,31 @@ router.get('/bank-bin', (req, res) => {
 });
 
 // API endpoint to fetch services from PB
-router.get('/fetch-services/:encryptedCode?', async (req, res) => {
-    const { encryptedCode } = req.params; // Extract the encryptedCode from the request parameters
+router.get('/services/:practiceCode?', async (req, res) => {
+  const { practiceCode } = req.params; // Use practiceCode directly
+  const headers = req.headers;
 
-    if (!encryptedCode) {
-        return res.status(400).json({ error: 'No encrypted code provided' });
-    }
+  if (!practiceCode) {
+    return res.status(400).json({ error: 'No practice code provided' });
+  }
 
-    try {
-        // Decrypt the practice code
-        const decryptedCode = await decrypt({ iv: process.env.IV, content: encryptedCode });
+  try {
+    const practiceInfo = {
+      IPAddressZT: 'petbooqz.yourlocalvet.com.au',
+      APIEP: 'advancenotice/api/v1',
+      APIUser: 'abcdef',
+      APIPassword: '1234'
+    };
 
-        const practiceInfo = {
-            IPAddressZT: 'petbooqz.yourlocalvet.com.au',
-            APIEP: 'advancenotice/api/v1',
-            APIUser: 'abcdef',
-            APIPassword: '1234'
-        };
+    const method = 'GET';
+    const request = 'services';
 
-        const method = 'GET';
-        const request = 'services';
-
-        const data = await fetchDataFromPracticeInfo(practiceInfo, method, request, decryptedCode);
-        res.json(data); // Send the fetched data as a response
-    } catch (error) {
-        console.error('Error fetching services:', error);
-        res.status(500).json({ error: 'Failed to fetch services' });
-    }
+    const data = await fetchDataFromPracticeInfo(practiceInfo, method, request, practiceCode);
+    res.json(data); // Send the fetched data as a response
+  } catch (error) {
+    console.error('Error fetching services:', error);
+    res.status(500).json({ error: 'Failed to fetch services' });
+  }
 });
 
 module.exports = router;

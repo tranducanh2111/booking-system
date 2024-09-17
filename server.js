@@ -5,7 +5,7 @@ const fs = require('fs');
 const bodyParser = require('body-parser');
 
 const app = express();
-const port = 3500;
+const port = 3100;
 
 // Middleware to parse form data
 app.use(bodyParser.urlencoded({ extended: true }));
