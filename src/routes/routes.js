@@ -4,8 +4,14 @@ const path = require('path');
 const router = express.Router();
 const { decrypt } = require('../utils/crypto'); // Import the decrypt function
 // Database Connection
-const { connectAdvanceNoticeDatabase, closeAdvanceNoticeDatabaseConnection } = require('../config/db_advance_notice');
-const { connectConnectDatabase, closeConnectDatabaseConnection } = require('../config/db_connect');
+const {
+  connectAdvanceNoticeDatabase,
+  closeAdvanceNoticeDatabaseConnection,
+  connectConnectDatabase,
+  closeConnectDatabaseConnection,
+  connectPetbooqzDatabase,
+  closePetbooqzDatabaseConnection
+} = require('../config/db_connection');
 
 // Handle request for loading the clinic notes
 router.get('/practice_info/:encryptedCode?', async (req, res) => {
@@ -88,6 +94,75 @@ router.get('/service-list', (req, res) => {
 // Handle request for loading the bank BIN
 router.get('/bank-bin', (req, res) => {
   res.sendFile(path.join(__dirname, '../../data/bank-bin.json'));
+});
+
+// API endpoint to fetch services from PB
+// router.get('/services/:practiceCode?', async (req, res) => {
+//   const { practiceCode } = req.params; // Use practiceCode directly
+//   const headers = req.headers;
+
+//   if (!practiceCode) {
+//     return res.status(400).json({ error: 'No practice code provided' });
+//   }
+
+//   try {
+//     const practiceInfo = {
+//       IPAddressZT: 'petbooqz.yourlocalvet.com.au',
+//       APIEP: 'advancenotice/api/v1',
+//       APIUser: 'abcdef',
+//       APIPassword: '1234'
+//     };
+
+//     const method = 'GET';
+//     const request = 'services';
+
+//     const data = await fetchDataFromPracticeInfo(practiceInfo, method, request, practiceCode);
+//     res.json(data); // Send the fetched data as a response
+//   } catch (error) {
+//     console.error('Error fetching services:', error);
+//     res.status(500).json({ error: 'Failed to fetch services' });
+//   }
+// });
+
+// API endpoint to fetch services from PB 
+router.get('/services/:practiceCode?', async (req, res) => {
+  try {
+    const practiceCode = req.params.practiceCode;
+    const headers = req.headers;
+
+    if (!practiceCode) {
+      return res.status(400).json({ error: 'No practice code provided' });
+    }
+
+    // Connect to the database
+    const db_petbooqz = connectPetbooqzDatabase();
+
+    // Fetch practice info using the practice code
+    const practiceServiceQuery = `
+      SELECT DISTINCT SKU, ItemName
+      FROM services
+      WHERE ClinicCode = ?
+      AND Status = 'Current'
+      AND DisplayOnline LIKE '%Yes%'`;
+    
+    const results = await new Promise((resolve, reject) => {
+      db_petbooqz.query(practiceServiceQuery, [practiceCode], (err, results) => {
+        if (err) reject(err);
+        else resolve(results);
+      });
+    });
+
+    if (results.length > 0) {
+      res.json(results); // Return the results directly
+    } else {
+      res.status(404).json({ error: 'Practice services not found' });
+    }
+  } catch (error) {
+    console.error('Error fetching practice services:', error);
+    res.status(500).json({ error: 'Error fetching practice services' });
+  } finally {
+    closePetbooqzDatabaseConnection();
+  }
 });
 
 module.exports = router;
