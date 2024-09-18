@@ -142,8 +142,10 @@ router.get('/services/:practiceCode?', async (req, res) => {
       SELECT DISTINCT SKU, ItemName
       FROM services
       WHERE ClinicCode = ?
+      AND UPPER(GoodsServices) LIKE '%PROCEDURE%'
       AND Status = 'Current'
-      AND DisplayOnline LIKE '%Yes%'`;
+      AND DisplayOnline LIKE '%Yes%'
+      ORDER BY ItemName ASC;`;
     
     const results = await new Promise((resolve, reject) => {
       db_petbooqz.query(practiceServiceQuery, [practiceCode], (err, results) => {
@@ -153,13 +155,21 @@ router.get('/services/:practiceCode?', async (req, res) => {
     });
 
     if (results.length > 0) {
-      res.json(results); // Return the results directly
+      const categories = results.map((service) => ({
+        sku: service.SKU,
+        name: service.ItemName,
+      }));
+
+      res.json({
+        messagecode: "Success",
+        categories: categories,
+      });
     } else {
-      res.status(404).json({ error: 'Practice services not found' });
+      res.status(404).json({ error: "Practice services not found" });
     }
   } catch (error) {
-    console.error('Error fetching practice services:', error);
-    res.status(500).json({ error: 'Error fetching practice services' });
+    console.error("Error fetching practice services:", error);
+    res.status(500).json({ error: "Error fetching practice services" });
   } finally {
     closePetbooqzDatabaseConnection();
   }
