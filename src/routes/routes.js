@@ -153,16 +153,16 @@ router.get('/services/:practiceCode?', async (req, res) => {
 });
 
 // API Endpoint to search clients from PB
-router.get('/searchClient/:practiceCode', async (req, res) => {
+router.get('/searchExistClient/:practiceCode', async (req, res) => {
   try {
     const practiceCode = req.params.practiceCode;
-    const { mobile, email, mastercode } = req.query;
+    const { mobile, lastname } = req.query;
 
     if (!practiceCode) {
       return res.status(400).json({ error: 'No practice code provided' });
     }
 
-    if (!mastercode && !mobile && !email) {
+    if (!lastname && !mobile) {
       return res.status(400).json({ error: 'Information is required to connect' });
     }
 
@@ -171,36 +171,44 @@ router.get('/searchClient/:practiceCode', async (req, res) => {
 
     // Construct the query
     let query = `
-      SELECT mastercode, Mobile, email, ContactTitle, ContactFirst, ContactLast, Address, City, State, Postcode
+      SELECT id, mastercode, ContactTitle, ContactFirst, ContactLast, Mobile, email
       FROM clientdb
       WHERE UPPER(Active) = 'CURRENT'
       AND ClinicCode = ?`;
 
-    const queryParams = [practiceCode];
-
-    if (mastercode) {
-      query += ' AND mastercode = ?';
-      queryParams.push(mastercode);
-    } else if (mobile) {
-      query += ' AND Mobile = ?';
+    if (mobile) {
+      query += ' AND UPPER(Mobile) = UPPER(?)';
       queryParams.push(mobile);
-    } else {
-      query += ' AND email = ?';
-      queryParams.push(email);
+    } 
+    if (lastname) {
+      query += ' AND UPPER(ContactLast) = UPPER(?)';
+      queryParams.push(lastname);
     }
 
-    const results = await queryDatabase(db_petbooqz, query, queryParams);
+    const results = await queryDatabase(db_petbooqz, query, [practiceCode]);
 
-    if (results.length > 1) {
-      return res.status(400).json({ error: 'There was an error loading your record' });
-    } else if (results.length === 0) {
-      return res.status(404).json({ error: 'Could not find client' });
+    if (results.length === 0) {
+      return res.json({ message: "Error", error: "No clients found with the provided details." });
+    } else if (results.length > 1) {
+      return res.json({ message: "Error", error: "Multiple clients found with the same mobile and last name." });
     }
 
-    res.json({
-      messagecode: "Success",
-      client: results[0]
-    });
+    const row = results[0];
+    const response = {
+      client: {
+        clientcode: row.mastercode,
+        title: row.ContactTitle,
+        firstName: row.ContactFirst,
+        lastname: row.ContactLast,
+        mobile: mobile,
+        email: row.email
+      },
+      DateRequested: new Date().toISOString(),
+      code: generateReservationId(),
+      messagecode: 'Success'
+    };
+
+    res.json(response);
 
   } catch (error) {
     console.error("Error searching for client:", error);
