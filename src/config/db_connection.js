@@ -64,11 +64,60 @@ function closePetbooqzDatabaseConnection() {
   closeDatabaseConnection('PETBOOQZ');
 }
 
+// Function to send query the database
+async function queryDatabase(connection, sql, params = []) {
+  return new Promise((resolve, reject) => {
+    connection.query(sql, params, (error, results) => {
+      if (error) {
+        reject(error);
+      } else {
+        resolve(results);
+      }
+    });
+  });
+}
+
+// Transaction functions
+async function beginTransaction(connection) {
+  return new Promise((resolve, reject) => {
+    connection.beginTransaction((err) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve();
+    });
+  });
+}
+
+async function commitTransaction(connection) {
+  return new Promise((resolve, reject) => {
+    connection.commit((err) => {
+      if (err) {
+        return reject(err);
+      }
+      resolve();
+    });
+  });
+}
+
+async function rollbackTransaction(connection) {
+  return new Promise((resolve, reject) => {
+    connection.rollback(() => {
+      resolve(); // No error handling needed for rollback
+    });
+  });
+}
+
+// Export the transaction functions
 module.exports = {
   connectConnectDatabase,
   closeConnectDatabaseConnection,
   connectAdvanceNoticeDatabase,
   closeAdvanceNoticeDatabaseConnection,
   connectPetbooqzDatabase,
-  closePetbooqzDatabaseConnection
+  closePetbooqzDatabaseConnection,
+  queryDatabase,
+  beginTransaction,
+  commitTransaction,
+  rollbackTransaction
 };
