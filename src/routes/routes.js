@@ -153,7 +153,7 @@ router.get('/services/:practiceCode?', async (req, res) => {
 });
 
 // API Endpoint to search clients from PB
-router.get('/searchExistClient/:practiceCode', async (req, res) => {
+router.post('/searchExistClient/:practiceCode', async (req, res) => {
   try {
     const practiceCode = req.params.practiceCode;
     const { mobile, lastname } = req.query;
