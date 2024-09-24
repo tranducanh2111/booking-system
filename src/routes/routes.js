@@ -117,7 +117,7 @@ router.get('/services', async (req, res) => {
     const method = 'GET';
     const request = 'services';
 
-    const data = await fetchDataFromPracticeInfo(practiceInfo, method, request, '', '', 'FVV001');
+    const data = await fetchDataFromPracticeInfo(practiceInfo, method, request, '', '', '');
     res.json(data); // Send the fetched data as a response
   } catch (error) {
     console.error('Error fetching services:', error);
@@ -127,7 +127,7 @@ router.get('/services', async (req, res) => {
 
 // API endpoint to fetch a client from PB
 router.post('/searchExistClient', async (req, res) => {
-  const { mobile, lastname } = req.body;
+  const { mobile, lastname, practiceCode } = req.body;
 
   if (!mobile && !lastname) {
       return res.status(400).json({ error: 'Mobile or last name is required' });
@@ -151,7 +151,7 @@ router.post('/searchExistClient', async (req, res) => {
     };
 
     // Call the fetchDataFromPracticeInfo function with the data
-    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, '', 'FVV001');
+    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, '', practiceCode);
     res.json(response);
   } catch (error) {
     console.error('Error fetching existed client:', error);
@@ -180,7 +180,7 @@ router.get('/clientPatients/:clientcode', async (req, res) => {
       clientcode: clientcode, 
     };
 
-    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, '', 'FVV001');
+    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, '', '');
     res.json(response);
   } catch (error) {
     console.error('Error fetching existed patients of client:', error);
@@ -190,7 +190,7 @@ router.get('/clientPatients/:clientcode', async (req, res) => {
 
 // API endpoint to make a temporary reservation from PB
 router.post('/reserve', async (req, res) => {
-  const { sku, room, time, date, staff, practiceCode } = req.body;
+  const { sku, room, time, date, staff ,practiceCode } = req.body;
 
   if (!sku || !room || !time || !date || !practiceCode) {
     return res.status(400).json({ error: 'Missing required fields' });
@@ -213,11 +213,45 @@ router.post('/reserve', async (req, res) => {
       room: room,
       time: time,
       date: date,
-      practiceCode: practiceCode
     };
 
     // Call the fetchDataFromPracticeInfo function with the data
-    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, '', 'FVV001');
+    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, '', practiceCode);
+    res.json(response);
+  } catch (error) {
+    console.error('Error fetching existed client:', error);
+    res.status(500).json({ error: 'Failed to fetch existed client' });
+  }
+});
+
+// API endpoint to make a temporary reservation from PB
+router.post('/findfreeSlots', async (req, res) => {
+  const { sku, room, date, staff, practiceCode } = req.body;
+
+  if (!sku || !date || !practiceCode) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+
+  try {
+    const practiceInfo = {
+      IPAddressZT: 'localhost',
+      ListeningPort: 81,
+      APIEP: 'petbooqz/advancenotice/api/v1',
+      APIUser: 'abcdef',
+      APIPassword: '1234'
+    };
+
+    const method = 'POST';
+    const request = 'findfreeSlots';
+
+    const data = {
+      sku: sku,
+      room: room,
+      date: date
+    };
+
+    // Call the fetchDataFromPracticeInfo function with the data
+    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, '', practiceCode);
     res.json(response);
   } catch (error) {
     console.error('Error fetching existed client:', error);
