@@ -1,0 +1,121 @@
+/* text style */
+.text-h1
+{
+    font-size: 64px !important;
+    margin: 0;
+    letter-spacing: 0.01rem;
+}
+
+.text-h2
+{
+    font-size: 32px !important;
+    margin: 0;
+    letter-spacing: 0.03rem;
+}
+
+.text-h3
+{
+    font-size: 24px !important;
+    margin: 0;
+    letter-spacing: 0.03rem;
+}
+
+.text-body
+{
+    font-size: 16px !important;
+    margin: 0;
+    letter-spacing: 0.03rem;
+}
+
+/* Other */
+.object-cover {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+}
+
+@media (max-width: 992px) {
+    .max-w-sm-150 {
+        max-width: 150px;
+    }
+}
+  
+@media (min-width: 992px) {
+    .max-w-lg-310 {
+        max-width: 310px;
+    }
+}
+
+.max-w-body
+{
+    max-width: 1241px;
+}
+
+@media (max-width: 576px)
+{
+    .page-height.page-height
+    {
+        min-height: calc(100vh - 55px - 83px);
+        height: fit-content !important;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 768px) 
+{
+    .page-height.page-height
+    {
+        min-height: calc(100vh - 55px - 56px);
+        height: fit-content !important;
+    }
+}
+  
+@media (min-width: 768px) {
+    .page-height
+    {
+        min-height: calc(100vh - 85px - 63px);
+        height: calc(100vh - 85px - 63px);
+    }
+}
+
+.overflow-auto-y
+{
+    overflow-y: auto;
+}
+
+.line-clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1; /* Number of lines to show */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+.hide-scrollbar
+{
+    scrollbar-width: none; /* For Firefox */
+    -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+}
+
+.outline-none
+{
+    outline: none;
+}
+
+.glassmorphism {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+}
+
+@supports not (backdrop-filter: blur(10px)) {
+    .glassmorphism {
+        background: rgba(255, 255, 255, 0.7);
+    }
+}
