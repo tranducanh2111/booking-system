@@ -1,7 +1,7 @@
 // src/js/api_requests.js
 const axios = require('axios');
 
-async function fetchDataFromPracticeInfo(practiceInfo, method, request, practiceCode) {
+async function fetchDataFromPracticeInfo(practiceInfo, method, request, data) {
     const { IPAddressZT, ListeningPort, APIEP, APIUser, APIPassword } = practiceInfo;
     // const { IPAddressZT, APIEP, APIUser, APIPassword } = practiceInfo;
 
@@ -18,11 +18,9 @@ async function fetchDataFromPracticeInfo(practiceInfo, method, request, practice
             method: method,
             url: url,
             auth: auth,
-            headers: {
-                'client_practice': practiceCode
-            }
+            data: data
         });
-        return response.data;
+        return response.data; // Return the data from the response
     } catch (error) {
         if (error.response) {
             console.error('Error fetching data from the API:', error.response.data);
