@@ -125,7 +125,7 @@ router.get('/services', async (req, res) => {
     const method = 'GET';
     const request = 'services';
 
-    const data = await fetchDataFromPracticeInfo(practiceInfo, method, request, '');
+    const data = await fetchDataFromPracticeInfo(practiceInfo, method, request, '','');
     res.json(data); // Send the fetched data as a response
   } catch (error) {
     console.error('Error fetching services:', error);
@@ -155,15 +155,43 @@ router.post('/searchExistClient', async (req, res) => {
     const data = {
       mobile: mobile,
       lastname: lastname
-  };
+    };
 
-  // Call the fetchDataFromPracticeInfo function with the data
-  const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data);
-  res.json(response);
-} catch (error) {
-  console.error('Error fetching existed client:', error);
-  res.status(500).json({ error: 'Failed to fetch existed client' });
-}
+    // Call the fetchDataFromPracticeInfo function with the data
+    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data,'');
+    res.json(response);
+  } catch (error) {
+    console.error('Error fetching existed client:', error);
+    res.status(500).json({ error: 'Failed to fetch existed client' });
+  }
+});
+
+router.get('/clientPatients/:clientcode', async (req, res) => {
+  const { clientcode } = req.params;
+
+  try {
+    const practiceInfo = {
+      IPAddressZT: 'localhost',
+      ListeningPort: 81,
+      APIEP: 'petbooqz/advancenotice/api/v1',
+      APIUser: 'abcdef',
+      APIPassword: '1234'
+    };
+
+    const method = 'GET';
+    const request = `clientPatients/${clientcode}`;
+
+    // Sending clientcode as part of the query parameters
+    const data = {
+      clientcode: clientcode, 
+    };
+
+    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, '');
+    res.json(response);
+  } catch (error) {
+    console.error('Error fetching existed patients of client:', error);
+    res.status(500).json({ error: 'Failed to fetch existed patients of client' });
+  }
 });
 
 module.exports = router;
