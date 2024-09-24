@@ -259,4 +259,37 @@ router.post('/findfreeSlots', async (req, res) => {
   }
 });
 
+// API endpoint to make a temporary reservation from PB
+router.post('/extendReservation', async (req, res) => {
+  const { reservationid, practiceCode } = req.body;
+
+  if (!reservationid) {
+    return res.status(400).json({ error: 'Missing reservation ID' });
+  }
+
+  try {
+    const practiceInfo = {
+      IPAddressZT: 'localhost',
+      ListeningPort: 81,
+      APIEP: 'petbooqz/advancenotice/api/v1',
+      APIUser: 'abcdef',
+      APIPassword: '1234'
+    };
+
+    const method = 'POST';
+    const request = 'extendReservation';
+
+    const data = {
+      reservationid: reservationid
+    };
+
+    // Call the fetchDataFromPracticeInfo function with the data
+    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, '', practiceCode);
+    res.json(response);
+  } catch (error) {
+    console.error('Error fetching existed client:', error);
+    res.status(500).json({ error: 'Failed to fetch existed client' });
+  }
+});
+
 module.exports = router;
