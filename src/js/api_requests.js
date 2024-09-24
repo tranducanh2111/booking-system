@@ -1,7 +1,7 @@
 // src/js/api_requests.js
 const axios = require('axios');
 
-async function fetchDataFromPracticeInfo(practiceInfo, method, request, data) {
+async function fetchDataFromPracticeInfo(practiceInfo, method, request, body, params) {
     const { IPAddressZT, ListeningPort, APIEP, APIUser, APIPassword } = practiceInfo;
     // const { IPAddressZT, APIEP, APIUser, APIPassword } = practiceInfo;
 
@@ -18,7 +18,8 @@ async function fetchDataFromPracticeInfo(practiceInfo, method, request, data) {
             method: method,
             url: url,
             auth: auth,
-            data: data
+            data: body,
+            params: params
         });
         return response.data; // Return the data from the response
     } catch (error) {
