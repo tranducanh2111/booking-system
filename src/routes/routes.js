@@ -343,4 +343,26 @@ router.get('/questions', async (req, res) => {
   }
 });
 
+// API tp fetch clinic species
+router.get('/getSpecies', async (req, res) => {
+  try {
+    const practiceInfo = {
+      IPAddressZT: 'localhost',
+      ListeningPort: 81,
+      APIEP: 'petbooqz/advancenotice/api/v1',
+      APIUser: 'abcdef',
+      APIPassword: '1234'
+    };
+
+    const method = 'GET';
+    const request = `getSpecies`;
+
+    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, '', '', '');
+    res.json(response);
+  } catch (error) {
+    console.error('Error fetching the clinic species:', error);
+    res.status(500).json({ error: 'Failed to fetch clinic species' });
+  }
+});
+
 module.exports = router;
