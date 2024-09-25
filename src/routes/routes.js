@@ -292,4 +292,33 @@ router.post('/extendReservation', async (req, res) => {
   }
 });
 
+// API to get client reminder
+router.get('/clientReminders/:clientcode', async (req, res) => {
+  const { clientcode } = req.params;
+
+  try {
+    const practiceInfo = {
+      IPAddressZT: 'localhost',
+      ListeningPort: 81,
+      APIEP: 'petbooqz/advancenotice/api/v1',
+      APIUser: 'abcdef',
+      APIPassword: '1234'
+    };
+
+    const method = 'GET';
+    const request = `clientReminders/${clientcode}`;
+
+    // Sending clientcode as part of the query parameters
+    const data = {
+      clientcode: clientcode, 
+    };
+
+    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, '', '');
+    res.json(response);
+  } catch (error) {
+    console.error('Error fetching client reminders:', error);
+    res.status(500).json({ error: 'Failed to fetch client reminders' });
+  }
+});
+
 module.exports = router;
