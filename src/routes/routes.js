@@ -321,4 +321,26 @@ router.get('/clientReminders/:clientcode', async (req, res) => {
   }
 });
 
+// API fetch clinic questions
+router.get('/questions', async (req, res) => {
+  try {
+    const practiceInfo = {
+      IPAddressZT: 'localhost',
+      ListeningPort: 81,
+      APIEP: 'petbooqz/advancenotice/api/v1',
+      APIUser: 'abcdef',
+      APIPassword: '1234'
+    };
+
+    const method = 'GET';
+    const request = `questions`;
+
+    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, '', '', '');
+    res.json(response);
+  } catch (error) {
+    console.error('Error fetching the clinic questions:', error);
+    res.status(500).json({ error: 'Failed to fetch clinic questions' });
+  }
+});
+
 module.exports = router;
