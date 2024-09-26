@@ -2,7 +2,7 @@
 const express = require('express');
 const path = require('path');
 const router = express.Router();
-const { fetchDataFromPracticeInfo } = require('../js/api_requests');
+const { handleGetRequest, handlePostRequest } = require('../js/api_requests');
 
 // Database Connection
 const {
@@ -10,15 +10,6 @@ const {
   closeAdvanceNoticeDatabaseConnection,
   queryDatabase,
 } = require('../config/db_connection');
-
-// Centralized practice info
-const practiceInfo = {
-  IPAddressZT: 'localhost',
-  ListeningPort: 81,
-  APIEP: 'petbooqz/advancenotice/api/v1',
-  APIUser: 'abcdef',
-  APIPassword: '1234'
-};
 
 // Handle request for loading the clinic notes
 router.get('/practice_info/:practiceCode', async (req, res) => {
@@ -90,68 +81,24 @@ router.get('/bank-bin', (req, res) => {
   res.sendFile(path.join(__dirname, '../../data/bank-bin.json'));
 });
 
-// Helper function to handle API requests
-const handleApiRequest = async (req, res, method, request, data = '', params = '', practiceCode = '') => {
-  try {
-    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, params, practiceCode);
-    res.json(response);
-  } catch (error) {
-    console.error(`Error in ${request}:`, error);
-    res.status(500).json({ error: `Failed to ${request}` });
-  }
-};
-
 // GET routes
-router.get('/services', (req, res) => handleApiRequest(req, res, 'GET', 'services'));
-router.get('/clientPatients/:clientcode', (req, res) => {
-  const { clientcode } = req.params;
-  handleApiRequest(req, res, 'GET', `clientPatients/${clientcode}`, { clientcode });
-});
-router.get('/clientReminders/:clientcode', (req, res) => {
-  const { clientcode } = req.params;
-  handleApiRequest(req, res, 'GET', `clientReminders/${clientcode}`, { clientcode });
-});
-router.get('/questions', (req, res) => handleApiRequest(req, res, 'GET', 'questions'));
-router.get('/getSpecies', (req, res) => handleApiRequest(req, res, 'GET', 'getSpecies'));
-router.get('/getBreedsBySpecies', (req, res) => {
+router.get('/services/:practiceCode', (req, res) => handleGetRequest(req, res, 'services'));
+router.get('/clientPatients/:practiceCode/:clientcode', (req, res) => handleGetRequest(req, res, `clientPatients/${req.params.clientcode}`, { clientcode: req.params.clientcode }));
+router.get('/clientReminders/:practiceCode/:clientcode', (req, res) => handleGetRequest(req, res, `clientReminders/${req.params.clientcode}`, { clientcode: req.params.clientcode }));
+router.get('/questions/:practiceCode', (req, res) => handleGetRequest(req, res, 'questions'));
+router.get('/getSpecies/:practiceCode', (req, res) => handleGetRequest(req, res, 'getSpecies'));
+router.get('/getBreedsBySpecies/:practiceCode', (req, res) => {
   const { speciesId } = req.query;
   if (!speciesId) {
     return res.status(400).json({ error: 'Species ID is required' });
   }
-  handleApiRequest(req, res, 'GET', 'getBreedsBySpecies', '', { speciesId });
+  handleGetRequest(req, res, 'getBreedsBySpecies', { speciesId });
 });
 
 // POST routes
-router.post('/searchExistClient', (req, res) => {
-  const { mobile, lastname, practiceCode } = req.body;
-  if (!mobile && !lastname) {
-    return res.status(400).json({ error: 'Mobile or last name is required' });
-  }
-  handleApiRequest(req, res, 'POST', 'searchexistClient', { mobile, lastname }, '', practiceCode);
-});
-
-router.post('/reserve', (req, res) => {
-  const { sku, room, time, date, practiceCode } = req.body;
-  if (!sku || !room || !time || !date || !practiceCode) {
-    return res.status(400).json({ error: 'Missing required fields' });
-  }
-  handleApiRequest(req, res, 'POST', 'reserve', { sku, room, time, date }, '', practiceCode);
-});
-
-router.post('/findfreeSlots', (req, res) => {
-  const { sku, room, date, practiceCode } = req.body;
-  if (!sku || !date || !practiceCode) {
-    return res.status(400).json({ error: 'Missing required fields' });
-  }
-  handleApiRequest(req, res, 'POST', 'findfreeSlots', { sku, room, date }, '', practiceCode);
-});
-
-router.post('/extendReservation', (req, res) => {
-  const { reservationid, practiceCode } = req.body;
-  if (!reservationid) {
-    return res.status(400).json({ error: 'Missing reservation ID' });
-  }
-  handleApiRequest(req, res, 'POST', 'extendReservation', { reservationid }, '', practiceCode);
-});
+router.post('/searchExistClient/:practiceCode', (req, res) => handlePostRequest(req, res, 'searchexistClient', ['mobile', 'lastname']));
+router.post('/reserve/:practiceCode', (req, res) => handlePostRequest(req, res, 'reserve', ['sku', 'room', 'time', 'date']));
+router.post('/findfreeSlots/:practiceCode', (req, res) => handlePostRequest(req, res, 'findfreeSlots', ['sku', 'room', 'date']));
+router.post('/extendReservation/:practiceCode', (req, res) => handlePostRequest(req, res, 'extendReservation', ['reservationid']));
 
 module.exports = router;
