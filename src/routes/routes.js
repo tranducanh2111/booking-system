@@ -11,6 +11,15 @@ const {
   queryDatabase,
 } = require('../config/db_connection');
 
+// Centralized practice info
+const practiceInfo = {
+  IPAddressZT: 'localhost',
+  ListeningPort: 81,
+  APIEP: 'petbooqz/advancenotice/api/v1',
+  APIUser: 'abcdef',
+  APIPassword: '1234'
+};
+
 // Handle request for loading the clinic notes
 router.get('/practice_info/:practiceCode', async (req, res) => {
   const practiceCode = req.params.practiceCode;
@@ -81,317 +90,68 @@ router.get('/bank-bin', (req, res) => {
   res.sendFile(path.join(__dirname, '../../data/bank-bin.json'));
 });
 
-// API endpoint to fetch services from PB
-router.get('/services', async (req, res) => {
+// Helper function to handle API requests
+const handleApiRequest = async (req, res, method, request, data = '', params = '', practiceCode = '') => {
   try {
-    const practiceInfo = {
-      IPAddressZT: 'localhost',
-      ListeningPort: 81,
-      APIEP: 'petbooqz/advancenotice/api/v1',
-      APIUser: 'abcdef',
-      APIPassword: '1234'
-    };
-
-    const method = 'GET';
-    const request = 'services';
-
-    const data = await fetchDataFromPracticeInfo(practiceInfo, method, request);
-    res.json(data); // Send the fetched data as a response
-  } catch (error) {
-    console.error('Error fetching services:', error);
-    res.status(500).json({ error: 'Failed to fetch services' });
-  }
-});
-
-// API endpoint to fetch services from PB
-router.get('/services', async (req, res) => {
-  try {
-    const practiceInfo = {
-      IPAddressZT: 'localhost',
-      ListeningPort: 81,
-      APIEP: 'petbooqz/advancenotice/api/v1',
-      APIUser: 'abcdef',
-      APIPassword: '1234'
-    };
-
-    const method = 'GET';
-    const request = 'services';
-
-    const data = await fetchDataFromPracticeInfo(practiceInfo, method, request, '', '', '');
-    res.json(data); // Send the fetched data as a response
-  } catch (error) {
-    console.error('Error fetching services:', error);
-    res.status(500).json({ error: 'Failed to fetch services' });
-  }
-});
-
-// API endpoint to fetch a client from PB
-router.post('/searchExistClient', async (req, res) => {
-  const { mobile, lastname, practiceCode } = req.body;
-
-  if (!mobile && !lastname) {
-      return res.status(400).json({ error: 'Mobile or last name is required' });
-  }
-
-  try {
-    const practiceInfo = {
-      IPAddressZT: 'localhost',
-      ListeningPort: 81,
-      APIEP: 'petbooqz/advancenotice/api/v1',
-      APIUser: 'abcdef',
-      APIPassword: '1234'
-    };
-
-    const method = 'POST';
-    const request = 'searchexistClient';
-
-    const data = {
-      mobile: mobile,
-      lastname: lastname
-    };
-
-    // Call the fetchDataFromPracticeInfo function with the data
-    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, '', practiceCode);
+    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, params, practiceCode);
     res.json(response);
   } catch (error) {
-    console.error('Error fetching existed client:', error);
-    res.status(500).json({ error: 'Failed to fetch existed client' });
+    console.error(`Error in ${request}:`, error);
+    res.status(500).json({ error: `Failed to ${request}` });
   }
-});
+};
 
-// API endpoint to fetch patients of an existed client from PB
-router.get('/clientPatients/:clientcode', async (req, res) => {
+// GET routes
+router.get('/services', (req, res) => handleApiRequest(req, res, 'GET', 'services'));
+router.get('/clientPatients/:clientcode', (req, res) => {
   const { clientcode } = req.params;
-
-  try {
-    const practiceInfo = {
-      IPAddressZT: 'localhost',
-      ListeningPort: 81,
-      APIEP: 'petbooqz/advancenotice/api/v1',
-      APIUser: 'abcdef',
-      APIPassword: '1234'
-    };
-
-    const method = 'GET';
-    const request = `clientPatients/${clientcode}`;
-
-    // Sending clientcode as part of the query parameters
-    const data = {
-      clientcode: clientcode, 
-    };
-
-    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, '', '');
-    res.json(response);
-  } catch (error) {
-    console.error('Error fetching existed patients of client:', error);
-    res.status(500).json({ error: 'Failed to fetch existed patients of client' });
-  }
+  handleApiRequest(req, res, 'GET', `clientPatients/${clientcode}`, { clientcode });
 });
-
-// API endpoint to make a temporary reservation from PB
-router.post('/reserve', async (req, res) => {
-  const { sku, room, time, date, staff ,practiceCode } = req.body;
-
-  if (!sku || !room || !time || !date || !practiceCode) {
-    return res.status(400).json({ error: 'Missing required fields' });
-  }
-
-  try {
-    const practiceInfo = {
-      IPAddressZT: 'localhost',
-      ListeningPort: 81,
-      APIEP: 'petbooqz/advancenotice/api/v1',
-      APIUser: 'abcdef',
-      APIPassword: '1234'
-    };
-
-    const method = 'POST';
-    const request = 'reserve';
-
-    const data = {
-      sku: sku,
-      room: room,
-      time: time,
-      date: date,
-    };
-
-    // Call the fetchDataFromPracticeInfo function with the data
-    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, '', practiceCode);
-    res.json(response);
-  } catch (error) {
-    console.error('Error fetching existed client:', error);
-    res.status(500).json({ error: 'Failed to fetch existed client' });
-  }
-});
-
-// API endpoint to make a temporary reservation from PB
-router.post('/findfreeSlots', async (req, res) => {
-  const { sku, room, date, staff, practiceCode } = req.body;
-
-  if (!sku || !date || !practiceCode) {
-    return res.status(400).json({ error: 'Missing required fields' });
-  }
-
-  try {
-    const practiceInfo = {
-      IPAddressZT: 'localhost',
-      ListeningPort: 81,
-      APIEP: 'petbooqz/advancenotice/api/v1',
-      APIUser: 'abcdef',
-      APIPassword: '1234'
-    };
-
-    const method = 'POST';
-    const request = 'findfreeSlots';
-
-    const data = {
-      sku: sku,
-      room: room,
-      date: date
-    };
-
-    // Call the fetchDataFromPracticeInfo function with the data
-    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, '', practiceCode);
-    res.json(response);
-  } catch (error) {
-    console.error('Error fetching existed client:', error);
-    res.status(500).json({ error: 'Failed to fetch existed client' });
-  }
-});
-
-// API endpoint to make a temporary reservation from PB
-router.post('/extendReservation', async (req, res) => {
-  const { reservationid, practiceCode } = req.body;
-
-  if (!reservationid) {
-    return res.status(400).json({ error: 'Missing reservation ID' });
-  }
-
-  try {
-    const practiceInfo = {
-      IPAddressZT: 'localhost',
-      ListeningPort: 81,
-      APIEP: 'petbooqz/advancenotice/api/v1',
-      APIUser: 'abcdef',
-      APIPassword: '1234'
-    };
-
-    const method = 'POST';
-    const request = 'extendReservation';
-
-    const data = {
-      reservationid: reservationid
-    };
-
-    // Call the fetchDataFromPracticeInfo function with the data
-    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, '', practiceCode);
-    res.json(response);
-  } catch (error) {
-    console.error('Error fetching existed client:', error);
-    res.status(500).json({ error: 'Failed to fetch existed client' });
-  }
-});
-
-// API to get client reminder
-router.get('/clientReminders/:clientcode', async (req, res) => {
+router.get('/clientReminders/:clientcode', (req, res) => {
   const { clientcode } = req.params;
-
-  try {
-    const practiceInfo = {
-      IPAddressZT: 'localhost',
-      ListeningPort: 81,
-      APIEP: 'petbooqz/advancenotice/api/v1',
-      APIUser: 'abcdef',
-      APIPassword: '1234'
-    };
-
-    const method = 'GET';
-    const request = `clientReminders/${clientcode}`;
-
-    // Sending clientcode as part of the query parameters
-    const data = {
-      clientcode: clientcode, 
-    };
-
-    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, data, '', '');
-    res.json(response);
-  } catch (error) {
-    console.error('Error fetching client reminders:', error);
-    res.status(500).json({ error: 'Failed to fetch client reminders' });
-  }
+  handleApiRequest(req, res, 'GET', `clientReminders/${clientcode}`, { clientcode });
 });
-
-// API fetch clinic questions
-router.get('/questions', async (req, res) => {
-  try {
-    const practiceInfo = {
-      IPAddressZT: 'localhost',
-      ListeningPort: 81,
-      APIEP: 'petbooqz/advancenotice/api/v1',
-      APIUser: 'abcdef',
-      APIPassword: '1234'
-    };
-
-    const method = 'GET';
-    const request = `questions`;
-
-    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, '', '', '');
-    res.json(response);
-  } catch (error) {
-    console.error('Error fetching the clinic questions:', error);
-    res.status(500).json({ error: 'Failed to fetch clinic questions' });
-  }
-});
-
-// API to fetch clinic species
-router.get('/getSpecies', async (req, res) => {
-  try {
-    const practiceInfo = {
-      IPAddressZT: 'localhost',
-      ListeningPort: 81,
-      APIEP: 'petbooqz/advancenotice/api/v1',
-      APIUser: 'abcdef',
-      APIPassword: '1234'
-    };
-
-    const method = 'GET';
-    const request = `getSpecies`;
-
-    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, '', '', '');
-    res.json(response);
-  } catch (error) {
-    console.error('Error fetching the clinic species:', error);
-    res.status(500).json({ error: 'Failed to fetch clinic species' });
-  }
-});
-
-// API to fetch species' breeds
-router.get('/getBreedsBySpecies', async (req, res) => {
-  const speciesId = req.query.speciesId;
-
+router.get('/questions', (req, res) => handleApiRequest(req, res, 'GET', 'questions'));
+router.get('/getSpecies', (req, res) => handleApiRequest(req, res, 'GET', 'getSpecies'));
+router.get('/getBreedsBySpecies', (req, res) => {
+  const { speciesId } = req.query;
   if (!speciesId) {
     return res.status(400).json({ error: 'Species ID is required' });
   }
+  handleApiRequest(req, res, 'GET', 'getBreedsBySpecies', '', { speciesId });
+});
 
-  try {
-    const practiceInfo = {
-      IPAddressZT: 'localhost',
-      ListeningPort: 81,
-      APIEP: 'petbooqz/advancenotice/api/v1',
-      APIUser: 'abcdef',
-      APIPassword: '1234'
-    };
-
-    const method = 'GET';
-    const request = `getBreedsBySpecies`;
-    const params = { speciesId };
-
-    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, '', params, '');
-    res.json(response);
-  } catch (error) {
-    console.error('Error fetching the clinic breeds by species:', error);
-    res.status(500).json({ error: 'Failed to fetch breeds by species' });
+// POST routes
+router.post('/searchExistClient', (req, res) => {
+  const { mobile, lastname, practiceCode } = req.body;
+  if (!mobile && !lastname) {
+    return res.status(400).json({ error: 'Mobile or last name is required' });
   }
+  handleApiRequest(req, res, 'POST', 'searchexistClient', { mobile, lastname }, '', practiceCode);
+});
+
+router.post('/reserve', (req, res) => {
+  const { sku, room, time, date, practiceCode } = req.body;
+  if (!sku || !room || !time || !date || !practiceCode) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+  handleApiRequest(req, res, 'POST', 'reserve', { sku, room, time, date }, '', practiceCode);
+});
+
+router.post('/findfreeSlots', (req, res) => {
+  const { sku, room, date, practiceCode } = req.body;
+  if (!sku || !date || !practiceCode) {
+    return res.status(400).json({ error: 'Missing required fields' });
+  }
+  handleApiRequest(req, res, 'POST', 'findfreeSlots', { sku, room, date }, '', practiceCode);
+});
+
+router.post('/extendReservation', (req, res) => {
+  const { reservationid, practiceCode } = req.body;
+  if (!reservationid) {
+    return res.status(400).json({ error: 'Missing reservation ID' });
+  }
+  handleApiRequest(req, res, 'POST', 'extendReservation', { reservationid }, '', practiceCode);
 });
 
 module.exports = router;
