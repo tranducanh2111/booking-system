@@ -343,7 +343,7 @@ router.get('/questions', async (req, res) => {
   }
 });
 
-// API tp fetch clinic species
+// API to fetch clinic species
 router.get('/getSpecies', async (req, res) => {
   try {
     const practiceInfo = {
@@ -362,6 +362,35 @@ router.get('/getSpecies', async (req, res) => {
   } catch (error) {
     console.error('Error fetching the clinic species:', error);
     res.status(500).json({ error: 'Failed to fetch clinic species' });
+  }
+});
+
+// API to fetch species' breeds
+router.get('/getBreedsBySpecies', async (req, res) => {
+  const speciesId = req.query.speciesId;
+
+  if (!speciesId) {
+    return res.status(400).json({ error: 'Species ID is required' });
+  }
+
+  try {
+    const practiceInfo = {
+      IPAddressZT: 'localhost',
+      ListeningPort: 81,
+      APIEP: 'petbooqz/advancenotice/api/v1',
+      APIUser: 'abcdef',
+      APIPassword: '1234'
+    };
+
+    const method = 'GET';
+    const request = `getBreedsBySpecies`;
+    const params = { speciesId };
+
+    const response = await fetchDataFromPracticeInfo(practiceInfo, method, request, '', params, '');
+    res.json(response);
+  } catch (error) {
+    console.error('Error fetching the clinic breeds by species:', error);
+    res.status(500).json({ error: 'Failed to fetch breeds by species' });
   }
 });
 
