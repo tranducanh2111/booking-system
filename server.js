@@ -22,19 +22,24 @@ app.use('/js', express.static(path.join(__dirname, 'src/js')));
 
 // Route to serve the single page application
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'src', 'index.html'));
+    res.sendFile(path.join(__dirname, 'src', 'index.html'));
 });
 
 // Route to serve page content
 app.get('/pages/:page', (req, res) => {
-  const pagePath = path.join(__dirname, 'src', 'pages', `${req.params.page}.html`);
-  fs.readFile(pagePath, 'utf8', (err, data) => {
-    if (err) {
-      res.status(404).sendFile(path.join(__dirname, 'src', '404.html'));
-    } else {
-      res.send(data);
-    }
-  });
+    const pagePath = path.join(
+        __dirname,
+        'src',
+        'pages',
+        `${req.params.page}.html`
+    );
+    fs.readFile(pagePath, 'utf8', (err, data) => {
+        if (err) {
+            res.status(404).sendFile(path.join(__dirname, 'src', '404.html'));
+        } else {
+            res.send(data);
+        }
+    });
 });
 
 // API Routes
@@ -43,9 +48,9 @@ app.use('/api', apiRoutes);
 
 // Catch-all route for handling 404 errors
 app.use((req, res, next) => {
-  res.status(404).sendFile(path.join(__dirname, 'src', '404.html'));
+    res.status(404).sendFile(path.join(__dirname, 'src', '404.html'));
 });
 
 app.listen(port, () => {
-  console.log(`Server running at http://localhost:${port}`);
+    console.log(`Server running at http://localhost:${port}`);
 });

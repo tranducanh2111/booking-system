@@ -3,12 +3,14 @@ let extensionDuration = 3 * 60 * 1000; // 3 minutes in milliseconds
 let timeoutId;
 
 export function startCheckoutTimer() {
-    console.log("start timeout process");
+    console.log('start timeout process');
     timeoutId = setTimeout(showTimeoutPopup, timeoutDuration);
 }
 
 function showTimeoutPopup() {
-    const userChoice = confirm("Your session is about to expire. Would you like to extend it for another 3 minutes?");
+    const userChoice = confirm(
+        'Your session is about to expire. Would you like to extend it for another 3 minutes?'
+    );
     if (userChoice) {
         resetTimer();
     } else {
@@ -17,7 +19,7 @@ function showTimeoutPopup() {
 }
 
 function resetTimer() {
-    console.log("start extend timeout process");
+    console.log('start extend timeout process');
     clearTimeout(timeoutId);
     timeoutId = setTimeout(showTimeoutPopup, extensionDuration);
 }

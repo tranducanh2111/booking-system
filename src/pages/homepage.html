@@ -1,27 +1,78 @@
 <div id="overlay" class="overlay">
     <div class="popup rounded-3" id="popup_choose_client_type">
-        <h3 class="text-center text-h3 text-primary mb-10">Are you our current client?</h3>
-        <div class="d-flex flex-wrap flex-column flex-md-row justify-content-between gap-5">
+        <h3 class="text-center text-h3 text-primary mb-10">
+            Are you our current client?
+        </h3>
+        <div
+            class="d-flex flex-wrap flex-column flex-md-row justify-content-between gap-5"
+        >
             <!-- Sign In -->
-            <button type="button" id="existingClientBtn" class="w-100 text-body fw-bolder text-white bg-user-primary rounded-3 px-5 py-2 border-primary">Existing Client</button>
-            <button type="button" id="GuestBtn" class="w-100 text-body fw-bolder text-primary rounded-3 border-primary bg-white px-5 py-2">Continue as Guest</button>
-            <button type="button" id="cancelBtn" class="w-100 text-body fw-bolder text-white bg-red border-red rounded-3 px-5 py-2">Cancel</button>
+            <button
+                type="button"
+                id="existingClientBtn"
+                class="w-100 text-body fw-bolder text-white bg-user-primary rounded-3 px-5 py-2 border-primary"
+            >
+                Existing Client
+            </button>
+            <button
+                type="button"
+                id="GuestBtn"
+                class="w-100 text-body fw-bolder text-primary rounded-3 border-primary bg-white px-5 py-2"
+            >
+                Continue as Guest
+            </button>
+            <button
+                type="button"
+                id="cancelBtn"
+                class="w-100 text-body fw-bolder text-white bg-red border-red rounded-3 px-5 py-2"
+            >
+                Cancel
+            </button>
         </div>
     </div>
 </div>
-<section class="max-w-body mx-auto w-100 d-flex flex-column justify-content-start align-items-center gap-20 px-4 py-10">
+<section
+    class="max-w-body mx-auto w-100 d-flex flex-column justify-content-start align-items-center gap-20 px-4 py-10"
+>
     <!-- Button Container -->
     <section class="row row-cols-1 row-cols-sm-2 w-100">
         <div class="col mb-3 mb-sm-0 p-0 pe-sm-3">
-            <button type="button" id="open_client_type_popup" class="w-100 d-flex flex-row flex-sm-column justify-content-center align-items-center p-3 bg-primary border-primary rounded-3">
-                <img src="svg/icons/create-appointment.svg" alt="Make Appointment Button" type="image/svg+xml" width="48" height="48">
-                <span class="text-body text-white mt-0 mt-sm-2 ms-3 ms-sm-0 mb-0">Make Appointment</span>
+            <button
+                type="button"
+                id="open_client_type_popup"
+                class="w-100 d-flex flex-row flex-sm-column justify-content-center align-items-center p-3 bg-primary border-primary rounded-3"
+            >
+                <img
+                    src="svg/icons/create-appointment.svg"
+                    alt="Make Appointment Button"
+                    type="image/svg+xml"
+                    width="48"
+                    height="48"
+                />
+                <span
+                    class="text-body text-white mt-0 mt-sm-2 ms-3 ms-sm-0 mb-0"
+                    >Make Appointment</span
+                >
             </button>
         </div>
         <div class="col p-0 ps-sm-3">
-            <button onclick="loadContent('cancel')" id="cancelAppointmentBtn" type="button" class="w-100 d-flex flex-row flex-sm-column justify-content-center align-items-center p-3 border-primary rounded-3 bg-white">
-                <img src="svg/icons/cancel-appointment.svg" alt="Cancel Appointment Button" type="image/svg+xml" width="48" height="48">
-                <span class="text-body text-primary mt-0 mt-sm-2 ms-3 ms-sm-0 mb-0">Cancel Appointment</span>
+            <button
+                onclick="loadContent('cancel')"
+                id="cancelAppointmentBtn"
+                type="button"
+                class="w-100 d-flex flex-row flex-sm-column justify-content-center align-items-center p-3 border-primary rounded-3 bg-white"
+            >
+                <img
+                    src="svg/icons/cancel-appointment.svg"
+                    alt="Cancel Appointment Button"
+                    type="image/svg+xml"
+                    width="48"
+                    height="48"
+                />
+                <span
+                    class="text-body text-primary mt-0 mt-sm-2 ms-3 ms-sm-0 mb-0"
+                    >Cancel Appointment</span
+                >
             </button>
         </div>
     </section>

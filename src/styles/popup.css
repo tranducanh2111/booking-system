@@ -26,7 +26,7 @@
     min-width: min-content; /* Could be more or less, depending on screen size */
     width: 90%;
     max-width: 400px !important;
-    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     /* animation: animateTop 1s; */
 }
 
@@ -36,14 +36,12 @@
     to {top: 0; opacity: 1}
 } */
 
-.bg-red
-{
-    background-color: #D06363;
+.bg-red {
+    background-color: #d06363;
 }
 
-.border-red
-{
-    border-color: #D06363;
+.border-red {
+    border-color: #d06363;
 }
 
 /* .overlay-active {
