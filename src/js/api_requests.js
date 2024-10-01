@@ -3,8 +3,7 @@ const axios = require('axios');
 
 // Database Connection
 const {
-    connectAdvanceNoticeDatabase,
-    closeAdvanceNoticeDatabaseConnection,
+    getAdvanceNoticePool,
     queryDatabase,
 } = require('../config/db_connection');
 
@@ -17,8 +16,7 @@ async function fetchDataFromPracticeInfo(
     params = null,
     practiceCode
 ) {
-    const { IPAddressZT, ListeningPort, APIEP, APIUser, APIPassword } =
-        practiceInfo;
+    const { IPAddressZT, ListeningPort, APIEP, APIUser, APIPassword } = practiceInfo;
 
     // Construct the base URL
     let url = `http://${IPAddressZT}:${ListeningPort}/${APIEP}/${request}`;
@@ -47,10 +45,7 @@ async function fetchDataFromPracticeInfo(
         return response.data; // Return the data from the response
     } catch (error) {
         if (error.response) {
-            console.error(
-                'Error fetching data from the API:',
-                error.response.data
-            );
+            console.error('Error fetching data from the API:', error.response.data);
             console.error('Status code:', error.response.status);
         } else {
             console.error('Error fetching data from the API:', error.message);
@@ -61,25 +56,22 @@ async function fetchDataFromPracticeInfo(
 
 // Get practice connection IP Address and endpoint
 async function getPracticeConnection(practiceCode) {
-    const db_advance_notice = connectAdvanceNoticeDatabase();
+    const pool = getAdvanceNoticePool();
     const practiceInfoQuery = `
       SELECT IPAddressZT, ListeningPort, APIEP, APIUser, APIPassword
       FROM practice
       WHERE PracticeCode = ? AND isActive = 'Yes'`;
 
     try {
-        const results = await queryDatabase(
-            db_advance_notice,
-            practiceInfoQuery,
-            [practiceCode]
-        );
+        const results = await queryDatabase(pool, practiceInfoQuery, [practiceCode]);
         if (results.length > 0) {
             return results[0];
         } else {
             throw new Error('Practice information not found');
         }
-    } finally {
-        closeAdvanceNoticeDatabaseConnection();
+    } catch (error) {
+        console.error('Error fetching practice connection:', error);
+        throw error;
     }
 }
 
@@ -102,9 +94,7 @@ const handleApiRequest = async (
         const practiceCodeRequested = await getPracticeConnection(practiceCode);
 
         if (!practiceCodeRequested) {
-            return res
-                .status(400)
-                .json({ error: `Can't establish the practice connection` });
+            return res.status(400).json({ error: `Can't establish the practice connection` });
         }
 
         const practiceInfo = {
@@ -140,11 +130,9 @@ const handlePostRequest = (req, res, apiEndpoint, requiredFields) => {
     const missingFields = requiredFields.filter((field) => !req.body[field]);
 
     if (missingFields.length) {
-        return res
-            .status(400)
-            .json({
-                error: `Missing required fields: ${missingFields.join(', ')}`,
-            });
+        return res.status(400).json({
+            error: `Missing required fields: ${missingFields.join(', ')}`,
+        });
     }
 
     handleApiRequest(req, res, 'POST', apiEndpoint, req.body);
