@@ -40,8 +40,13 @@ function getPetbooqzPool() {
 
 // Function to query the database
 async function queryDatabase(pool, sql, params = []) {
-    const [results] = await pool.query(sql, params);
-    return results;
+    try {
+        const [results] = await pool.query(sql, params);
+        return results;
+    } catch (error) {
+        console.error('Error querying database:', error);
+        throw error;
+    }
 }
 
 // Transaction functions
@@ -55,6 +60,7 @@ async function withTransaction(pool, callback) {
         return result;
     } catch (error) {
         await connection.rollback();
+        console.error('Error in transaction:', error);
         throw error;
     } finally {
         connection.release();
