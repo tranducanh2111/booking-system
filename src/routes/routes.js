@@ -6,8 +6,7 @@ const { handleGetRequest, handlePostRequest } = require('../js/api_requests');
 
 // Database Connection
 const {
-    connectAdvanceNoticeDatabase,
-    closeAdvanceNoticeDatabaseConnection,
+    getAdvanceNoticePool,
     queryDatabase,
 } = require('../config/db_connection');
 
@@ -18,18 +17,14 @@ router.get('/practice_info/:practiceCode', async (req, res) => {
         return res.status(400).json({ error: 'No practice code provided' });
     }
 
-    const db_advance_notice = connectAdvanceNoticeDatabase();
+    const pool = getAdvanceNoticePool();
     const practiceInfoQuery = `
     SELECT Notes, PracticeName, Phone, Email, Website, Logo, Address, Suburb, Postcode, State, Country, IPAddressZT, ListeningPort, APIEP, APIUser, APIPassword
     FROM practice
     WHERE PracticeCode = ? AND isActive = 'Yes'`;
 
     try {
-        const results = await queryDatabase(
-            db_advance_notice,
-            practiceInfoQuery,
-            [practiceCode]
-        );
+        const results = await queryDatabase(pool, practiceInfoQuery, [practiceCode]);
         if (results.length > 0) {
             res.json(results[0]);
         } else {
@@ -38,34 +33,25 @@ router.get('/practice_info/:practiceCode', async (req, res) => {
     } catch (error) {
         console.error('Error fetching practice information:', error);
         res.status(500).json({ error: 'Error fetching practice information' });
-    } finally {
-        closeAdvanceNoticeDatabaseConnection();
     }
 });
 
 // Handle the practice booking day preference
 router.get('/earliest-booking/:id?', async (req, res) => {
-    const db_advance_notice = connectAdvanceNoticeDatabase();
+    const pool = getAdvanceNoticePool();
     const practiceCode = req.params.id;
-    const query =
-        'SELECT EarliestBooking FROM practice WHERE PracticeCode = ? AND isActive = "Yes"';
+    const query = 'SELECT EarliestBooking FROM practice WHERE PracticeCode = ? AND isActive = "Yes"';
 
     try {
-        const results = await queryDatabase(db_advance_notice, query, [
-            practiceCode,
-        ]);
+        const results = await queryDatabase(pool, query, [practiceCode]);
         if (results.length > 0) {
             res.json({ earliestBooking: results[0].EarliestBooking });
         } else {
-            res.status(404).json({
-                error: 'Earliest booking information not found',
-            });
+            res.status(404).json({ error: 'Earliest booking information not found' });
         }
     } catch (err) {
         console.error('Error fetching earliest booking:', err);
         res.status(500).json({ error: 'Error fetching earliest booking' });
-    } finally {
-        closeAdvanceNoticeDatabaseConnection();
     }
 });
 

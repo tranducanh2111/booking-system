@@ -1,129 +1,76 @@
 const mysql = require('mysql2');
 require('dotenv').config();
 
-let connections = {};
+const pools = {};
 
-function connectDatabase(dbName) {
-    if (!connections[dbName]) {
-        connections[dbName] = mysql.createConnection({
-            host: process.env.DB_HOST,
-            user: process.env.DB_USER,
-            password: process.env.DB_PASSWORD,
-            database: process.env[`DB_NAME_${dbName}`],
-            port: process.env.DB_PORT,
-        });
-
-        connections[dbName].connect((err) => {
-            if (err) {
-                console.error(
-                    `Error connecting to the ${dbName} database:`,
-                    err.stack
-                );
-                return;
-            }
-            console.log(`Connected to the ${dbName} Database`);
-        });
-    }
-    return connections[dbName];
+function createPool(dbName) {
+    return mysql.createPool({
+        host: process.env.DB_HOST,
+        user: process.env.DB_USER,
+        password: process.env.DB_PASSWORD,
+        database: process.env[`DB_NAME_${dbName}`],
+        port: process.env.DB_PORT,
+        connectionLimit: 10,
+        queueLimit: 0
+    });
 }
 
-function closeDatabaseConnection(dbName) {
-    if (connections[dbName]) {
-        connections[dbName].end((err) => {
-            if (err) {
-                console.error(
-                    `Error closing the ${dbName} database connection:`,
-                    err.stack
-                );
-                return;
-            }
-            console.log(`Closed the ${dbName} database connection`);
-            connections[dbName] = null; // Clear the connection
-        });
+function getPool(dbName) {
+    if (!pools[dbName]) {
+        pools[dbName] = createPool(dbName);
+        console.log(`Created pool for the ${dbName} Database`);
     }
+    return pools[dbName].promise(); // Use promise() to get a promise-based pool
 }
 
 // For the connection to the connect database
-function connectConnectDatabase() {
-    return connectDatabase('CONNECT');
-}
-
-function closeConnectDatabaseConnection() {
-    closeDatabaseConnection('CONNECT');
+function getConnectPool() {
+    return getPool('CONNECT');
 }
 
 // For the connection to the advance notice database
-function connectAdvanceNoticeDatabase() {
-    return connectDatabase('ADVANCE_NOTICE');
-}
-
-function closeAdvanceNoticeDatabaseConnection() {
-    closeDatabaseConnection('ADVANCE_NOTICE');
+function getAdvanceNoticePool() {
+    return getPool('ADVANCE_NOTICE');
 }
 
 // For the connection to the petbooqz database
-function connectPetbooqzDatabase() {
-    return connectDatabase('PETBOOQZ');
+function getPetbooqzPool() {
+    return getPool('PETBOOQZ');
 }
 
-function closePetbooqzDatabaseConnection() {
-    closeDatabaseConnection('PETBOOQZ');
-}
-
-// Function to send query the database
-async function queryDatabase(connection, sql, params = []) {
-    return new Promise((resolve, reject) => {
-        connection.query(sql, params, (error, results) => {
-            if (error) {
-                reject(error);
-            } else {
-                resolve(results);
-            }
-        });
-    });
+// Function to query the database
+async function queryDatabase(pool, sql, params = []) {
+    const [results] = await pool.query(sql, params);
+    return results;
 }
 
 // Transaction functions
-async function beginTransaction(connection) {
-    return new Promise((resolve, reject) => {
-        connection.beginTransaction((err) => {
-            if (err) {
-                return reject(err);
-            }
-            resolve();
-        });
-    });
+async function withTransaction(pool, callback) {
+    const connection = await pool.getConnection();
+    await connection.beginTransaction();
+
+    try {
+        const result = await callback(connection);
+        await connection.commit();
+        return result;
+    } catch (error) {
+        await connection.rollback();
+        throw error;
+    } finally {
+        connection.release();
+    }
 }
 
-async function commitTransaction(connection) {
-    return new Promise((resolve, reject) => {
-        connection.commit((err) => {
-            if (err) {
-                return reject(err);
-            }
-            resolve();
-        });
-    });
+// Function to close all pools (use when shutting down the application)
+function closeAllPools() {
+    return Promise.all(Object.values(pools).map(pool => pool.end()));
 }
 
-async function rollbackTransaction(connection) {
-    return new Promise((resolve, reject) => {
-        connection.rollback(() => {
-            resolve(); // No error handling needed for rollback
-        });
-    });
-}
-
-// Export the transaction functions
 module.exports = {
-    connectConnectDatabase,
-    closeConnectDatabaseConnection,
-    connectAdvanceNoticeDatabase,
-    closeAdvanceNoticeDatabaseConnection,
-    connectPetbooqzDatabase,
-    closePetbooqzDatabaseConnection,
+    getConnectPool,
+    getAdvanceNoticePool,
+    getPetbooqzPool,
     queryDatabase,
-    beginTransaction,
-    commitTransaction,
-    rollbackTransaction,
+    withTransaction,
+    closeAllPools
 };
