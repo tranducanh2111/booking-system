@@ -50,7 +50,7 @@ async function fetchDataFromPracticeInfo(
         } else {
             console.error('Error fetching data from the API:', error.message);
         }
-        throw error;
+        throw new Error('Failed to fetch data from the practice API');
     }
 }
 
