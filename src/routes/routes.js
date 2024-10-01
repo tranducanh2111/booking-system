@@ -2,13 +2,29 @@
 const express = require('express');
 const path = require('path');
 const router = express.Router();
-const { handleGetRequest, handlePostRequest } = require('../js/api_requests');
+const { handleGetRequest, handlePostRequest } = require('../utils/api_requests');
 
 // Database Connection
 const {
     getAdvanceNoticePool,
     queryDatabase,
 } = require('../config/db_connection');
+
+// Import rate limiters
+const { generalLimiter, apiLimiter } = require('../config/rate_limit');
+
+// Apply general rate limiter to all routes
+router.use(generalLimiter);
+
+// Apply stricter rate limiter to API routes
+router.use('/practice/', apiLimiter);
+
+// Log Middleware to check if rate limiters are applied
+// router.use((req, res, next) => {
+//     console.log(`Request Method: ${req.method}, Request URL: ${req.originalUrl}`);
+//     console.log(`Using General Limiter: ${!!req.rateLimit}, API Limiter: ${req.path.startsWith('/practice/') ? !!apiLimiter : false}`);
+//     next();
+// });
 
 // Handle request for loading the clinic notes
 router.get('/practice_info/:practiceCode', async (req, res) => {
@@ -77,26 +93,26 @@ router.get('/bank-bin', (req, res) => {
 });
 
 // GET routes
-router.get('/services/:practiceCode', (req, res) =>
+router.get('/practice/services/:practiceCode', (req, res) =>
     handleGetRequest(req, res, 'services')
 );
-router.get('/clientPatients/:practiceCode/:clientcode', (req, res) =>
+router.get('/practice/clientPatients/:practiceCode/:clientcode', (req, res) =>
     handleGetRequest(req, res, `clientPatients/${req.params.clientcode}`, {
         clientcode: req.params.clientcode,
     })
 );
-router.get('/clientReminders/:practiceCode/:clientcode', (req, res) =>
+router.get('/practice/clientReminders/:practiceCode/:clientcode', (req, res) =>
     handleGetRequest(req, res, `clientReminders/${req.params.clientcode}`, {
         clientcode: req.params.clientcode,
     })
 );
-router.get('/questions/:practiceCode', (req, res) =>
+router.get('/practice/questions/:practiceCode', (req, res) =>
     handleGetRequest(req, res, 'questions')
 );
-router.get('/getSpecies/:practiceCode', (req, res) =>
+router.get('/practice/getSpecies/:practiceCode', (req, res) =>
     handleGetRequest(req, res, 'getSpecies')
 );
-router.get('/getBreedsBySpecies/:practiceCode', (req, res) => {
+router.get('/practice/getBreedsBySpecies/:practiceCode', (req, res) => {
     const { speciesId } = req.query;
     if (!speciesId) {
         return res.status(400).json({ error: 'Species ID is required' });
@@ -105,19 +121,19 @@ router.get('/getBreedsBySpecies/:practiceCode', (req, res) => {
 });
 
 // POST routes
-router.post('/searchExistClient/:practiceCode', (req, res) =>
+router.post('/practice/searchExistClient/:practiceCode', (req, res) =>
     handlePostRequest(req, res, 'searchexistClient', ['mobile', 'lastname'])
 );
-router.post('/reserve/:practiceCode', (req, res) =>
+router.post('/practice/reserve/:practiceCode', (req, res) =>
     handlePostRequest(req, res, 'reserve', ['sku', 'room', 'time', 'date'])
 );
-router.post('/findfreeSlots/:practiceCode', (req, res) =>
+router.post('/practice/findfreeSlots/:practiceCode', (req, res) =>
     handlePostRequest(req, res, 'findfreeSlots', ['sku', 'room', 'date'])
 );
-router.post('/extendReservation/:practiceCode', (req, res) =>
+router.post('/practice/extendReservation/:practiceCode', (req, res) =>
     handlePostRequest(req, res, 'extendReservation', ['reservationid'])
 );
-router.post('/finaliseReservation/:practiceCode', (req, res) =>
+router.post('/practice/finaliseReservation/:practiceCode', (req, res) =>
     handlePostRequest(req, res, 'finaliseReservation', ['reservationid'])
 );
 

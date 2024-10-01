@@ -10,6 +10,7 @@ npm install dotenv
 npm install crypto
 npm install date-fns
 npm install axios
+npm install express-rate-limit
 
 npm install prettier
 <!-- To run prettier -->
