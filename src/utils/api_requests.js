@@ -121,12 +121,12 @@ const handleApiRequest = async (
 };
 
 // Utility function for GET requests
-const handleGetRequest = (req, res, apiEndpoint, params = {}) => {
-    handleApiRequest(req, res, 'GET', apiEndpoint, {}, params);
+const handleGetRequest = async (req, res, apiEndpoint, params = {}) => {
+    await handleApiRequest(req, res, 'GET', apiEndpoint, {}, params);
 };
 
 // Utility function for POST requests
-const handlePostRequest = (req, res, apiEndpoint, requiredFields) => {
+const handlePostRequest = async (req, res, apiEndpoint, requiredFields) => {
     const missingFields = requiredFields.filter((field) => !req.body[field]);
 
     if (missingFields.length) {
@@ -135,7 +135,7 @@ const handlePostRequest = (req, res, apiEndpoint, requiredFields) => {
         });
     }
 
-    handleApiRequest(req, res, 'POST', apiEndpoint, req.body);
+    await handleApiRequest(req, res, 'POST', apiEndpoint, req.body);
 };
 
 module.exports = {
