@@ -5,61 +5,84 @@ export function loadContent(page) {
     sessionStorage.setItem('currentPage', page);
 
     import(`./load_practice_info.js`)
-        .then(module => {
+        .then((module) => {
             module.loadPracticeInfo();
         })
-        .catch(error => console.error('Error loading load_practice_info.js:', error));
+        .catch((error) =>
+            console.error('Error loading load_practice_info.js:', error)
+        );
 
     const cacheBuster = new Date().getTime(); // Generate a unique timestamp to bust the cache
 
     fetch(`/pages/${page}.html?ts=${cacheBuster}`)
-        .then(response => response.text())
-        .then(html => {
+        .then((response) => response.text())
+        .then((html) => {
             contentDiv.innerHTML = html;
 
             if (page === 'select_service') {
                 import(`./select_service.js?ts=${cacheBuster}`)
-                    .then(module => {
+                    .then((module) => {
                         module.initializePreferredDate();
                         module.initSelectService();
                         module.initializeServiceSelection();
                     })
-                    .catch(error => console.error('Error loading select_service.js:', error));
+                    .catch((error) =>
+                        console.error('Error loading select_service.js:', error)
+                    );
             }
 
             // Load scripts for other pages as necessary
             if (page === 'homepage') {
                 import(`./popup_loader.js?ts=${cacheBuster}`)
-                    .then(module => {
+                    .then((module) => {
                         module.setupPopup();
                     })
-                    .catch(error => console.error('Error loading popup_loader.js:', error));
+                    .catch((error) =>
+                        console.error('Error loading popup_loader.js:', error)
+                    );
 
                 import(`./load_practice_info.js?ts=${cacheBuster}`)
-                    .then(module => {
+                    .then((module) => {
                         module.loadPracticeInfo();
                     })
-                    .catch(error => console.error('Error loading load_practice_info.js:', error));
+                    .catch((error) =>
+                        console.error(
+                            'Error loading load_practice_info.js:',
+                            error
+                        )
+                    );
             }
 
             if (page === 'cancel') {
-                import(`./cancel_appointment.js?ts=${cacheBuster}`)
-                    .catch(error => console.error('Error loading cancel_appointment.js:', error));
+                import(`./cancel_appointment.js?ts=${cacheBuster}`).catch(
+                    (error) =>
+                        console.error(
+                            'Error loading cancel_appointment.js:',
+                            error
+                        )
+                );
             }
 
             if (page === 'checkout') {
                 import(`./booking_confirmation.js?ts=${cacheBuster}`)
-                    .then(module => {
+                    .then((module) => {
                         module.initializeCheckoutPage();
                     })
-                    .catch(error => console.error('Error loading booking_confirmation.js:', error));
+                    .catch((error) =>
+                        console.error(
+                            'Error loading booking_confirmation.js:',
+                            error
+                        )
+                    );
 
                 // Import the checkout timer only for the checkout page
                 import(`./checkout_timer.js?ts=${cacheBuster}`)
-                    .then(module => {
+                    .then((module) => {
                         module.startCheckoutTimer();
                     })
-                    .catch(error => console.error('Error loading checkout_timer.js:', error));
+                    .catch((error) =>
+                        console.error('Error loading checkout_timer.js:', error)
+                    );
             }
         })
         .catch(() => {
