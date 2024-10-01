@@ -1,10 +1,10 @@
 {
     "clinicNotes": [
-        {
-            "greeting": "Dear Valued Clients,",
-            "content": "Thank you for choosing our Vet Clinic for your pet's healthcare needs! Before booking your appointment, please take a moment to review our policies to ensure a smooth and enjoyable visit. To provide the best care possible, we kindly ask that you bring your pet's medical records and arrive 10 minutes early. Cancellations or rescheduling should be done at least 24 hours in advance to avoid a late fee. If you have any questions or need assistance, our friendly staff is here to help. Feel free to contact us at (555) 123-4567 or email us at info@vetclinic.com. We look forward to seeing you and your furry friends soon!",
-            "closing": "Warm regards,",
-            "signature": "The Vet Clinic Team"
-        }
+      {
+        "greeting": "Dear Valued Clients,",
+        "content": "Thank you for choosing our Vet Clinic for your pet's healthcare needs! Before booking your appointment, please take a moment to review our policies to ensure a smooth and enjoyable visit. To provide the best care possible, we kindly ask that you bring your pet's medical records and arrive 10 minutes early. Cancellations or rescheduling should be done at least 24 hours in advance to avoid a late fee. If you have any questions or need assistance, our friendly staff is here to help. Feel free to contact us at (555) 123-4567 or email us at info@vetclinic.com. We look forward to seeing you and your furry friends soon!",
+        "closing": "Warm regards,",
+        "signature": "The Vet Clinic Team"
+      }
     ]
-}
+  }

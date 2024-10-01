@@ -1,23 +1,9 @@
-<section
-    class="page-height position-relative d-flex justify-content-center align-items-center px-5"
->
+<section class="page-height position-relative d-flex justify-content-center align-items-center px-5">
     <figure class="h-100 w-100 position-absolute">
-        <img
-            src="images/form-background.jpg"
-            alt="Form Background"
-            class="h-100 w-100 opacity-50 object-fit-cover"
-        />
+        <img src="images/form-background.jpg" alt="Form Background" class="h-100 w-100 opacity-50 object-fit-cover">
     </figure>
-    <section
-        class="glassmorphism mx-auto w-100 d-flex flex-column justify-content-start gap-10 py-8 px-6"
-        style="max-width: 420px"
-    >
-        <form
-            action="/cancel_appointment"
-            method="POST"
-            name="Cancel Appointment"
-            onsubmit="proceedCancellation(); return false;"
-        >
+    <section class="glassmorphism mx-auto w-100 d-flex flex-column justify-content-start gap-10 py-8 px-6" style="max-width: 420px;">
+        <form action="/cancel_appointment" method="POST" name="Cancel Appointment" onsubmit="proceedCancellation(); return false;">
             <div class="row mb-10">
                 <h2 class="text-h2 text-center">Cancel a Booking</h2>
             </div>
@@ -25,9 +11,7 @@
             <div class="row mb-10 gap-6">
                 <!-- Booking Code -->
                 <div class="col-12 d-flex flex-column gap-3">
-                    <label for="bookingCode" class="text-body"
-                        >Booking Code</label
-                    >
+                    <label for="bookingCode" class="text-body">Booking Code</label>
                     <input
                         type="text"
                         id="bookingCode"
@@ -35,7 +19,7 @@
                         placeholder="Booking Code"
                         class="text-body py-2 px-5 rounded-3"
                         required
-                    />
+                    >
                 </div>
                 <!-- Mobile -->
                 <div class="col-12 d-flex flex-column gap-3">
@@ -47,29 +31,18 @@
                         placeholder="Mobile"
                         class="text-body py-2 px-5 rounded-3"
                         required
-                    />
+                    >
                 </div>
             </div>
             <!-- Button Container -->
             <div class="row">
                 <!-- Submit Form -->
                 <div class="col">
-                    <button
-                        type="submit"
-                        class="bg-primary w-100 rounded-3 p-5 p-md-3 text-white text-body border-primary"
-                    >
-                        PROCEED
-                    </button>
+                    <button type="submit" class="bg-primary w-100 rounded-3 p-5 p-md-3 text-white text-body border-primary">PROCEED</button>
                 </div>
                 <!-- Redirect to Homepage -->
                 <div class="col">
-                    <button
-                        onclick="loadContent('homepage')"
-                        type="button"
-                        class="bg-red w-100 rounded-3 p-5 p-md-3 text-white text-body border-red"
-                    >
-                        RETURN
-                    </button>
+                    <button onclick="loadContent('homepage')" type="button" class="bg-red w-100 rounded-3 p-5 p-md-3 text-white text-body border-red">RETURN</button>
                 </div>
             </div>
         </form>

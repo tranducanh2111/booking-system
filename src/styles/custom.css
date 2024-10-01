@@ -1,23 +1,27 @@
 /* text style */
-.text-h1 {
+.text-h1
+{
     font-size: 64px !important;
     margin: 0;
     letter-spacing: 0.01rem;
 }
 
-.text-h2 {
+.text-h2
+{
     font-size: 32px !important;
     margin: 0;
     letter-spacing: 0.03rem;
 }
 
-.text-h3 {
+.text-h3
+{
     font-size: 24px !important;
     margin: 0;
     letter-spacing: 0.03rem;
 }
 
-.text-body {
+.text-body
+{
     font-size: 16px !important;
     margin: 0;
     letter-spacing: 0.03rem;
@@ -35,39 +39,46 @@
         max-width: 150px;
     }
 }
-
+  
 @media (min-width: 992px) {
     .max-w-lg-310 {
         max-width: 310px;
     }
 }
 
-.max-w-body {
+.max-w-body
+{
     max-width: 1241px;
 }
 
-@media (max-width: 576px) {
-    .page-height.page-height {
+@media (max-width: 576px)
+{
+    .page-height.page-height
+    {
         min-height: calc(100vh - 55px - 83px);
         height: fit-content !important;
     }
 }
 
-@media (min-width: 576px) and (max-width: 768px) {
-    .page-height.page-height {
+@media (min-width: 576px) and (max-width: 768px) 
+{
+    .page-height.page-height
+    {
         min-height: calc(100vh - 55px - 56px);
         height: fit-content !important;
     }
 }
-
+  
 @media (min-width: 768px) {
-    .page-height {
+    .page-height
+    {
         min-height: calc(100vh - 85px - 63px);
         height: calc(100vh - 85px - 63px);
     }
 }
 
-.overflow-auto-y {
+.overflow-auto-y
+{
     overflow-y: auto;
 }
 
@@ -83,12 +94,14 @@
     display: none; /* For Chrome, Safari, and Opera */
 }
 
-.hide-scrollbar {
+.hide-scrollbar
+{
     scrollbar-width: none; /* For Firefox */
-    -ms-overflow-style: none; /* For Internet Explorer and Edge */
+    -ms-overflow-style: none;  /* For Internet Explorer and Edge */
 }
 
-.outline-none {
+.outline-none
+{
     outline: none;
 }
 

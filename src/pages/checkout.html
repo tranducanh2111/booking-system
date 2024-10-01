@@ -1,11 +1,7 @@
 <!-- checkout.html -->
 <section class="max-w-body w-100 px-4 mx-auto">
     <h2 class="text-h2 text-center mt-5">Confirm Appointment</h2>
-    <form
-        action=""
-        class="d-lg-grid d-flex flex-column gap-10"
-        style="grid-template-columns: auto 395px"
-    >
+    <form action="" class="d-lg-grid d-flex flex-column gap-10" style="grid-template-columns: auto 395px;">
         <!-- Confirm Infomation -->
         <section class="d-flex flex-column justify-content-start gap-5 py-10">
             <!-- BEGIN: Client Detail -->
@@ -15,68 +11,36 @@
                     <!-- Title -->
                     <div class="col-sm-2 d-flex flex-column gap-2">
                         <label for="title" class="text-body">Title</label>
-                        <input
-                            type="text"
-                            id="title"
-                            name="title"
-                            placeholder="Title"
-                            class="text-body py-2 px-3 rounded-3"
-                        />
+                        <input type="text" id="title" name="title" placeholder="Title" class="text-body py-2 px-3 rounded-3">
                     </div>
                     <!-- First Name -->
                     <div class="col-sm-4 d-flex flex-column gap-2">
                         <label for="fname" class="text-body">First Name</label>
-                        <input
-                            type="text"
-                            id="fname"
-                            name="fname"
-                            placeholder="First Name"
-                            class="text-body py-2 px-3 rounded-3"
-                        />
+                        <input type="text" id="fname" name="fname" placeholder="First Name" class="text-body py-2 px-3 rounded-3">
                     </div>
                     <!-- Last Name -->
                     <div class="col-sm-6 d-flex flex-column gap-2">
                         <label for="lname" class="text-body">Last Name</label>
-                        <input
-                            type="text"
-                            id="lname"
-                            name="lname"
-                            placeholder="Last Name"
-                            class="text-body py-2 px-3 rounded-3"
-                        />
+                        <input type="text" id="lname" name="lname" placeholder="Last Name" class="text-body py-2 px-3 rounded-3">
                     </div>
                 </div>
                 <div class="row gap-sm-0 gap-4">
                     <!-- Email -->
                     <div class="col-sm-6 d-flex flex-column gap-2">
                         <label for="email" class="text-body">Email</label>
-                        <input
-                            type="email"
-                            id="email"
-                            name="email"
-                            placeholder="Email"
-                            class="text-body py-2 px-3 rounded-3"
-                        />
+                        <input type="email" id="email" name="email" placeholder="Email" class="text-body py-2 px-3 rounded-3">
                     </div>
                     <!-- Mobile -->
                     <div class="col-sm-6 d-flex flex-column gap-2">
                         <label for="mobile" class="text-body">Mobile</label>
-                        <input
-                            type="number"
-                            id="mobile"
-                            name="mobile"
-                            placeholder="Mobile"
-                            class="text-body py-2 px-3 rounded-3"
-                        />
+                        <input type="number" id="mobile" name="mobile" placeholder="Mobile" class="text-body py-2 px-3 rounded-3">
                     </div>
                 </div>
             </article>
             <!-- END: Client Detail -->
             <!-- BEGIN: Patient Detail -->
             <article class="patient-detail p-8 bg-white shadow rounded-3">
-                <div
-                    class="d-flex justify-content-between align-items-center mb-10"
-                >
+                <div class="d-flex justify-content-between align-items-center mb-10">
                     <h2 class="text-h2 flex-grow-1">Patient Detail</h2>
                     <select
                         name="current-patient"
@@ -85,68 +49,30 @@
                         style="height: 38px; max-width: 170px"
                         aria-placeholder=""
                     >
-                        <option
-                            value=""
-                            class="text-body"
-                            disabled
-                            selected
-                            hidden
-                        >
-                            Existed Patients
-                        </option>
+                        <option value="" class="text-body" disabled selected hidden>Existed Patients</option>
                         <option value="Male" class="text-body">Abby</option>
-                        <option value="Female" class="text-body">
-                            Chow Chow
-                        </option>
+                        <option value="Female" class="text-body">Chow Chow</option>
                     </select>
                 </div>
                 <div class="row gap-sm-0 mb-6">
                     <!-- Patient Name -->
-                    <div class="col-4 d-flex flex-column gap-2">
+                    <div class=" col-4 d-flex flex-column gap-2">
                         <label for="patient-name" class="text-body">Name</label>
-                        <input
-                            type="text"
-                            id="patient-name"
-                            name="patient-name"
-                            placeholder="Patient Name"
-                            class="text-body py-2 px-3 rounded-3"
-                        />
+                        <input type="text" id="patient-name" name="patient-name" placeholder="Patient Name" class="text-body py-2 px-3 rounded-3">
                     </div>
                     <!-- Patient Date of Birth -->
                     <div class="col-4 d-flex flex-column gap-2">
                         <label for="patient-dob" class="text-body">DOB</label>
-                        <input
-                            type="date"
-                            id="patient-dob"
-                            name="patient-dob"
-                            class="text-body py-2 px-3 rounded-3"
-                        />
+                        <input type="date" id="patient-dob" name="patient-dob" class="text-body py-2 px-3 rounded-3">
                     </div>
                     <!-- Patient Gender -->
                     <div class="col-4 d-flex flex-column gap-2">
                         <label for="gender" class="text-body">Gender</label>
-                        <select
-                            name="gender"
-                            id="patient-gender"
-                            class="text-body py-3 px-3 rounded-3 border-2"
-                            style="height: 41px"
-                        >
-                            <option
-                                value=""
-                                class="text-body"
-                                disabled
-                                selected
-                                hidden
-                            >
-                                Patient Gender
-                            </option>
+                        <select name="gender" id="patient-gender" class="text-body py-3 px-3 rounded-3 border-2" style="height: 41px;">
+                            <option value="" class="text-body" disabled selected hidden>Patient Gender</option>
                             <option value="Male" class="text-body">Male</option>
-                            <option value="Female" class="text-body">
-                                Female
-                            </option>
-                            <option value="Unknown" class="text-body">
-                                Unknown
-                            </option>
+                            <option value="Female" class="text-body">Female</option>
+                            <option value="Unknown" class="text-body">Unknown</option>
                         </select>
                     </div>
                 </div>
@@ -154,47 +80,17 @@
                     <!-- Breed -->
                     <div class="col-sm-6 d-flex flex-column gap-2">
                         <label for="breed" class="text-body">Breed</label>
-                        <select
-                            name="breed"
-                            id="patient-breed"
-                            class="text-body py-3 px-3 rounded-3 border-2"
-                            style="height: 41px"
-                        >
-                            <option
-                                value=""
-                                class="text-body"
-                                disabled
-                                selected
-                                hidden
-                            >
-                                Patient Breed
-                            </option>
-                            <option value="Test Breed" class="text-body">
-                                Test Breed
-                            </option>
+                        <select name="breed" id="patient-breed" class="text-body py-3 px-3 rounded-3 border-2" style="height: 41px;">
+                            <option value="" class="text-body" disabled selected hidden>Patient Breed</option>
+                            <option value="Test Breed" class="text-body">Test Breed</option>
                         </select>
                     </div>
                     <!-- Species -->
                     <div class="col-sm-6 d-flex flex-column gap-2">
                         <label for="species" class="text-body">Species</label>
-                        <select
-                            name="species"
-                            id="patient-species"
-                            class="text-body py-3 px-3 rounded-3 border-2"
-                            style="height: 41px"
-                        >
-                            <option
-                                value=""
-                                class="text-body"
-                                disabled
-                                selected
-                                hidden
-                            >
-                                Patient Species
-                            </option>
-                            <option value="Test Species" class="text-body">
-                                Test Species
-                            </option>
+                        <select name="species" id="patient-species" class="text-body py-3 px-3 rounded-3 border-2" style="height: 41px;">
+                            <option value="" class="text-body" disabled selected hidden>Patient Species</option>
+                            <option value="Test Species" class="text-body">Test Species</option>
                         </select>
                     </div>
                 </div>
@@ -202,134 +98,47 @@
             <!-- END: Patient Detail -->
         </section>
         <!-- Sticky Sidebar -->
-        <aside
-            class="sticky-top d-flex d-md-grid d-lg-flex flex-column gap-5 py-10"
-            style="grid-template-columns: auto 395px; height: fit-content"
-        >
+        <aside class="sticky-top d-flex d-md-grid d-lg-flex flex-column gap-5 py-10" style="grid-template-columns: auto 395px; height: fit-content;">
             <!-- Appointment Detail -->
-            <article
-                class="p-8 bg-white shadow rounded-3"
-                style="height: fit-content"
-            >
+            <article class="p-8 bg-white shadow rounded-3" style="height: fit-content;">
                 <div class="mb-8">
-                    <p class="text-body fw-bold text-primary mb-2">
-                        Appointment Detail
-                    </p>
+                    <p class="text-body fw-bold text-primary mb-2">Appointment Detail</p>
                     <h3 id="confirm-service" class="text-h3 line-clamp-1"></h3>
                 </div>
                 <div class="d-block">
                     <!-- Appointment Room -->
-                    <span
-                        class="w-100 d-inline-flex align-items-start"
-                        style="width: max-content"
-                    >
-                        <img
-                            src="svg/icons/location.svg"
-                            alt="Note"
-                            width="24"
-                            height="24"
-                        />
-                        <p
-                            id="confirm-service-room"
-                            class="text-body mb-0 ms-2"
-                        >
-                            Procedure 1
-                        </p>
+                    <span class="w-100 d-inline-flex align-items-start" style="width: max-content;">
+                        <img src="svg/icons/location.svg" alt="Note" width="24" height="24">
+                        <p id="confirm-service-room" class="text-body mb-0 ms-2">Procedure 1</p>
                     </span>
                     <!-- Appointment Staff -->
-                    <span
-                        class="w-100 d-inline-flex align-items-start"
-                        style="width: max-content"
-                    >
-                        <img
-                            src="svg/icons/staff.svg"
-                            alt="Note"
-                            width="24"
-                            height="24"
-                        />
-                        <p
-                            id="confirm-service-staff"
-                            class="text-body mb-0 ms-2"
-                        >
-                            Katherin Alissia
-                        </p>
+                    <span class="w-100 d-inline-flex align-items-start" style="width: max-content;">
+                        <img src="svg/icons/staff.svg" alt="Note" width="24" height="24">
+                        <p id="confirm-service-staff" class="text-body mb-0 ms-2">Katherin Alissia</p>
                     </span>
                     <!-- Appointment Date -->
-                    <span
-                        class="w-100 d-inline-flex align-items-start"
-                        style="width: max-content"
-                    >
-                        <img
-                            src="svg/icons/calendar.svg"
-                            alt="Note"
-                            width="24"
-                            height="24"
-                        />
-                        <p
-                            id="confirm-service-date"
-                            class="text-body mb-0 ms-2"
-                        ></p>
+                    <span class="w-100 d-inline-flex align-items-start" style="width: max-content;">
+                        <img src="svg/icons/calendar.svg" alt="Note" width="24" height="24">
+                        <p id="confirm-service-date" class="text-body mb-0 ms-2"></p>
                     </span>
                     <!-- Appointment Time -->
-                    <span
-                        class="w-100 d-inline-flex align-items-center"
-                        style="width: max-content"
-                    >
-                        <img
-                            src="svg/icons/clock.svg"
-                            alt="Appointment Time"
-                            width="24"
-                            height="20"
-                        />
-                        <p
-                            id="confirm-service-time"
-                            class="text-body mb-0 ms-2"
-                        ></p>
+                    <span class="w-100 d-inline-flex align-items-center" style="width: max-content;">
+                        <img src="svg/icons/clock.svg" alt="Appointment Time" width="24" height="20">
+                        <p id="confirm-service-time" class="text-body mb-0 ms-2"></p>
                     </span>
                 </div>
                 <div class="mt-8">
-                    <button
-                        type="button"
-                        onclick="chooseOtherService()"
-                        class="w-100 px-3 py-2 rounded-3 text-body text-primary border-primary bg-white fw-bold"
-                    >
-                        <img
-                            src="svg/icons/back-arrow.svg"
-                            alt="Check Out Icon"
-                            class="me-1"
-                            width="16"
-                            height="16"
-                        />
+                    <button type="button" onclick="chooseOtherService()" class="w-100 px-3 py-2 rounded-3 text-body text-primary border-primary bg-white fw-bold">
+                        <img src="svg/icons/back-arrow.svg" alt="Check Out Icon" class="me-1" width="16" height="16">
                         Change Service
                     </button>
                 </div>
             </article>
             <!-- Credit Card -->
             <div class="credit-card">
-                <section
-                    class="position-relative d-flex flex-column justify-content-center align-items-center text-break rounded-3 mx-auto mx-md-0 px-10 py-5"
-                    style="
-                        aspect-ratio: 395/214.5;
-                        max-width: 450px;
-                        width: 100%;
-                        background-image: linear-gradient(
-                            45deg,
-                            #6546bd,
-                            #08cbff
-                        );
-                        z-index: 1;
-                    "
-                >
-                    <img
-                        src="images/credit-card-bg.png"
-                        alt="Credit Card Background"
-                        class="position-absolute top-0 start-0 opacity-25 w-100"
-                        style="z-index: -1"
-                    />
-                    <div
-                        class="w-100 d-flex justify-content-between align-items-center"
-                        style="height: fit-content !important"
-                    >
+                <section class="position-relative d-flex flex-column justify-content-center align-items-center text-break rounded-3 mx-auto mx-md-0 px-10 py-5" style="aspect-ratio: 395/214.5; max-width: 450px; width: 100%; background-image: linear-gradient(45deg, #6546BD, #08CBFF); z-index: 1;">
+                    <img src="images/credit-card-bg.png" alt="Credit Card Background" class="position-absolute top-0 start-0 opacity-25 w-100" style="z-index: -1;">
+                    <div class="w-100 d-flex justify-content-between align-items-center" style="height: fit-content !important;">
                         <figure id="bank-identifier">
                             <!-- <img src="svg/icons/anz.svg" height="32" alt="ANZ Bank Logo"> -->
                         </figure>
@@ -338,11 +147,7 @@
                         </figure>
                     </div>
                     <div class="w-100 mt-10 text-body">
-                        <span
-                            class="text-body text-white fw-bold"
-                            style="mix-blend-mode: lighten"
-                            >Card Number</span
-                        >
+                        <span class="text-body text-white fw-bold" style="mix-blend-mode: lighten;">Card Number</span>
                         <div>
                             <input
                                 type="text"
@@ -351,37 +156,25 @@
                                 class="p-0 border-0 bg-transparent me-1 outline-none text-body text-white opacity-75"
                                 maxlength="19"
                                 placeholder="0000 0000 0000 0000"
-                            />
+                            >
                         </div>
                     </div>
-                    <div
-                        class="w-100 d-flex justify-content-between card-details mt-3 mb-3"
-                    >
+                    <div class="w-100 d-flex justify-content-between card-details mt-3 mb-3">
                         <div class="d-flex flex-column">
-                            <span
-                                class="text-body text-white fw-bold"
-                                style="mix-blend-mode: lighten"
-                                >Card Holder</span
-                            >
+                            <span class=" text-body text-white fw-bold" style="mix-blend-mode: lighten;">Card Holder</span>
                             <input
                                 type="text"
                                 id="card-holder"
                                 class="p-0 border-0 bg-transparent me-2 outline-none text-body text-white opacity-75"
                                 title="Client Name"
                                 placeholder="John Doe"
-                                style="width: 160px"
-                            />
+                                style="width: 160px;"
+                            >
                         </div>
                         <div class="d-flex flex-row">
                             <div class="d-flex flex-column me-3">
-                                <span
-                                    class="text-white text-body fw-bold"
-                                    style="mix-blend-mode: lighten"
-                                    >Expired</span
-                                >
-                                <div
-                                    class="d-inline-flex justify-content-between text-body text-white"
-                                >
+                                <span class=" text-white text-body fw-bold" style="mix-blend-mode: lighten;">Expired</span>
+                                <div class="d-inline-flex justify-content-between text-body text-white">
                                     <input
                                         type="text"
                                         id="card-expiry-month"
@@ -391,8 +184,8 @@
                                         title="2 digits number"
                                         oninput="moveToNext(this, 'card-expiry-year')"
                                         placeholder="00"
-                                        style="width: 18px"
-                                    />
+                                        style="width: 18px;"
+                                    >
                                     /
                                     <input
                                         type="text"
@@ -402,16 +195,12 @@
                                         pattern="\d{2}"
                                         oninput="moveToNext(this, 'card-cvv')"
                                         placeholder="00"
-                                        style="width: 18px"
-                                    />
+                                        style="width: 18px;"
+                                    >
                                 </div>
                             </div>
                             <div class="d-flex flex-column">
-                                <span
-                                    class="text-white text-body fw-bold"
-                                    style="mix-blend-mode: lighten"
-                                    >CVV</span
-                                >
+                                <span class="text-white text-body fw-bold" style="mix-blend-mode: lighten;">CVV</span>
                                 <input
                                     type="text"
                                     id="card-cvv"
@@ -420,8 +209,8 @@
                                     pattern="\d{3}"
                                     title="3 digits number"
                                     placeholder="000"
-                                    style="width: 36px"
-                                />
+                                    style="width: 36px;"
+                                >
                             </div>
                         </div>
                     </div>
@@ -429,33 +218,14 @@
             </div>
             <section class="row mt-5">
                 <div class="col-12 col-sm-6 mb-3 mb-md-0">
-                    <button
-                        type="button"
-                        onclick="cancelAppointmentReservation()"
-                        class="w-100 px-3 py-md-2 py-5 rounded-3 text-body text-white border-red bg-red fw-bold"
-                    >
-                        <img
-                            src="svg/icons/cancel.svg"
-                            alt="Check Out Icon"
-                            class="me-1"
-                            width="24"
-                            height="24"
-                        />
+                    <button type="button" onclick="cancelAppointmentReservation()" class="w-100 px-3 py-md-2 py-5 rounded-3 text-body text-white border-red bg-red fw-bold">
+                        <img src="svg/icons/cancel.svg" alt="Check Out Icon" class="me-1" width="24" height="24">
                         Cancel
                     </button>
                 </div>
                 <div class="col-12 col-sm-6">
-                    <button
-                        type="submit"
-                        class="w-100 px-3 py-md-2 py-5 rounded-3 text-body text-white border-primary bg-primary fw-bold"
-                    >
-                        <img
-                            src="svg/icons/checkout.svg"
-                            alt="Check Out Icon"
-                            class="me-1"
-                            width="24"
-                            height="24"
-                        />
+                    <button type="submit" class="w-100 px-3 py-md-2 py-5 rounded-3 text-body text-white border-primary bg-primary fw-bold">
+                        <img src="svg/icons/checkout.svg" alt="Check Out Icon" class="me-1" width="24" height="24">
                         Pay &amp; Confirm
                     </button>
                 </div>

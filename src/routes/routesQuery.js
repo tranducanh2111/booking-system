@@ -1,11 +1,11 @@
 router.get('/services/:practiceCode?', async (req, res) => {
-    const practiceCode = req.params.practiceCode;
-    if (!practiceCode) {
+      const practiceCode = req.params.practiceCode;
+      if (!practiceCode) {
         return res.status(400).json({ error: 'No practice code provided' });
-    }
-
-    const db_petbooqz = connectPetbooqzDatabase();
-    const practiceServiceQuery = `
+      }
+    
+      const db_petbooqz = connectPetbooqzDatabase();
+      const practiceServiceQuery = `
         SELECT DISTINCT SKU, ItemName
         FROM services
         WHERE ClinicCode = ?
@@ -13,118 +13,109 @@ router.get('/services/:practiceCode?', async (req, res) => {
         AND Status = 'Current'
         AND DisplayOnline LIKE '%Yes%'
         ORDER BY ItemName ASC;`;
-
-    try {
-        const results = await queryDatabase(db_petbooqz, practiceServiceQuery, [
-            practiceCode,
-        ]);
+    
+      try {
+        const results = await queryDatabase(db_petbooqz, practiceServiceQuery, [practiceCode]);
         if (results.length > 0) {
-            const categories = results.map((service) => ({
-                sku: service.SKU,
-                name: service.ItemName,
-            }));
-            res.json({ messagecode: 'Success', categories });
+          const categories = results.map(service => ({
+            sku: service.SKU,
+            name: service.ItemName,
+          }));
+          res.json({ messagecode: "Success", categories });
         } else {
-            res.status(404).json({ error: 'Practice services not found' });
+          res.status(404).json({ error: "Practice services not found" });
         }
-    } catch (error) {
-        console.error('Error fetching practice services:', error);
-        res.status(500).json({ error: 'Error fetching practice services' });
-    } finally {
+      } catch (error) {
+        console.error("Error fetching practice services:", error);
+        res.status(500).json({ error: "Error fetching practice services" });
+      } finally {
         closePetbooqzDatabaseConnection();
-    }
-});
-
-// API Endpoint to search clients from PB
-router.post('/searchExistClient/:practiceCode', async (req, res) => {
-    try {
+      }
+    });
+    
+    // API Endpoint to search clients from PB
+    router.post('/searchExistClient/:practiceCode', async (req, res) => {
+      try {
         const practiceCode = req.params.practiceCode;
         const { mobile, lastname } = req.query;
-
+    
         if (!practiceCode) {
-            return res.status(400).json({ error: 'No practice code provided' });
+          return res.status(400).json({ error: 'No practice code provided' });
         }
-
+    
         if (!lastname && !mobile) {
-            return res
-                .status(400)
-                .json({ error: 'Information is required to connect' });
+          return res.status(400).json({ error: 'Information is required to connect' });
         }
-
+    
         // Connect to the database
         const db_petbooqz = connectPetbooqzDatabase();
-
+    
         // Construct the query
         let query = `
           SELECT id, mastercode, ContactTitle, ContactFirst, ContactLast, Mobile, email
           FROM clientdb
           WHERE UPPER(Active) = 'CURRENT'
           AND ClinicCode = ?`;
-
+    
         if (mobile) {
-            query += ' AND UPPER(Mobile) = UPPER(?)';
-            queryParams.push(mobile);
-        }
+          query += ' AND UPPER(Mobile) = UPPER(?)';
+          queryParams.push(mobile);
+        } 
         if (lastname) {
-            query += ' AND UPPER(ContactLast) = UPPER(?)';
-            queryParams.push(lastname);
+          query += ' AND UPPER(ContactLast) = UPPER(?)';
+          queryParams.push(lastname);
         }
-
+    
         const results = await queryDatabase(db_petbooqz, query, [practiceCode]);
-
+    
         if (results.length === 0) {
-            return res.json({
-                message: 'Error',
-                error: 'No clients found with the provided details.',
-            });
+          return res.json({ message: "Error", error: "No clients found with the provided details." });
         } else if (results.length > 1) {
-            return res.json({
-                message: 'Error',
-                error: 'Multiple clients found with the same mobile and last name.',
-            });
+          return res.json({ message: "Error", error: "Multiple clients found with the same mobile and last name." });
         }
-
+    
         const row = results[0];
         const response = {
-            client: {
-                clientcode: row.mastercode,
-                title: row.ContactTitle,
-                firstName: row.ContactFirst,
-                lastname: row.ContactLast,
-                mobile: mobile,
-                email: row.email,
-            },
-            DateRequested: new Date().toISOString(),
-            code: generateReservationId(),
-            messagecode: 'Success',
+          client: {
+            clientcode: row.mastercode,
+            title: row.ContactTitle,
+            firstName: row.ContactFirst,
+            lastname: row.ContactLast,
+            mobile: mobile,
+            email: row.email
+          },
+          DateRequested: new Date().toISOString(),
+          code: generateReservationId(),
+          messagecode: 'Success'
         };
-
+    
         res.json(response);
-    } catch (error) {
-        console.error('Error searching for client:', error);
-        res.status(500).json({ error: 'Error searching for client' });
-    } finally {
+    
+      } catch (error) {
+        console.error("Error searching for client:", error);
+        res.status(500).json({ error: "Error searching for client" });
+      } finally {
         closePetbooqzDatabaseConnection();
-    }
-});
-
-// API endpoint to get patients by practice code and client code
-router.get('/clientPatients/:practiceCode', async (req, res) => {
-    try {
+      }
+    });
+    
+    // API endpoint to get patients by practice code and client code
+    router.get('/clientPatients/:practiceCode', async (req, res) => {
+      try {
         const { practiceCode } = req.params;
         const { clientCode } = req.query;
-
+    
         if (!practiceCode) {
-            return res.status(400).json({ error: 'Practice code is required' });
+          return res.status(400).json({ error: 'Practice code is required' });
         }
-
+    
         if (!clientCode) {
-            return res.status(400).json({ error: 'Client code is required' });
+          return res.status(400).json({ error: 'Client code is required' });
         }
-
+    
         // Connect to the database
         const db_petbooqz = connectPetbooqzDatabase();
-
+    
         const query = `
           SELECT p.PatientCode, p.FirstName, p.Sex, p.Desexed, p.Species AS SpeciesCode,
                  p.DateOfBirth, p.Breed, p.BreedCode, b.VeNOMID, p.Picture,
@@ -136,86 +127,76 @@ router.get('/clientPatients/:practiceCode', async (req, res) => {
           AND p.ClinicCode = ?
           AND UPPER(p.Deceased) = 'CURRENT'
         `;
-
-        const results = await queryDatabase(db_petbooqz, query, [
-            clientCode,
-            practiceCode,
-        ]);
-
-        const patients = results.map((row) => ({
-            PatientCode: row.PatientCode,
-            FirstName: row.FirstName,
-            Sex: row.Sex,
-            Desexed: row.Desexed,
-            SpeciesCode: row.SpeciesCode,
-            DateOfBirth: row.DateOfBirth,
-            Breed: row.Breed,
-            BreedCode: row.VeNOMID,
-            Species: row.Species,
+    
+        const results = await queryDatabase(db_petbooqz, query, [clientCode, practiceCode]);
+    
+        const patients = results.map(row => ({
+          PatientCode: row.PatientCode,
+          FirstName: row.FirstName,
+          Sex: row.Sex,
+          Desexed: row.Desexed,
+          SpeciesCode: row.SpeciesCode,
+          DateOfBirth: row.DateOfBirth,
+          Breed: row.Breed,
+          BreedCode: row.VeNOMID,
+          Species: row.Species
         }));
-
+    
         res.json({
-            messagecode: 'Success',
-            patients: patients,
+          messagecode: "Success",
+          patients: patients
         });
-    } catch (error) {
+    
+      } catch (error) {
         console.error('Error fetching patients:', error);
         res.status(500).json({ error: 'Error fetching patients' });
-    } finally {
+      } finally {
         closePetbooqzDatabaseConnection();
-    }
-});
-
-router.post('/makeReservation', async (req, res) => {
-    try {
+      }
+    });
+    
+    router.post('/makeReservation', async (req, res) => {
+      try {
         const { sku, room, time, date, staff, practiceCode } = req.body;
-
+    
         // Validate input
         if (!sku || !room || !time || !date || !practiceCode) {
-            return res.status(400).json({ error: 'Missing required fields' });
+          return res.status(400).json({ error: 'Missing required fields' });
         }
-
+    
         // Check if booking is in the past
         const currentDateTime = new Date();
         const requestedDateTime = new Date(`${date}T${time}`);
         if (requestedDateTime < currentDateTime) {
-            return res.status(400).json({ error: 'Cannot book in the past' });
+          return res.status(400).json({ error: 'Cannot book in the past' });
         }
-
+    
         // Fetch the ApptBlock (duration) for the service
         // Create Connection to the PB Database
         const db_petbooqz = connectPetbooqzDatabase();
-
+    
         // Retrieve the service duration
         const serviceDataQuery = `
           SELECT ApptBlock
           FROM services
           WHERE SKU = ? AND ClinicCode = ?
         `;
-
-        const serviceDataResults = await queryDatabase(
-            db_petbooqz,
-            serviceDataQuery,
-            [sku, practiceCode]
-        );
-
+    
+        const serviceDataResults = await queryDatabase(db_petbooqz, serviceDataQuery, [sku, practiceCode]);
+    
         if (!serviceDataResults || serviceDataResults.length === 0) {
-            return res
-                .status(404)
-                .json({ error: 'Service not found for the given SKU' });
+          return res.status(404).json({ error: 'Service not found for the given SKU' });
         }
-
-        const duration =
-            serviceDataResults.ApptBlock > 0
-                ? serviceDataResults.ApptBlock
-                : 15;
+    
+    
+        const duration = serviceDataResults.ApptBlock > 0 ? serviceDataResults.ApptBlock : 15;
         const consultTime = 15; // Assuming default consult time is 15 minutes
         const blocks = Math.ceil(duration / consultTime);
-
+    
         // Start and End Time of the appointment
         const start = new Date(`${date}T${time}`);
         const end = addMinutes(start, duration);
-
+    
         // // Check if the slot is already taken
         const existingAppointmentQuery = `
           SELECT *
@@ -225,144 +206,99 @@ router.post('/makeReservation', async (req, res) => {
           AND staffcode = ?
           AND ClinicCode = ?
         `;
-
-        const existingAppointmentResults = await queryDatabase(
-            db_petbooqz,
-            existingAppointmentQuery,
-            [start, end, room, practiceCode]
-        );
-
+    
+        const existingAppointmentResults = await queryDatabase(db_petbooqz, existingAppointmentQuery, [start, end, room, practiceCode]);
+    
         if (existingAppointmentResults.length > 0) {
-            return res
-                .status(409)
-                .json({ error: 'Sorry, this slot has been taken' });
+          return res.status(409).json({ error: 'Sorry, this slot has been taken' });
         }
-
+    
         // Get ColumnID
-        const columnId = await getColumnId(
-            db_petbooqz,
-            date,
-            room,
-            practiceCode
-        );
-
+        const columnId = await getColumnId(db_petbooqz, date, room, practiceCode);
+    
         const reservationId = generateReservationId();
         const now = new Date().toISOString().slice(0, 19).replace('T', ' ');
         // Reservation expire after 8 mins
-        const expires = new Date(Date.now() + 8 * 60000)
-            .toISOString()
-            .slice(0, 19)
-            .replace('T', ' ');
-
-        const contents = Buffer.from(JSON.stringify(req.body)).toString(
-            'base64'
-        );
+        const expires = new Date(Date.now() + 8 * 60000).toISOString().slice(0, 19).replace('T', ' ');
+    
+        const contents = Buffer.from(JSON.stringify(req.body)).toString('base64');
         const reason = 'Temporary Reservation';
-
+    
         // // Begin transaction
         await beginTransaction(db_petbooqz);
-
+    
         try {
-            // Query to insert a temp record to the PB.reservations
-            const insertReservationQuery = `
+          // Query to insert a temp record to the PB.reservations
+          const insertReservationQuery = `
           INSERT INTO reservations (ReservationId, DateCreated, Status, ApptId, Contents, Expires, ClinicCode) 
           VALUES (?, ?, ?, ?, ?, ?, ?)
           `;
-
-            // Query to insert a temp record to the PB.daybook
-            const insertDaybookQuery = `
+    
+          // Query to insert a temp record to the PB.daybook
+          const insertDaybookQuery = `
           INSERT INTO daybook (ApptID, Appdate, AppTime, entered_by, Reason, staffcode, Extended, ObjectId, Start, End, ClinicCode, Blocks, ApptCode, Created, ColumnID, Appstatus) 
           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
           `;
-
-            // Insert into reservations table
-            await queryDatabase(db_petbooqz, insertReservationQuery, [
-                reservationId,
-                now,
-                'RESERVATION',
-                reservationId,
-                contents,
-                expires,
-                practiceCode,
-            ]);
-
-            // Insert into daybook table
-            await queryDatabase(db_petbooqz, insertDaybookQuery, [
-                reservationId,
-                date,
-                time,
-                staff || null,
-                reason,
-                room,
-                reservationId,
-                reservationId,
-                start,
-                end,
-                practiceCode,
-                blocks,
-                sku,
-                now,
-                columnId,
-                'Online',
-            ]);
-
-            await commitTransaction(db_petbooqz);
-
-            res.json({
-                messagecode: 'Success',
-                ReservationId: reservationId,
-                CreateTime: now,
-                ExpiryTime: expires,
-            });
+    
+          // Insert into reservations table
+          await queryDatabase(db_petbooqz, insertReservationQuery, [reservationId, now, 'RESERVATION', reservationId, contents, expires, practiceCode]);
+    
+          // Insert into daybook table
+          await queryDatabase(db_petbooqz, insertDaybookQuery, [reservationId, date, time, staff || null, reason, room, reservationId, reservationId, start, end, practiceCode, blocks, sku, now, columnId, 'Online']);
+    
+          await commitTransaction(db_petbooqz);
+    
+          res.json({
+            messagecode: 'Success',
+            ReservationId: reservationId,
+            CreateTime: now,
+            ExpiryTime: expires
+          });
         } catch (error) {
-            await rollbackTransaction(db_petbooqz);
-            throw error;
+          await rollbackTransaction(db_petbooqz);
+          throw error;
         }
-    } catch (error) {
+      } catch (error) {
         console.error('Error making reservation:', error);
         res.status(500).json({ error: 'Error making reservation' });
-    } finally {
+      } finally {
         // Close the Petbooqz database connection
         closePetbooqzDatabaseConnection();
-    }
-});
-
-// Get ColumnID for the Appointment
-async function getColumnId(dbConnection, date, room, practiceCode) {
-    const weekday = new Date(date).toLocaleString('en-us', { weekday: 'long' });
-    console.log('Weekday:', weekday);
-    const query = `
+      }
+    });
+    
+    // Get ColumnID for the Appointment
+    async function getColumnId(dbConnection, date, room, practiceCode) {
+      const weekday = new Date(date).toLocaleString('en-us', { weekday: 'long' });
+      console.log("Weekday:", weekday);
+      const query = `
         SELECT ColumnID 
         FROM daybookColumn 
         WHERE daytext = ? 
         AND staff = ? 
         AND ClinicCode = ?
       `;
-
-    try {
-        const columnIDResults = await queryDatabase(dbConnection, query, [
-            weekday,
-            room,
-            practiceCode,
-        ]);
-
+      
+      try {
+        const columnIDResults = await queryDatabase(dbConnection, query, [weekday, room, practiceCode]);
+    
         if (columnIDResults.length === 0) {
-            throw new Error('Room is not available');
+          throw new Error('Room is not available');
         }
         return columnIDResults[0].ColumnID;
-    } catch (error) {
+      } catch (error) {
         console.error('Error getting ColumnID:', error);
         throw error;
+      }
     }
-}
-
-// Generate Unique ID for the temporary reservation
-function generateReservationId() {
-    // This is a simplified version of the PBIDv4 function
-    const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-    let result = '';
-    for (let i = 0; i < 16; i++) {
+    
+    // Generate Unique ID for the temporary reservation
+    function generateReservationId() {
+      // This is a simplified version of the PBIDv4 function
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      let result = '';
+      for (let i = 0; i < 16; i++) {
         result += chars.charAt(Math.floor(Math.random() * chars.length));
+      }
+      return result;
     }
-    return result;
-}

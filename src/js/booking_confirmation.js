@@ -1,33 +1,33 @@
-import { loadContent } from './page_loader.js';
+import { loadContent } from "./page_loader.js";
 
 export function initializeCheckoutPage() {
-    const input = document.getElementById('card-number');
-    const industryIdentifier = document.getElementById('industry-identfier');
-    const bankIdentifier = document.getElementById('bank-identifier');
+    const input = document.getElementById("card-number");
+    const industryIdentifier = document.getElementById("industry-identfier");
+    const bankIdentifier = document.getElementById("bank-identifier");
 
     // Default Payment
     bankIdentifier.innerHTML = `<img src="svg/bank-logos/stripe.svg" alt="Stripe" height="32">`;
     industryIdentifier.innerHTML = `<img src="svg/icons/visa.svg" alt="Visa Icon" height="32">`;
 
     const cardNetworkImages = {
-        3: 'svg/icons/amex.svg',
-        4: 'svg/icons/visa.svg',
-        5: 'svg/icons/mastercard.svg',
-        2: 'svg/icons/mastercard.svg',
+        "3": "svg/icons/amex.svg",
+        "4": "svg/icons/visa.svg",
+        "5": "svg/icons/mastercard.svg",
+        "2": "svg/icons/mastercard.svg"
     };
 
     let bankIINs = {};
 
     fetchBankIINs()
         .then(() => {
-            input.addEventListener('input', handleInput);
+            input.addEventListener("input", handleInput);
         })
-        .catch((error) => console.error('Error loading BIN data:', error));
+        .catch(error => console.error('Error loading BIN data:', error));
 
     function fetchBankIINs() {
         return fetch('/api/bank-bin')
-            .then((response) => response.json())
-            .then((data) => {
+            .then(response => response.json())
+            .then(data => {
                 bankIINs = data;
             });
     }
@@ -48,7 +48,7 @@ export function initializeCheckoutPage() {
 
     function updateCardNetworkImage(value) {
         const firstDigit = value.charAt(0);
-        const imagePath = cardNetworkImages[firstDigit] || 'svg/icons/visa.svg';
+        const imagePath = cardNetworkImages[firstDigit] || "svg/icons/visa.svg";
         industryIdentifier.innerHTML = `<img src="${imagePath}" alt="Card Network" height="32">`;
     }
 
@@ -67,24 +67,18 @@ export function initializeCheckoutPage() {
 
     populateAppointmentData();
 
-    document
-        .getElementById('card-number')
-        .addEventListener('input', function () {
-            moveToNext(this, 'card-holder');
-        });
-    document
-        .getElementById('card-expiry-month')
-        .addEventListener('input', function (e) {
-            this.value = this.value.replace(/[^0-9]/g, '');
-            moveToNext(this, 'card-expiry-year');
-        });
-    document
-        .getElementById('card-expiry-year')
-        .addEventListener('input', function (e) {
-            this.value = this.value.replace(/[^0-9]/g, '');
-            moveToNext(this, 'card-cvv');
-        });
-    document.getElementById('card-cvv').addEventListener('input', function (e) {
+    document.getElementById("card-number").addEventListener("input", function() {
+        moveToNext(this, 'card-holder');
+    });
+    document.getElementById("card-expiry-month").addEventListener("input", function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+        moveToNext(this, 'card-expiry-year');
+    });
+    document.getElementById("card-expiry-year").addEventListener("input", function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '');
+        moveToNext(this, 'card-cvv');
+    });
+    document.getElementById("card-cvv").addEventListener("input", function(e) {
         this.value = this.value.replace(/[^0-9]/g, '');
     });
 }
@@ -110,17 +104,12 @@ export function cancelAppointmentReservation() {
 }
 
 function populateAppointmentData() {
-    const appointmentBookingData = JSON.parse(
-        sessionStorage.getItem('appointmentBookingData')
-    );
+    const appointmentBookingData = JSON.parse(sessionStorage.getItem('appointmentBookingData'));
     if (appointmentBookingData) {
-        document.getElementById('confirm-service').textContent =
-            appointmentBookingData['service'];
-        document.getElementById('confirm-service-date').textContent =
-            appointmentBookingData['appointment-day'];
-        document.getElementById('confirm-service-time').textContent =
-            appointmentBookingData['appointment-time'];
-
+        document.getElementById('confirm-service').textContent = appointmentBookingData['service'];
+        document.getElementById('confirm-service-date').textContent = appointmentBookingData['appointment-day'];
+        document.getElementById('confirm-service-time').textContent = appointmentBookingData['appointment-time'];
+        
         // Remove session storage for temporary booking data
         // sessionStorage.removeItem('appointmentBookingData');
     }
