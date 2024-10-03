@@ -20,11 +20,11 @@ router.use(generalLimiter);
 router.use('/practice/', apiLimiter);
 
 // Log Middleware to check if rate limiters are applied
-// router.use((req, res, next) => {
-//     console.log(`Request Method: ${req.method}, Request URL: ${req.originalUrl}`);
-//     console.log(`Using General Limiter: ${!!req.rateLimit}, API Limiter: ${req.path.startsWith('/practice/') ? !!apiLimiter : false}`);
-//     next();
-// });
+router.use((req, res, next) => {
+    console.log(`Request Method: ${req.method}, Request URL: ${req.originalUrl}`);
+    console.log(`Using General Limiter: ${!!req.rateLimit}, API Limiter: ${req.path.startsWith('/practice/') ? !!apiLimiter : false}`);
+    next();
+});
 
 // Handle request for loading the clinic notes
 router.get('/practice_info/:practiceCode', async (req, res) => {
@@ -35,9 +35,9 @@ router.get('/practice_info/:practiceCode', async (req, res) => {
 
     const pool = getAdvanceNoticePool();
     const practiceInfoQuery = `
-    SELECT Notes, PracticeName, Phone, Email, Website, Logo, Address, Suburb, Postcode, State, Country, IPAddressZT, ListeningPort, APIEP, APIUser, APIPassword
-    FROM practice
-    WHERE PracticeCode = ? AND isActive = 'Yes'`;
+        SELECT Notes, PracticeName, Phone, Email, Website, Logo, Address, Suburb, Postcode, State, Country, IPAddressZT, ListeningPort, APIEP, APIUser, APIPassword
+        FROM practice
+        WHERE PracticeCode = ? AND isActive = 'Yes'`;
 
     try {
         const results = await queryDatabase(pool, practiceInfoQuery, [practiceCode]);

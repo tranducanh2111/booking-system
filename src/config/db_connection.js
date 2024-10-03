@@ -10,8 +10,11 @@ function createPool(dbName) {
         password: process.env.DB_PASSWORD,
         database: process.env[`DB_NAME_${dbName}`],
         port: process.env.DB_PORT,
+        waitForConnections: true,
         connectionLimit: 10,
-        queueLimit: 0
+        queueLimit: 10,
+        maxIdle: 10,
+        idleTimeout: 8000 // 8 seconds
     });
 }
 
@@ -40,12 +43,15 @@ function getPetbooqzPool() {
 
 // Function to query the database
 async function queryDatabase(pool, sql, params = []) {
+    const connection = await pool.getConnection();
     try {
-        const [results] = await pool.query(sql, params);
+        const [results] = await connection.query(sql, params);
         return results;
     } catch (error) {
         console.error('Error querying database:', error);
         throw error;
+    } finally {
+        connection.release();
     }
 }
 
