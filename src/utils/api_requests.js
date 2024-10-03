@@ -2,10 +2,7 @@
 const axios = require('axios');
 
 // Database Connection
-const {
-    getAdvanceNoticePool,
-    queryDatabase,
-} = require('../config/db_connection');
+const { getAdvanceNoticePool } = require('../config/db_connection');
 
 // Get the data from the practice
 async function fetchDataFromPracticeInfo(
@@ -55,15 +52,14 @@ async function fetchDataFromPracticeInfo(
 }
 
 // Get practice connection IP Address and endpoint
-async function getPracticeConnection(practiceCode) {
-    const pool = getAdvanceNoticePool();
+async function getPracticeConnection(practiceCode, connection) {
     const practiceInfoQuery = `
       SELECT IPAddressZT, ListeningPort, APIEP, APIUser, APIPassword
       FROM practice
       WHERE PracticeCode = ? AND isActive = 'Yes'`;
 
     try {
-        const results = await queryDatabase(pool, practiceInfoQuery, [practiceCode]);
+        const [results] = await connection.query(practiceInfoQuery, [practiceCode]);
         if (results.length > 0) {
             return results[0];
         } else {
@@ -82,7 +78,8 @@ const handleApiRequest = async (
     method,
     request,
     data = {},
-    params = {}
+    params = {},
+    connection
 ) => {
     const practiceCode = req.params.practiceCode;
 
@@ -91,7 +88,7 @@ const handleApiRequest = async (
     }
 
     try {
-        const practiceCodeRequested = await getPracticeConnection(practiceCode);
+        const practiceCodeRequested = await getPracticeConnection(practiceCode, connection);
 
         if (!practiceCodeRequested) {
             return res.status(400).json({ error: `Can't establish the practice connection` });
@@ -122,7 +119,13 @@ const handleApiRequest = async (
 
 // Utility function for GET requests
 const handleGetRequest = async (req, res, apiEndpoint, params = {}) => {
-    await handleApiRequest(req, res, 'GET', apiEndpoint, {}, params);
+    const pool = getAdvanceNoticePool();
+    const connection = await pool.getConnection();
+    try {
+        await handleApiRequest(req, res, 'GET', apiEndpoint, {}, params, connection);
+    } finally {
+        connection.release();
+    }
 };
 
 // Utility function for POST requests
@@ -135,10 +138,40 @@ const handlePostRequest = async (req, res, apiEndpoint, requiredFields) => {
         });
     }
 
-    await handleApiRequest(req, res, 'POST', apiEndpoint, req.body);
+    const pool = getAdvanceNoticePool();
+    const connection = await pool.getConnection();
+    try {
+        await handleApiRequest(req, res, 'POST', apiEndpoint, req.body, {}, connection);
+    } finally {
+        connection.release();
+    }
+};
+
+// Middleware to fetch practice information
+const fetchPracticeInfo = async (req, res, next) => {
+    const practiceCode = req.params.practiceCode;
+
+    if (!practiceCode) {
+        return res.status(400).json({ error: 'No practice code provided' });
+    }
+
+    const pool = getAdvanceNoticePool();
+    const connection = await pool.getConnection();
+
+    try {
+        const practiceInfo = await getPracticeConnection(practiceCode, connection);
+        req.practiceInfo = practiceInfo; // Attach practice info to the request object
+        next(); // Proceed to the next middleware or route handler
+    } catch (error) {
+        console.error('Error fetching practice information:', error);
+        res.status(500).json({ error: 'Failed to fetch practice information' });
+    } finally {
+        connection.release();
+    }
 };
 
 module.exports = {
     handleGetRequest,
     handlePostRequest,
+    fetchPracticeInfo,
 };
