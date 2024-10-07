@@ -147,31 +147,7 @@ const handlePostRequest = async (req, res, apiEndpoint, requiredFields) => {
     }
 };
 
-// Middleware to fetch practice information
-const fetchPracticeInfo = async (req, res, next) => {
-    const practiceCode = req.params.practiceCode;
-
-    if (!practiceCode) {
-        return res.status(400).json({ error: 'No practice code provided' });
-    }
-
-    const pool = getAdvanceNoticePool();
-    const connection = await pool.getConnection();
-
-    try {
-        const practiceInfo = await getPracticeConnection(practiceCode, connection);
-        req.practiceInfo = practiceInfo; // Attach practice info to the request object
-        next(); // Proceed to the next middleware or route handler
-    } catch (error) {
-        console.error('Error fetching practice information:', error);
-        res.status(500).json({ error: 'Failed to fetch practice information' });
-    } finally {
-        connection.release();
-    }
-};
-
 module.exports = {
     handleGetRequest,
     handlePostRequest,
-    fetchPracticeInfo,
 };

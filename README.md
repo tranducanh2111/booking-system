@@ -13,5 +13,7 @@ npm install axios
 npm install express-rate-limit
 
 npm install prettier
+
 <!-- To run prettier -->
+
 npx prettier --write .

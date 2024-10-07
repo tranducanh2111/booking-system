@@ -2,7 +2,10 @@
 const express = require('express');
 const path = require('path');
 const router = express.Router();
-const { handleGetRequest, handlePostRequest } = require('../utils/api_requests');
+const {
+    handleGetRequest,
+    handlePostRequest,
+} = require('../utils/api_requests');
 
 // Database Connection
 const {
@@ -21,8 +24,12 @@ router.use('/practice/', apiLimiter);
 
 // Log Middleware to check if rate limiters are applied
 router.use((req, res, next) => {
-    console.log(`Request Method: ${req.method}, Request URL: ${req.originalUrl}`);
-    console.log(`Using General Limiter: ${!!req.rateLimit}, API Limiter: ${req.path.startsWith('/practice/') ? !!apiLimiter : false}`);
+    console.log(
+        `Request Method: ${req.method}, Request URL: ${req.originalUrl}`
+    );
+    console.log(
+        `Using General Limiter: ${!!req.rateLimit}, API Limiter: ${req.path.startsWith('/practice/') ? !!apiLimiter : false}`
+    );
     next();
 });
 
@@ -40,7 +47,9 @@ router.get('/practice_info/:practiceCode', async (req, res) => {
         WHERE PracticeCode = ? AND isActive = 'Yes'`;
 
     try {
-        const results = await queryDatabase(pool, practiceInfoQuery, [practiceCode]);
+        const results = await queryDatabase(pool, practiceInfoQuery, [
+            practiceCode,
+        ]);
         if (results.length > 0) {
             res.json(results[0]);
         } else {
@@ -56,14 +65,17 @@ router.get('/practice_info/:practiceCode', async (req, res) => {
 router.get('/earliest-booking/:id?', async (req, res) => {
     const pool = getAdvanceNoticePool();
     const practiceCode = req.params.id;
-    const query = 'SELECT EarliestBooking FROM practice WHERE PracticeCode = ? AND isActive = "Yes"';
+    const query =
+        'SELECT EarliestBooking FROM practice WHERE PracticeCode = ? AND isActive = "Yes"';
 
     try {
         const results = await queryDatabase(pool, query, [practiceCode]);
         if (results.length > 0) {
             res.json({ earliestBooking: results[0].EarliestBooking });
         } else {
-            res.status(404).json({ error: 'Earliest booking information not found' });
+            res.status(404).json({
+                error: 'Earliest booking information not found',
+            });
         }
     } catch (err) {
         console.error('Error fetching earliest booking:', err);

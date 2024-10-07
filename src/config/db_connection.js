@@ -14,7 +14,7 @@ function createPool(dbName) {
         connectionLimit: 10,
         queueLimit: 10,
         maxIdle: 10,
-        idleTimeout: 8000 // 8 seconds
+        idleTimeout: 8000, // 8 seconds
     });
 }
 
@@ -56,26 +56,26 @@ async function queryDatabase(pool, sql, params = []) {
 }
 
 // Transaction functions
-async function withTransaction(pool, callback) {
-    const connection = await pool.getConnection();
-    await connection.beginTransaction();
+// async function withTransaction(pool, callback) {
+//     const connection = await pool.getConnection();
+//     await connection.beginTransaction();
 
-    try {
-        const result = await callback(connection);
-        await connection.commit();
-        return result;
-    } catch (error) {
-        await connection.rollback();
-        console.error('Error in transaction:', error);
-        throw error;
-    } finally {
-        connection.release();
-    }
-}
+//     try {
+//         const result = await callback(connection);
+//         await connection.commit();
+//         return result;
+//     } catch (error) {
+//         await connection.rollback();
+//         console.error('Error in transaction:', error);
+//         throw error;
+//     } finally {
+//         connection.release();
+//     }
+// }
 
 // Function to close all pools (use when shutting down the application)
 function closeAllPools() {
-    return Promise.all(Object.values(pools).map(pool => pool.end()));
+    return Promise.all(Object.values(pools).map((pool) => pool.end()));
 }
 
 module.exports = {
@@ -83,6 +83,6 @@ module.exports = {
     getAdvanceNoticePool,
     getPetbooqzPool,
     queryDatabase,
-    withTransaction,
-    closeAllPools
+    // withTransaction,
+    closeAllPools,
 };

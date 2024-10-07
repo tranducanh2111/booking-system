@@ -8,9 +8,11 @@ async function makeRequests() {
     const requests = [];
 
     for (let i = 0; i < numberOfRequests; i++) {
-        requests.push(axios.get(url).catch(error => {
-            console.error(`Request ${i + 1} failed:`, error.message);
-        }));
+        requests.push(
+            axios.get(url).catch((error) => {
+                console.error(`Request ${i + 1} failed:`, error.message);
+            })
+        );
     }
 
     await Promise.all(requests);
