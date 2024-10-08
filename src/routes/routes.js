@@ -34,7 +34,7 @@ router.use((req, res, next) => {
 });
 
 // Handle request for loading the clinic notes
-router.get('/practice_info/:practiceCode', async (req, res) => {
+router.get('/practice/:practiceCode', async (req, res) => {
     const practiceCode = req.params.practiceCode;
     if (!practiceCode) {
         return res.status(400).json({ error: 'No practice code provided' });
@@ -42,7 +42,7 @@ router.get('/practice_info/:practiceCode', async (req, res) => {
 
     const pool = getAdvanceNoticePool();
     const practiceInfoQuery = `
-        SELECT Notes, PracticeName, Phone, Email, Website, Logo, Address, Suburb, Postcode, State, Country, IPAddressZT, ListeningPort, APIEP, APIUser, APIPassword
+        SELECT PracticeName, Phone, Email, Website, Logo, Address, Suburb, Postcode, State, Country, IPAddressZT, ListeningPort, APIEP, APIUser, APIPassword, AllowChooseRoom, EarliestBooking, Notes
         FROM practice
         WHERE PracticeCode = ? AND isActive = 'Yes'`;
 
@@ -62,7 +62,7 @@ router.get('/practice_info/:practiceCode', async (req, res) => {
 });
 
 // Handle the practice booking day preference
-router.get('/earliest-booking/:id?', async (req, res) => {
+router.get('/practice/earliest-booking/:id?', async (req, res) => {
     const pool = getAdvanceNoticePool();
     const practiceCode = req.params.id;
     const query =
@@ -133,14 +133,14 @@ router.get('/practice/getBreedsBySpecies/:practiceCode', (req, res) => {
 });
 
 // POST routes
-router.post('/practice/searchExistClient/:practiceCode', (req, res) =>
+router.post('/practice/searchexistClient/:practiceCode', (req, res) =>
     handlePostRequest(req, res, 'searchexistClient', ['mobile', 'lastname'])
 );
 router.post('/practice/reserve/:practiceCode', (req, res) =>
     handlePostRequest(req, res, 'reserve', ['sku', 'room', 'time', 'date'])
 );
 router.post('/practice/findfreeSlots/:practiceCode', (req, res) =>
-    handlePostRequest(req, res, 'findfreeSlots', ['sku', 'room', 'date'])
+    handlePostRequest(req, res, 'findfreeSlots', ['sku', 'date'])
 );
 router.post('/practice/extendReservation/:practiceCode', (req, res) =>
     handlePostRequest(req, res, 'extendReservation', ['reservationid'])
