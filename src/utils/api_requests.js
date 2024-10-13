@@ -13,7 +13,8 @@ async function fetchDataFromPracticeInfo(
     params = null,
     practiceCode
 ) {
-    const { IPAddressZT, ListeningPort, APIEP, APIUser, APIPassword } = practiceInfo;
+    const { IPAddressZT, ListeningPort, APIEP, APIUser, APIPassword } =
+        practiceInfo;
 
     // Construct the base URL
     let url = `http://${IPAddressZT}:${ListeningPort}/${APIEP}/${request}`;
@@ -36,13 +37,16 @@ async function fetchDataFromPracticeInfo(
             data: body,
             params: params,
             headers: {
-                client_practice: practiceCode,
+                CLIENT_PRACTICE: practiceCode,
             },
         });
         return response.data; // Return the data from the response
     } catch (error) {
         if (error.response) {
-            console.error('Error fetching data from the API:', error.response.data);
+            console.error(
+                'Error fetching data from the API:',
+                error.response.data
+            );
             console.error('Status code:', error.response.status);
         } else {
             console.error('Error fetching data from the API:', error.message);
@@ -59,7 +63,9 @@ async function getPracticeConnection(practiceCode, connection) {
       WHERE PracticeCode = ? AND isActive = 'Yes'`;
 
     try {
-        const [results] = await connection.query(practiceInfoQuery, [practiceCode]);
+        const [results] = await connection.query(practiceInfoQuery, [
+            practiceCode,
+        ]);
         if (results.length > 0) {
             return results[0];
         } else {
@@ -88,10 +94,15 @@ const handleApiRequest = async (
     }
 
     try {
-        const practiceCodeRequested = await getPracticeConnection(practiceCode, connection);
+        const practiceCodeRequested = await getPracticeConnection(
+            practiceCode,
+            connection
+        );
 
         if (!practiceCodeRequested) {
-            return res.status(400).json({ error: `Can't establish the practice connection` });
+            return res
+                .status(400)
+                .json({ error: `Can't establish the practice connection` });
         }
 
         const practiceInfo = {
@@ -122,14 +133,54 @@ const handleGetRequest = async (req, res, apiEndpoint, params = {}) => {
     const pool = getAdvanceNoticePool();
     const connection = await pool.getConnection();
     try {
-        await handleApiRequest(req, res, 'GET', apiEndpoint, {}, params, connection);
+        await handleApiRequest(
+            req,
+            res,
+            'GET',
+            apiEndpoint,
+            {},
+            params,
+            connection
+        );
     } finally {
         connection.release();
     }
 };
 
 // Utility function for POST requests
-const handlePostRequest = async (req, res, apiEndpoint, requiredFields) => {
+// const handlePostRequest = async (req, res, apiEndpoint, requiredFields) => {
+//     const missingFields = requiredFields.filter((field) => !req.body[field]);
+
+//     if (missingFields.length) {
+//         return res.status(400).json({
+//             error: `Missing required fields: ${missingFields.join(', ')}`,
+//         });
+//     }
+
+//     const pool = getAdvanceNoticePool();
+//     const connection = await pool.getConnection();
+//     try {
+//         await handleApiRequest(
+//             req,
+//             res,
+//             'POST',
+//             apiEndpoint,
+//             req.body,
+//             {},
+//             connection
+//         );
+//     } finally {
+//         connection.release();
+//     }
+// };
+
+const handlePostRequest = async (
+    req,
+    res,
+    apiEndpoint,
+    requiredFields,
+    optionalFields = []
+) => {
     const missingFields = requiredFields.filter((field) => !req.body[field]);
 
     if (missingFields.length) {
@@ -138,14 +189,35 @@ const handlePostRequest = async (req, res, apiEndpoint, requiredFields) => {
         });
     }
 
+    let requestBody = {};
+    requiredFields.forEach((field) => {
+        requestBody[field] = req.body[field];
+    });
+
+    // Add optional fields
+    optionalFields.forEach((field) => {
+        if (req.body[field]) {
+            requestBody[field] = req.body[field]; 
+        }
+    });
+
     const pool = getAdvanceNoticePool();
     const connection = await pool.getConnection();
     try {
-        await handleApiRequest(req, res, 'POST', apiEndpoint, req.body, {}, connection);
+        await handleApiRequest(
+            req,
+            res,
+            'POST',
+            apiEndpoint,
+            requestBody,
+            {},
+            connection
+        );
     } finally {
         connection.release();
     }
 };
+
 
 module.exports = {
     handleGetRequest,

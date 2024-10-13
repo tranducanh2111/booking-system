@@ -34,7 +34,7 @@ router.use((req, res, next) => {
 });
 
 // Handle request for loading the clinic notes
-router.get('/practice/:practiceCode', async (req, res) => {
+router.get('/practice/practiceinfo/:practiceCode', async (req, res) => {
     const practiceCode = req.params.practiceCode;
     if (!practiceCode) {
         return res.status(400).json({ error: 'No practice code provided' });
@@ -51,6 +51,7 @@ router.get('/practice/:practiceCode', async (req, res) => {
             practiceCode,
         ]);
         if (results.length > 0) {
+            results[0].messagecode = 'Success';
             res.json(results[0]);
         } else {
             res.status(404).json({ error: 'Practice information not found' });
@@ -139,9 +140,13 @@ router.post('/practice/searchexistClient/:practiceCode', (req, res) =>
 router.post('/practice/reserve/:practiceCode', (req, res) =>
     handlePostRequest(req, res, 'reserve', ['sku', 'room', 'time', 'date'])
 );
-router.post('/practice/findfreeSlots/:practiceCode', (req, res) =>
-    handlePostRequest(req, res, 'findfreeSlots', ['sku', 'date'])
-);
+// router.post('/practice/findfreeSlots/:practiceCode', (req, res) =>
+//     handlePostRequest(req, res, 'findfreeSlots', ['sku', 'date','room'])
+// );
+router.post('/practice/findfreeSlots/:practiceCode', (req, res) => {
+    handlePostRequest(req, res, 'findfreeSlots', ['sku', 'date'], ['room']);
+});
+
 router.post('/practice/extendReservation/:practiceCode', (req, res) =>
     handlePostRequest(req, res, 'extendReservation', ['reservationid'])
 );
