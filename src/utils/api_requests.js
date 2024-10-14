@@ -181,25 +181,28 @@ const handlePostRequest = async (
     requiredFields,
     optionalFields = []
 ) => {
-    const missingFields = requiredFields.filter((field) => !req.body[field]);
+    const missingFields = requiredFields.filter((field) => req.body[field] == null);
 
     if (missingFields.length) {
+        console.error('Missing required fields:', missingFields);
         return res.status(400).json({
             error: `Missing required fields: ${missingFields.join(', ')}`,
         });
     }
 
     let requestBody = {};
+    // Add required fields to requestBody
     requiredFields.forEach((field) => {
         requestBody[field] = req.body[field];
     });
 
-    // Add optional fields
     optionalFields.forEach((field) => {
-        if (req.body[field]) {
-            requestBody[field] = req.body[field]; 
-        }
+        if (req.body[field] !== undefined && req.body[field] !== null) {
+            requestBody[field] = req.body[field];
+        } 
     });
+
+    // console.log('Final request body before API call:', requestBody);
 
     const pool = getAdvanceNoticePool();
     const connection = await pool.getConnection();
@@ -217,6 +220,7 @@ const handlePostRequest = async (
         connection.release();
     }
 };
+
 
 
 module.exports = {

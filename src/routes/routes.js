@@ -140,9 +140,7 @@ router.post('/practice/searchexistClient/:practiceCode', (req, res) =>
 router.post('/practice/reserve/:practiceCode', (req, res) =>
     handlePostRequest(req, res, 'reserve', ['sku', 'room', 'time', 'date'])
 );
-// router.post('/practice/findfreeSlots/:practiceCode', (req, res) =>
-//     handlePostRequest(req, res, 'findfreeSlots', ['sku', 'date','room'])
-// );
+
 router.post('/practice/findfreeSlots/:practiceCode', (req, res) => {
     handlePostRequest(req, res, 'findfreeSlots', ['sku', 'date'], ['room']);
 });
@@ -150,8 +148,20 @@ router.post('/practice/findfreeSlots/:practiceCode', (req, res) => {
 router.post('/practice/extendReservation/:practiceCode', (req, res) =>
     handlePostRequest(req, res, 'extendReservation', ['reservationid'])
 );
-router.post('/practice/finaliseReservation/:practiceCode', (req, res) =>
-    handlePostRequest(req, res, 'finaliseReservation', ['reservationid'])
+
+router.post('/practice/finaliseReservation/:practiceCode', (req, res) => {
+    handlePostRequest(
+        req, 
+        res, 
+        'finaliseReservation', 
+        ['reservationid', 'firstname', 'lastname', 'mobile', 'email','patientname','breed', 'venomid', 'species', 'dob', 'sex', 'notes', 'sex'], 
+        ['clientcode', 'patientcode'] 
+    );
+});
+
+
+router.post('/practice/getrooms/:practiceCode', (req, res) =>
+    handlePostRequest(req, res, 'getrooms', ['sku'])
 );
 
 module.exports = router;
