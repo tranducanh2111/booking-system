@@ -142,7 +142,7 @@ router.post('/practice/reserve/:practiceCode', (req, res) =>
 );
 
 router.post('/practice/findfreeSlots/:practiceCode', (req, res) => {
-    handlePostRequest(req, res, 'findfreeSlots', ['sku', 'date'], ['room']);
+    handlePostRequest(req, res, 'findfreeSlots', ['sku', 'date'], ['room','staff']);
 });
 
 router.post('/practice/extendReservation/:practiceCode', (req, res) =>
@@ -162,6 +162,10 @@ router.post('/practice/finaliseReservation/:practiceCode', (req, res) => {
 
 router.post('/practice/getrooms/:practiceCode', (req, res) =>
     handlePostRequest(req, res, 'getrooms', ['sku'])
+);
+
+router.post('/practice/getstaff/:practiceCode', (req, res) =>
+    handlePostRequest(req, res, 'getstaff', ['sku'])
 );
 
 module.exports = router;

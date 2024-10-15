@@ -202,7 +202,7 @@ const handlePostRequest = async (
         } 
     });
 
-    // console.log('Final request body before API call:', requestBody);
+    console.log('Final request body before API call:', requestBody);
 
     const pool = getAdvanceNoticePool();
     const connection = await pool.getConnection();
